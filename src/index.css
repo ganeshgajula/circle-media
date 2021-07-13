@@ -2,10 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+.bg-primary {
+  background-color: #1da1f2;
+}
+
 .primary-color:hover {
   color: #1da1f2;
 }
 
 .nav-svg:hover {
+  fill: #1da1f2;
+}
+
+.fill-primary-color {
   fill: #1da1f2;
 }
