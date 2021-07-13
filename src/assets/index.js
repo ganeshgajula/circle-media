@@ -10,4 +10,7 @@ export {
   SearchIcon,
   VerifiedBadgeIcon,
   MoreIcon,
+  TitleIcon,
+  UploadImageIcon,
+  UploadEmojiIcon,
 } from "./svgs";
