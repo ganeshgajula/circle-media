@@ -1,11 +1,14 @@
 import React, { useRef, useState } from "react";
 import { UploadImageIcon, UploadEmojiIcon } from "../../assets";
+import { newPostCreated } from "../../features/posts/postSlice";
+import { useDispatch } from "react-redux";
 
 export const NewPost = () => {
+  const maxCharacterLimit = 280;
   const inputEl = useRef(null);
   const [postContent, setPostContent] = useState("");
 
-  const maxCharacterLimit = 280;
+  const dispatch = useDispatch();
 
   return (
     <div>
@@ -42,7 +45,10 @@ export const NewPost = () => {
               >
                 {postContent.length}/ {maxCharacterLimit}
               </div>
-              <button className="bg-primary text-white text-lg font-bold px-4 py-1 rounded-full">
+              <button
+                className="bg-primary text-white text-lg font-bold px-4 py-1 rounded-full"
+                onClick={() => dispatch(newPostCreated(postContent))}
+              >
                 Post
               </button>
             </div>
