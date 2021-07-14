@@ -17,3 +17,7 @@
 .fill-primary-color {
   fill: #1da1f2;
 }
+
+.bg-extra-light-gray {
+  background-color: #f5f8fa;
+}
