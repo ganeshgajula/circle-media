@@ -1,5 +1,6 @@
 import React from "react";
-import { SideNavbar, NewPost } from "../../components";
+import { SideNavbar } from "../../components";
+import { Posts } from "../../features/posts/posts";
 import { TitleIcon } from "../../assets";
 
 export const Home = () => {
@@ -11,7 +12,8 @@ export const Home = () => {
           <span className="text-xl font-extrabold">Home</span>
           <TitleIcon />
         </div>
-        <NewPost />
+        <Posts />
+        <div className="h-3 bg-extra-light-gray"></div>
       </main>
     </div>
   );
