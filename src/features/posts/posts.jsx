@@ -28,7 +28,7 @@ export const Posts = () => {
               <span
                 className="flex items-center space-x-2 cursor-pointer"
                 onClick={() =>
-                  dispatch(likeButtonPressed({ postId: post.postId }))
+                  dispatch(likeButtonPressed({ postId: post.postId, post }))
                 }
               >
                 <LikeIcon />

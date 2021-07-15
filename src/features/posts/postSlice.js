@@ -1,4 +1,4 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createSlice, current, nanoid } from "@reduxjs/toolkit";
 
 const initialState = {
   posts: [
@@ -31,8 +31,34 @@ export const postsSlice = createSlice({
       const postIndex = state.posts.findIndex(
         (post) => post.postId === action.payload.postId
       );
-      console.log(postIndex);
-      state.posts[postIndex].likes += 1;
+
+      const isPostLiked = state.likedPosts.find(
+        (post) => post.postId === action.payload.postId
+      );
+
+      const addPostToLikedVideos = (post, postIndex) => {
+        state.likedPosts.push(post);
+        state.posts[postIndex].likes += 1;
+        console.log(
+          "inside add posts to liked videos",
+          current(state.likedPosts)
+        );
+      };
+
+      const removePostFromLikedVideos = (post, postIndex) => {
+        state.likedPosts.pop(post);
+        state.posts[postIndex].likes -= 1;
+        console.log(
+          "inside remove posts to liked videos",
+          current(state.likedPosts)
+        );
+      };
+
+      console.log("from outside", current(state.likedPosts));
+
+      !isPostLiked
+        ? addPostToLikedVideos(action.payload.post, postIndex)
+        : removePostFromLikedVideos(action.payload.post, postIndex);
     },
   },
 });
