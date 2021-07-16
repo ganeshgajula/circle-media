@@ -13,6 +13,7 @@ const initialState = {
   ],
   likedPosts: [],
   repostedPosts: [],
+  bookmarkedPosts: [],
 };
 
 export const postsSlice = createSlice({
@@ -77,10 +78,29 @@ export const postsSlice = createSlice({
         ? addPostToRepostsAndIncrementCount()
         : removePostFromRepostsAndDecrementCount();
     },
+    bookmarkButtonPressed: (state, action) => {
+      const isPostBookmarked = state.bookmarkedPosts.find(
+        (post) => post.postId === action.payload.post.postId
+      );
+
+      const addToBookmarks = () => {
+        state.bookmarkedPosts.push(action.payload.post);
+      };
+
+      const removeFromBookmarks = () => {
+        state.bookmarkedPosts.pop(action.payload.post);
+      };
+
+      !isPostBookmarked ? addToBookmarks() : removeFromBookmarks();
+    },
   },
 });
 
-export const { newPostCreated, likeButtonPressed, repostButtonPressed } =
-  postsSlice.actions;
+export const {
+  newPostCreated,
+  likeButtonPressed,
+  repostButtonPressed,
+  bookmarkButtonPressed,
+} = postsSlice.actions;
 
 export default postsSlice.reducer;
