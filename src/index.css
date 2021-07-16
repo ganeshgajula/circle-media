@@ -10,6 +10,46 @@
   color: #1da1f2;
 }
 
+.fill-red {
+  fill: #e0245e;
+}
+
+.fill-green {
+  fill: #17bf63;
+}
+
+.red-color:hover {
+  color: #e0245e;
+}
+
+.green-color:hover {
+  color: #17bf63;
+}
+
+.blue-color:hover {
+  color: #1b95e0;
+}
+
+.yellow-color:hover {
+  color: #fde68a;
+}
+
+.like-svg:hover {
+  fill: #e0245e;
+}
+
+.repost-svg:hover {
+  fill: #17bf63;
+}
+
+.reply-svg:hover {
+  fill: #1b95e0;
+}
+
+.bookmark-svg:hover {
+  fill: #fbbf24;
+}
+
 .nav-svg:hover {
   fill: #1da1f2;
 }

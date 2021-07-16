@@ -47,7 +47,12 @@ export const NewPost = () => {
               </div>
               <button
                 className="bg-primary text-white text-lg font-bold px-4 py-1 rounded-full"
-                onClick={() => dispatch(newPostCreated(postContent))}
+                onClick={() => {
+                  dispatch(newPostCreated(postContent));
+                  setPostContent("");
+                }}
+                style={{ opacity: !postContent ? 0.5 : 1 }}
+                disabled={!postContent}
               >
                 Post
               </button>
