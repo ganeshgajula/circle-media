@@ -18,6 +18,18 @@
   fill: #17bf63;
 }
 
+.fill-yellow {
+  fill: #fbbf24;
+}
+
+.fill-repost-gray {
+  fill: #536471;
+}
+
+.gray-text {
+  color: #536471;
+}
+
 .red-color:hover {
   color: #e0245e;
 }
