@@ -1,12 +1,17 @@
 export {
   HomeIcon,
+  FilledHomeIcon,
   NotificationIcon,
+  FilledNotificationIcon,
   BookmarkIcon,
+  FilledBookmarkIcon,
   ProfileIcon,
+  FilledProfileIcon,
   ReplyIcon,
   RepostIcon,
   LikeIcon,
   AddToBookmarkIcon,
+  FilledAddedToBookmarkIcon,
   SearchIcon,
   VerifiedBadgeIcon,
   MoreIcon,
@@ -15,4 +20,5 @@ export {
   UploadEmojiIcon,
   FilledLikeIcon,
   FilledRepostIcon,
+  UserRepostedIcon,
 } from "./svgs";
