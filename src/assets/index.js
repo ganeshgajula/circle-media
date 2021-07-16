@@ -13,4 +13,6 @@ export {
   TitleIcon,
   UploadImageIcon,
   UploadEmojiIcon,
+  FilledLikeIcon,
+  FilledRepostIcon,
 } from "./svgs";
