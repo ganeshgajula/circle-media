@@ -13,7 +13,6 @@ export const Home = () => {
           <TitleIcon />
         </div>
         <Posts />
-        <div className="h-3 bg-extra-light-gray"></div>
       </main>
     </div>
   );
