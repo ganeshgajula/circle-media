@@ -59,7 +59,9 @@ export const Posts = () => {
                     <span className="p-2 hover:bg-blue-100 rounded-full">
                       <ReplyIcon />
                     </span>
-                    <span>{post.replies}</span>
+                    <span className={post.replies < 1 && "hidden"}>
+                      {post.replies}
+                    </span>
                   </button>
                   <button
                     className="flex items-center cursor-pointer red-color like-svg"
