@@ -21,4 +21,5 @@ export {
   FilledLikeIcon,
   FilledRepostIcon,
   UserRepostedIcon,
+  CloseIcon,
 } from "./svgs";
