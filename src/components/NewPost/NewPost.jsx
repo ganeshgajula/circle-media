@@ -14,7 +14,7 @@ export const NewPost = () => {
     <div>
       <div className="flex px-3 py-3 border-b border-gray-100">
         <div className="h-12 w-14 mr-4 rounded-full bg-blue-500 text-white flex items-center justify-center">
-          <span className="text-2xl font-bold">GG</span>
+          <span className="text-2xl font-semibold">GG</span>
         </div>
         <div className="flex flex-col w-full">
           <textarea
