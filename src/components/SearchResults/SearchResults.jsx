@@ -11,14 +11,19 @@ export const SearchResults = ({ searchedKeyword }) => {
   );
 
   return (
-    <div className="inline-block w-80 h-auto max-h-96 bg-white shadow-md rounded-lg px-3 pt-2 overflow-y-auto">
+    <div className="inline-block w-80 h-auto max-h-96 bg-white shadow-md rounded-lg overflow-y-auto z-10">
       {searchedKeyword && matchedUsersList.length ? (
         matchedUsersList.map((user) => {
           let initials = "";
-          user.name.split(" ").map((username) => (initials += username[0]));
+          user.name
+            .split(" ")
+            .map((username) => (initials += username[0].toUpperCase()));
 
           return (
-            <div className="flex items-center space-x-4 mb-3">
+            <div
+              key={user.userId}
+              className="flex items-center space-x-4 px-3 py-2 cursor-pointer hover:bg-gray-100"
+            >
               <div className="h-12 w-12 bg-blue-500 text-white rounded-full flex items-center justify-center">
                 <span className="text-xl font-semibold">{initials}</span>
               </div>
@@ -30,7 +35,7 @@ export const SearchResults = ({ searchedKeyword }) => {
           );
         })
       ) : (
-        <p className="font-medium text-gray-500 mb-2">
+        <p className="font-medium text-gray-500 px-3 py-2">
           {!matchedUsersList.length ? "No user found" : "Search Users"}
         </p>
       )}

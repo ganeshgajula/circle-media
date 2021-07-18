@@ -8,7 +8,7 @@ export const SearchBar = () => {
 
   return (
     <div className="flex flex-col space-y-1">
-      <div className="flex items-center mt-2 bg-gray-100 rounded-full">
+      <div className="flex items-center mt-2 bg-extra-light-gray rounded-full">
         <div style={{ display: searchPopOver && "none" }}>
           <SearchIcon />
         </div>
@@ -18,7 +18,7 @@ export const SearchBar = () => {
           value={searchedKeyword}
           onChange={(e) => setSearchedKeyword(e.target.value)}
           onFocus={() => setSearchPopOver(true)}
-          className="bg-gray-100 py-2 px-4 mr-3 text-base rounded-full w-64 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+          className="bg-extra-light-gray py-2 px-4 mr-3 text-base rounded-full w-72 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
           placeholder="Search"
         />
 
