@@ -11,7 +11,7 @@ export const SearchResults = ({ searchedKeyword }) => {
   );
 
   return (
-    <div className="inline-block w-80 h-auto max-h-96 bg-white shadow-md rounded-lg overflow-y-auto z-10">
+    <div className="inline-block w-80 h-auto max-h-96 bg-white shadow-md rounded-lg overflow-y-auto">
       {searchedKeyword && matchedUsersList.length ? (
         matchedUsersList.map((user) => {
           let initials = "";

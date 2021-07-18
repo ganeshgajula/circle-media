@@ -7,8 +7,8 @@ export const SearchBar = () => {
   const [searchedKeyword, setSearchedKeyword] = useState("");
 
   return (
-    <div className="flex flex-col space-y-1">
-      <div className="flex items-center mt-2 bg-extra-light-gray rounded-full">
+    <div className="flex flex-col space-y-1 mt-2 fixed z-10">
+      <div className="flex items-center bg-extra-light-gray rounded-full">
         <div style={{ display: searchPopOver && "none" }}>
           <SearchIcon />
         </div>
