@@ -1,5 +1,5 @@
 import React from "react";
-import { SideNavbar, SearchBar } from "../../components";
+import { SideNavbar, SearchBar, SuggestionBox } from "../../components";
 import { Posts } from "../../features/posts/posts";
 import { TitleIcon } from "../../assets";
 
@@ -16,8 +16,9 @@ export const Home = () => {
         </div>
         <Posts />
       </main>
-      <aside className="ml-4">
+      <aside className="ml-4 w-22">
         <SearchBar />
+        <SuggestionBox />
       </aside>
     </div>
   );
