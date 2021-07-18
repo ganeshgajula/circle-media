@@ -2,8 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+.w-22 {
+  width: 22rem;
+}
+
 .bg-primary {
   background-color: #1da1f2;
+}
+
+.text-primary {
+  color: #1da1f2;
 }
 
 .primary-color:hover {
