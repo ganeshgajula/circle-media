@@ -232,3 +232,12 @@ export const CloseIcon = ({ setSearchPopOver, setSearchedKeyword }) => (
     <path d="M12 2c5.53 0 10 4.47 10 10s-4.47 10-10 10S2 17.53 2 12S6.47 2 12 2m3.59 5L12 10.59L8.41 7L7 8.41L10.59 12L7 15.59L8.41 17L12 13.41L15.59 17L17 15.59L13.41 12L17 8.41L15.59 7z"></path>
   </svg>
 );
+
+export const CloseThickIcon = () => (
+  <svg width="1.1rem" height="1.1rem" viewBox="0 0 24 24">
+    <path
+      d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91z"
+      fill="currentColor"
+    ></path>
+  </svg>
+);

@@ -22,4 +22,5 @@ export {
   FilledRepostIcon,
   UserRepostedIcon,
   CloseIcon,
+  CloseThickIcon,
 } from "./svgs";
