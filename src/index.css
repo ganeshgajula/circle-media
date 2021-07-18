@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+.w-44 {
+  width: 44%;
+}
+
+.w-17 {
+  width: 17.5rem;
+}
+
 .w-22 {
   width: 22rem;
 }
