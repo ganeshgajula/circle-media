@@ -54,7 +54,7 @@ export const Posts = () => {
                   <span className="gray-text">• 1h</span>
                 </div>
                 <article className="mb-1">{post.postContent}</article>
-                <div className="flex space-x-24 items-center">
+                <div className="flex space-x-28 xl:space-x-24 items-center">
                   <button className="flex items-center cursor-pointer blue-color reply-svg">
                     <span className="p-2 hover:bg-blue-100 rounded-full">
                       <ReplyIcon />
