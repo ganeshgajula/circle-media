@@ -23,4 +23,5 @@ export {
   UserRepostedIcon,
   CloseIcon,
   CloseThickIcon,
+  NavSearchIcon,
 } from "./svgs";
