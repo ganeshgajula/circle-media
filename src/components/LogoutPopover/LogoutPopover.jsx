@@ -3,7 +3,7 @@ import { CloseThickIcon } from "../../assets";
 
 export const LogoutPopover = ({ setShowLogoutPopover }) => {
   return (
-    <div className="fixed bottom-24 w-72 h-32 bg-white shadow-xl rounded-xl">
+    <div className="fixed sm:bottom-24 md:bottom-28 lg:bottom-24 w-72 h-32 bg-white shadow-xl rounded-xl z-10">
       <div className="flex justify-between">
         <div className="flex items-center space-x-2 pl-4 py-3 border-b border-gray-100">
           <div className="h-12 w-12 bg-blue-500 text-white rounded-full flex items-center justify-center">

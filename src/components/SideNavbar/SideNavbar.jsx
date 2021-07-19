@@ -60,7 +60,7 @@ export const SideNavbar = () => {
         <LogoutPopover setShowLogoutPopover={setShowLogoutPopover} />
       )}
       <div
-        className="flex items-center mt-64 px-3 py-3 cursor-pointer xl:hover:bg-blue-50 rounded-full"
+        className="flex items-center sm:mt-52 md:mt-48 lg:mt-64 px-3 py-3 cursor-pointer xl:hover:bg-blue-50 rounded-full"
         onClick={() => setShowLogoutPopover(true)}
       >
         <span className="text-2xl mr-2 bg-blue-500 text-white px-1.5 py-1.5 rounded-full ">
