@@ -22,8 +22,6 @@ export const Posts = () => {
   const feed = useSelector((state) => state.feed);
   const dispatch = useDispatch();
 
-  // md:space-x-20 xl:space-x-24
-
   return (
     <>
       <NewPost />
@@ -56,8 +54,8 @@ export const Posts = () => {
                   <span className="gray-text">• 1h</span>
                 </div>
                 <article className="mb-1">{post.postContent}</article>
-                <div className="flex relative items-center py-4">
-                  <button className="flex absolute -left-2 items-center cursor-pointer blue-color reply-svg">
+                <div className="flex items-center justify-between mr-4 sm:mr-7 md:mr-10 lg:mr-14">
+                  <button className="flex items-center cursor-pointer blue-color reply-svg">
                     <span className="p-2 hover:bg-blue-100 rounded-full">
                       <ReplyIcon />
                     </span>
@@ -66,7 +64,7 @@ export const Posts = () => {
                     </span>
                   </button>
                   <button
-                    className="flex absolute left-16 sm:left-28 items-center cursor-pointer red-color like-svg"
+                    className="flex items-center cursor-pointer red-color like-svg"
                     onClick={() => dispatch(likeButtonPressed({ post }))}
                   >
                     <span className="p-2 hover:bg-red-100 rounded-full">
@@ -88,7 +86,7 @@ export const Posts = () => {
                     </span>
                   </button>
                   <button
-                    className="flex absolute left-36 sm:left-52 items-center cursor-pointer green-color repost-svg"
+                    className="flex items-center cursor-pointer green-color repost-svg"
                     onClick={() => dispatch(repostButtonPressed({ post }))}
                   >
                     <span className="p-2 hover:bg-green-100 rounded-full">
@@ -110,7 +108,7 @@ export const Posts = () => {
                     </span>
                   </button>
                   <button
-                    className="flex absolute left-56 sm:left-80 cursor-pointer yellow-color bookmark-svg"
+                    className="flex cursor-pointer yellow-color bookmark-svg"
                     onClick={() => dispatch(bookmarkButtonPressed({ post }))}
                   >
                     <span className="p-2 hover:bg-yellow-100 rounded-full">
