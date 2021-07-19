@@ -13,7 +13,7 @@ export const SuggestionBox = () => {
     : showOnlyFiveProfiles;
 
   return (
-    <div className="mt-12 flex flex-col bg-blue-500 w-22 bg-extra-light-gray rounded-2xl fixed top-24">
+    <div className="mt-12 flex flex-col bg-blue-500 lg:w-30 xl:w-22 bg-extra-light-gray rounded-2xl fixed top-24">
       <div className="font-extrabold text-gray-900 px-3 py-2 text-xl border-b border-gray-200 ">
         Who to follow
       </div>

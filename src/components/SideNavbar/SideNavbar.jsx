@@ -4,6 +4,7 @@ import initialLogo from "../../assets/c-logo.png";
 import { Link } from "react-router-dom";
 import {
   HomeIcon,
+  NavSearchIcon,
   NotificationIcon,
   BookmarkIcon,
   ProfileIcon,
@@ -29,23 +30,26 @@ export const SideNavbar = () => {
         />
       </Link>
       <ul>
-        <li className="flex items-center px-3 py-3  cursor-pointer hover:bg-blue-50 rounded-full primary-color nav-svg">
+        <li className="flex items-center px-3 py-3  cursor-pointer xl:hover:bg-blue-50 rounded-full primary-color nav-svg">
           <HomeIcon />
           <span className="ml-4 font-bold text-xl hidden xl:block">Home</span>
         </li>
-        <li className="flex items-center px-3 py-3 cursor-pointer hover:bg-blue-50 rounded-full primary-color nav-svg">
+        <li className="flex items-center px-3 py-3 lg:hidden cursor-pointer xl:hover:bg-blue-50 rounded-full primary-color nav-svg">
+          <NavSearchIcon />
+        </li>
+        <li className="flex items-center px-3 py-3 cursor-pointer  xl:hover:bg-blue-50 rounded-full primary-color nav-svg">
           <NotificationIcon />
           <span className="ml-4 font-bold text-xl hidden xl:block">
             Notifications
           </span>
         </li>
-        <li className="flex items-center px-3 py-3 cursor-pointer hover:bg-blue-50 rounded-full primary-color nav-svg">
+        <li className="flex items-center px-3 py-3 cursor-pointer xl:hover:bg-blue-50 rounded-full primary-color nav-svg">
           <BookmarkIcon />
           <span className="ml-4 font-bold text-xl hidden xl:block">
             Bookmarks
           </span>
         </li>
-        <li className="flex items-center px-3 py-3 cursor-pointer hover:bg-blue-50 rounded-full primary-color nav-svg">
+        <li className="flex items-center px-3 py-3 cursor-pointer xl:hover:bg-blue-50 rounded-full primary-color nav-svg">
           <ProfileIcon />
           <span className="ml-4 font-bold text-xl hidden xl:block">
             Profile
@@ -56,7 +60,7 @@ export const SideNavbar = () => {
         <LogoutPopover setShowLogoutPopover={setShowLogoutPopover} />
       )}
       <div
-        className="flex items-center mt-64 px-3 py-3 cursor-pointer hover:bg-blue-50 rounded-full"
+        className="flex items-center mt-64 px-3 py-3 cursor-pointer xl:hover:bg-blue-50 rounded-full"
         onClick={() => setShowLogoutPopover(true)}
       >
         <span className="text-2xl mr-2 bg-blue-500 text-white px-1.5 py-1.5 rounded-full ">
