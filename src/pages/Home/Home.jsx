@@ -16,11 +16,13 @@ export const Home = () => {
           <SideNavbar />
         </div>
         <main className="w-full md:w-7/12 lg:w-6/12 xl:w-5/12 min-h-screen h-auto border-l border-r border-gray-100 sm:ml-24 md:ml-36 lg:ml-36 xl:ml-80 flex-wrap">
-          <div className="flex justify-between items-center px-3 py-3 border-b border-gray-100">
+          <div className="flex justify-between items-center px-3 py-3 border-b border-gray-100 fixed top-0 z-10 bg-white w-full">
             <span className="text-xl font-extrabold">Home</span>
             <TitleIcon />
           </div>
-          <Posts />
+          <div className="pt-12">
+            <Posts />
+          </div>
         </main>
         <aside className="ml-8 hidden lg:w-1/4 lg:block xl:w-22">
           <SearchBar />
