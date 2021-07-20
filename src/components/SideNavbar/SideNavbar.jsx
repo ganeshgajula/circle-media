@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../assets/logo.png";
-import initialLogo from "../../assets/c-logo.png";
+import mobileLogo from "../../assets/mobile-logo.png";
 import { Link } from "react-router-dom";
 import {
   HomeIcon,
@@ -24,7 +24,7 @@ export const SideNavbar = () => {
           className="h-12 w-36 mb-3 hidden xl:block"
         />
         <img
-          src={initialLogo}
+          src={mobileLogo}
           alt="brand-logo"
           className="h-11 w-10 mb-3 mt-2 block xl:hidden"
         />
