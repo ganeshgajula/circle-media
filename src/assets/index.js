@@ -24,4 +24,8 @@ export {
   CloseIcon,
   CloseThickIcon,
   NavSearchIcon,
+  CloseThinIcon,
+  ProfileSmallIcon,
+  BookmarkSmallIcon,
+  LogoutIcon,
 } from "./svgs";
