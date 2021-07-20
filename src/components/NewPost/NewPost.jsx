@@ -46,12 +46,16 @@ export const NewPost = () => {
                 {postContent.length}/ {maxCharacterLimit}
               </div>
               <button
-                className="bg-primary text-white text-lg font-bold px-4 py-1 rounded-full"
+                className={
+                  !postContent
+                    ? "bg-blue-300 text-white text-lg font-bold px-4 py-1 rounded-full cursor-auto"
+                    : "bg-primary text-white text-lg font-bold px-4 py-1 rounded-full "
+                }
                 onClick={() => {
                   dispatch(newPostCreated(postContent));
                   setPostContent("");
                 }}
-                style={{ opacity: !postContent ? 0.5 : 1 }}
+                // style={{ opacity: !postContent ? 0.5 : 1 }}
                 disabled={!postContent}
               >
                 Post
