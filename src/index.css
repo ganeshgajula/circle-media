@@ -93,3 +93,7 @@
 .bg-extra-light-gray {
   background-color: #f5f8fa;
 }
+
+.modal-bg {
+  background-color: rgba(0, 0, 0, 0.4);
+}
