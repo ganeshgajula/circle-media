@@ -1,7 +1,10 @@
 import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import { Home, Notifications } from "./pages";
+import { Notifications } from "./pages";
+import { Home } from "./features/posts/Home";
+import { SinglePostPage } from "./features/posts/SinglePostPage";
+import { Profile } from "./features/posts/Profile";
 import {
   SideNavbar,
   SearchBar,
@@ -20,6 +23,8 @@ function App() {
           <main className="w-full md:w-7/12 lg:w-6/12 xl:w-5/12 min-h-screen h-auto border-l border-r border-gray-100 sm:ml-24 md:ml-36 lg:ml-36 xl:ml-80">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/posts/:postId" element={<SinglePostPage />} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="/notifications" element={<Notifications />} />
             </Routes>
           </main>

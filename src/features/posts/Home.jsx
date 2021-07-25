@@ -1,5 +1,5 @@
 import React from "react";
-import { Posts } from "../../features/posts/posts";
+import { Posts } from "../../features/posts/Posts";
 import { TitleIcon } from "../../assets";
 
 export const Home = () => {

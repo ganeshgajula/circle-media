@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { UploadImageIcon, UploadEmojiIcon } from "../../assets";
-import { newPostCreated } from "../../features/posts/postSlice";
+import { newPostCreated } from "./postSlice";
 import { useDispatch } from "react-redux";
 
 export const NewPost = () => {
