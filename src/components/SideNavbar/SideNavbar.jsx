@@ -17,7 +17,7 @@ export const SideNavbar = () => {
 
   return (
     <nav className="flex flex-col h-screen xl:w-17 px-3 py-3">
-      <Link to="/home">
+      <Link to="/">
         <img
           src={logo}
           alt="brand-logo"
@@ -30,31 +30,41 @@ export const SideNavbar = () => {
         />
       </Link>
       <ul>
-        <li className="flex items-center px-3 py-3  cursor-pointer xl:hover:bg-blue-50 rounded-full primary-color nav-svg">
-          <HomeIcon />
-          <span className="ml-4 font-bold text-xl hidden xl:block">Home</span>
-        </li>
-        <li className="flex items-center px-3 py-3 lg:hidden cursor-pointer xl:hover:bg-blue-50 rounded-full primary-color nav-svg">
-          <NavSearchIcon />
-        </li>
-        <li className="flex items-center px-3 py-3 cursor-pointer  xl:hover:bg-blue-50 rounded-full primary-color nav-svg">
-          <NotificationIcon />
-          <span className="ml-4 font-bold text-xl hidden xl:block">
-            Notifications
-          </span>
-        </li>
-        <li className="flex items-center px-3 py-3 cursor-pointer xl:hover:bg-blue-50 rounded-full primary-color nav-svg">
-          <BookmarkIcon />
-          <span className="ml-4 font-bold text-xl hidden xl:block">
-            Bookmarks
-          </span>
-        </li>
-        <li className="flex items-center px-3 py-3 cursor-pointer xl:hover:bg-blue-50 rounded-full primary-color nav-svg">
-          <ProfileIcon />
-          <span className="ml-4 font-bold text-xl hidden xl:block">
-            Profile
-          </span>
-        </li>
+        <Link to="/">
+          <li className="flex items-center px-3 py-3  cursor-pointer xl:hover:bg-blue-50 rounded-full primary-color nav-svg">
+            <HomeIcon />
+            <span className="ml-4 font-bold text-xl hidden xl:block">Home</span>
+          </li>
+        </Link>
+        <Link to="/search">
+          <li className="flex items-center px-3 py-3 lg:hidden cursor-pointer xl:hover:bg-blue-50 rounded-full primary-color nav-svg">
+            <NavSearchIcon />
+          </li>
+        </Link>
+        <Link to="/notifications">
+          <li className="flex items-center px-3 py-3 cursor-pointer  xl:hover:bg-blue-50 rounded-full primary-color nav-svg">
+            <NotificationIcon />
+            <span className="ml-4 font-bold text-xl hidden xl:block">
+              Notifications
+            </span>
+          </li>
+        </Link>
+        <Link to="/bookmarks">
+          <li className="flex items-center px-3 py-3 cursor-pointer xl:hover:bg-blue-50 rounded-full primary-color nav-svg">
+            <BookmarkIcon />
+            <span className="ml-4 font-bold text-xl hidden xl:block">
+              Bookmarks
+            </span>
+          </li>
+        </Link>
+        <Link to="/profile">
+          <li className="flex items-center px-3 py-3 cursor-pointer xl:hover:bg-blue-50 rounded-full primary-color nav-svg">
+            <ProfileIcon />
+            <span className="ml-4 font-bold text-xl hidden xl:block">
+              Profile
+            </span>
+          </li>
+        </Link>
       </ul>
       {showLogoutPopover && (
         <LogoutPopover setShowLogoutPopover={setShowLogoutPopover} />
