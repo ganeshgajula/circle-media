@@ -1,4 +1,4 @@
-import { createSlice, current, nanoid } from "@reduxjs/toolkit";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 const initialState = {
   posts: [
@@ -29,8 +29,6 @@ export const postsSlice = createSlice({
         reposts: 0,
         bookmarks: 0,
       });
-
-      console.log(current(state));
     },
     likeButtonPressed: (state, action) => {
       const isPostLiked = state.likedPosts.find(
