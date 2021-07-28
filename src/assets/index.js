@@ -28,4 +28,5 @@ export {
   ProfileSmallIcon,
   BookmarkSmallIcon,
   LogoutIcon,
+  LeftArrow,
 } from "./svgs";
