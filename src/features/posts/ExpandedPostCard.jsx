@@ -17,6 +17,7 @@ import {
   repostButtonPressed,
   bookmarkButtonPressed,
 } from "./postSlice";
+import { TimeAndDateInfo } from "./TimeAndDateInfo";
 
 export const ExpandedPostCard = ({ post }) => {
   const feed = useSelector((state) => state.feed);
@@ -26,9 +27,6 @@ export const ExpandedPostCard = ({ post }) => {
     <div
       key={post.postId}
       className="flex flex-col px-3 pt-3 pb-1 border-b border-gray-100"
-      onClick={() => {
-        navigate(`/posts/${post.postId}`);
-      }}
     >
       <div
         className={`${
@@ -43,20 +41,11 @@ export const ExpandedPostCard = ({ post }) => {
       <div className="flex items-center">
         <div
           className="bg-blue-500 mr-3 text-white h-12 w-12 rounded-full flex items-center justify-center"
-          onClick={(e) => {
-            e.stopPropagation();
-            navigate("/profile");
-          }}
+          onClick={() => navigate("/profile")}
         >
           <span className="text-2xl font-semibold">GG</span>
         </div>
-        <div
-          className="flex flex-col"
-          onClick={(e) => {
-            e.stopPropagation();
-            navigate("/profile");
-          }}
-        >
+        <div className="flex flex-col" onClick={() => navigate("/profile")}>
           <div className="font-bold text-base hover:underline">
             Ganesh Gajula
           </div>
@@ -66,7 +55,7 @@ export const ExpandedPostCard = ({ post }) => {
       <article className="my-4 ml-1 text-xl font-medium">
         {post.postContent}
       </article>
-
+      <TimeAndDateInfo timestamp={post.date} />
       <div className="flex items-center justify-between mr-4 sm:mr-7 md:mr-10 lg:mr-14">
         <button className="flex items-center cursor-pointer blue-color reply-svg">
           <span className="p-2 hover:bg-blue-100 rounded-full">
@@ -76,10 +65,7 @@ export const ExpandedPostCard = ({ post }) => {
         </button>
         <button
           className="flex items-center cursor-pointer red-color like-svg"
-          onClick={(e) => {
-            e.stopPropagation();
-            dispatch(likeButtonPressed({ post }));
-          }}
+          onClick={() => dispatch(likeButtonPressed({ post }))}
         >
           <span className="p-2 hover:bg-red-100 rounded-full">
             {!isPostPresent(feed.likedPosts, post.postId) ? (
@@ -101,10 +87,7 @@ export const ExpandedPostCard = ({ post }) => {
         </button>
         <button
           className="flex items-center cursor-pointer green-color repost-svg"
-          onClick={(e) => {
-            e.stopPropagation();
-            dispatch(repostButtonPressed({ post }));
-          }}
+          onClick={() => dispatch(repostButtonPressed({ post }))}
         >
           <span className="p-2 hover:bg-green-100 rounded-full">
             {!isPostPresent(feed.repostedPosts, post.postId) ? (
@@ -126,10 +109,7 @@ export const ExpandedPostCard = ({ post }) => {
         </button>
         <button
           className="flex cursor-pointer yellow-color bookmark-svg"
-          onClick={(e) => {
-            e.stopPropagation();
-            dispatch(bookmarkButtonPressed({ post }));
-          }}
+          onClick={() => dispatch(bookmarkButtonPressed({ post }))}
         >
           <span className="p-2 hover:bg-yellow-100 rounded-full">
             {!isPostPresent(feed.bookmarkedPosts, post.postId) ? (

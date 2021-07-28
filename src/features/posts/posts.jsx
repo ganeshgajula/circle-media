@@ -12,7 +12,7 @@ export const Posts = () => {
       <div className="h-3 bg-extra-light-gray"></div>
       <div>
         {feed.posts.map((post) => (
-          <PostCard post={post} />
+          <PostCard post={post} key={post.postId} />
         ))}
       </div>
     </>

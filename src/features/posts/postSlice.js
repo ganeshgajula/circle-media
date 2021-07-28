@@ -9,6 +9,7 @@ const initialState = {
       replies: 0,
       reposts: 0,
       bookmarks: 0,
+      date: new Date().toISOString(),
     },
   ],
   likedPosts: [],

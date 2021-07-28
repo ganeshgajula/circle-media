@@ -17,6 +17,7 @@ import {
   repostButtonPressed,
   bookmarkButtonPressed,
 } from "./postSlice";
+import { TimeAgo } from "./TimeAgo";
 
 export const PostCard = ({ post }) => {
   const feed = useSelector((state) => state.feed);
@@ -24,7 +25,6 @@ export const PostCard = ({ post }) => {
   const navigate = useNavigate();
   return (
     <div
-      key={post.postId}
       className="flex flex-col px-3 pt-3 pb-1 border-b border-gray-100 cursor-pointer"
       onClick={() => {
         navigate(`/posts/${post.postId}`);
@@ -62,9 +62,11 @@ export const PostCard = ({ post }) => {
               <span className="font-bold text-base hover:underline">
                 Ganesh Gajula
               </span>
-              <span className="gray-text">@ganeshgajula_</span>
+              <span className="gray-text ml-1">@ganeshgajula_</span>
             </span>
-            <span className="gray-text">• 1h</span>
+            <span className="gray-text">
+              • <TimeAgo timestamp={post.date} />
+            </span>
           </div>
 
           <article className="mb-1 text-base">{post.postContent}</article>
