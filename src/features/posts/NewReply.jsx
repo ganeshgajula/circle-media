@@ -46,7 +46,6 @@ export const NewReply = ({ postId }) => {
               dispatch(
                 replyButtonPressed({
                   postId,
-                  userInitials: "TP",
                   name: "Tanay Pratap",
                   username: "tanaypratap",
                   date: new Date().toISOString(),

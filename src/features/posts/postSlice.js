@@ -13,11 +13,10 @@ const initialState = {
       allReplies: [
         {
           id: nanoid(),
-          userInitials: "GG",
           name: "Ganesh Gajula",
           username: "ganeshgajula_",
           date: new Date().toISOString(),
-          replyText: "Manisha's new iphone is dope",
+          replyText: "Another sample check post",
         },
       ],
     },
@@ -111,7 +110,6 @@ export const postsSlice = createSlice({
 
       state.posts[postIndex].allReplies.push({
         id: nanoid(),
-        userInitials: action.payload.userInitials,
         name: action.payload.name,
         username: action.payload.username,
         date: action.payload.date,
