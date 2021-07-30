@@ -1,9 +1,11 @@
 import React, { useState, useRef } from "react";
+import { replyButtonPressed } from "./postSlice";
+import { useDispatch } from "react-redux";
 
-export const NewReply = () => {
+export const NewReply = ({ postId }) => {
   const [replyContent, setReplyContent] = useState("");
   const inputEl = useRef(null);
-
+  const dispatch = useDispatch();
   const maxCharacterLimit = 280;
 
   return (
@@ -40,6 +42,19 @@ export const NewReply = () => {
                 ? "bg-blue-300 text-white text-lg font-bold px-4 py-1 rounded-full cursor-auto"
                 : "bg-primary text-white text-lg font-bold px-4 py-1 rounded-full"
             } ml-4 text-xs`}
+            onClick={() => {
+              dispatch(
+                replyButtonPressed({
+                  postId,
+                  userInitials: "TP",
+                  name: "Tanay Pratap",
+                  username: "tanaypratap",
+                  date: new Date().toISOString(),
+                  replyText: replyContent,
+                })
+              );
+              setReplyContent("");
+            }}
           >
             Reply
           </button>

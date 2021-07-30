@@ -19,6 +19,7 @@ import {
 } from "./postSlice";
 import { TimeAndDateInfo } from "./TimeAndDateInfo";
 import { NewReply } from "./NewReply";
+import { PostReplies } from "./PostReplies";
 
 export const ExpandedPostCard = ({ post }) => {
   const feed = useSelector((state) => state.feed);
@@ -126,10 +127,11 @@ export const ExpandedPostCard = ({ post }) => {
           <p className="text-gray-500 ml-16">
             Replying to <span className="text-primary">@ganeshgajula_</span>
           </p>
-          <NewReply />
+          <NewReply postId={post.postId} />
         </div>
       </div>
       <div className="h-3 bg-extra-light-gray"></div>
+      <PostReplies replies={post.allReplies} />
     </div>
   );
 };

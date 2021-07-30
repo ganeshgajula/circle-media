@@ -10,6 +10,16 @@ const initialState = {
       reposts: 0,
       bookmarks: 0,
       date: new Date().toISOString(),
+      allReplies: [
+        {
+          id: nanoid(),
+          userInitials: "GG",
+          name: "Ganesh Gajula",
+          username: "ganeshgajula_",
+          date: new Date().toISOString(),
+          replyText: "Manisha's new iphone is dope",
+        },
+      ],
     },
   ],
   likedPosts: [],
@@ -29,6 +39,8 @@ export const postsSlice = createSlice({
         replies: 0,
         reposts: 0,
         bookmarks: 0,
+        date: new Date().toISOString(),
+        allReplies: [],
       });
     },
     likeButtonPressed: (state, action) => {
@@ -92,6 +104,20 @@ export const postsSlice = createSlice({
 
       !isPostBookmarked ? addToBookmarks() : removeFromBookmarks();
     },
+    replyButtonPressed: (state, action) => {
+      const postIndex = state.posts.findIndex(
+        (post) => post.postId === action.payload.postId
+      );
+
+      state.posts[postIndex].allReplies.push({
+        id: nanoid(),
+        userInitials: action.payload.userInitials,
+        name: action.payload.name,
+        username: action.payload.username,
+        date: action.payload.date,
+        replyText: action.payload.replyText,
+      });
+    },
   },
 });
 
@@ -100,6 +126,7 @@ export const {
   likeButtonPressed,
   repostButtonPressed,
   bookmarkButtonPressed,
+  replyButtonPressed,
 } = postsSlice.actions;
 
 export default postsSlice.reducer;
