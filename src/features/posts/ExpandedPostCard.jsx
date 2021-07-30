@@ -56,7 +56,7 @@ export const ExpandedPostCard = ({ post }) => {
         {post.postContent}
       </article>
       <TimeAndDateInfo timestamp={post.date} />
-      <div className="flex items-center justify-between mr-4 sm:mr-7 md:mr-10 lg:mr-14">
+      <div className="flex items-center justify-between mr-4 sm:mr-7 md:mr-10 lg:mr-14 py-2">
         <button className="flex items-center cursor-pointer blue-color reply-svg">
           <span className="p-2 hover:bg-blue-100 rounded-full">
             <ReplyIcon />

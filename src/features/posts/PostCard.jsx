@@ -65,7 +65,7 @@ export const PostCard = ({ post }) => {
               <span className="gray-text ml-1">@ganeshgajula_</span>
             </span>
             <span className="gray-text">
-              • <TimeAgo timestamp={post.date} />
+              · <TimeAgo timestamp={post.date} />
             </span>
           </div>
 
