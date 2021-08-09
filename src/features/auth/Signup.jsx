@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { signUpUser } from "./authSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Signup = () => {
   const [firstname, setFirstName] = useState("");
@@ -8,14 +10,22 @@ export const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { status } = useSelector((state) => state.auth);
 
-  const signUpHandler = async (e) => {
+  const signUpHandler = (e) => {
     e.preventDefault();
-    console.log("Signup successful");
+    dispatch(signUpUser({ firstname, lastname, username, email, password }));
   };
 
   const allFieldsEntered =
     firstname && lastname && username && email && password;
+
+  useEffect(() => {
+    if (status === "fulfilled") {
+      navigate("/login");
+    }
+  }, [status, navigate]);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen">
@@ -70,7 +80,7 @@ export const Signup = () => {
           }`}
           disabled={!allFieldsEntered}
         >
-          Sign Up
+          {status === "loading" ? "Signing up.." : "Sign Up"}
         </button>
       </form>
       <p>
@@ -79,7 +89,7 @@ export const Signup = () => {
           onClick={() => navigate("/login")}
           className="text-blue-600 pl-1"
         >
-          Login
+          Log in
         </button>
       </p>
     </div>
