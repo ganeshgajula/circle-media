@@ -1,18 +1,35 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "./authSlice";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { state } = useLocation();
+  const dispatch = useDispatch();
+  const allFieldsEntered = email && password;
+  const { isUserLoggedIn, status, currentUser } = useSelector(
+    (state) => state.auth
+  );
 
-  const loginHandler = async (e) => {
+  const loginHandler = (e) => {
     e.preventDefault();
-    console.log("Login successful");
+    dispatch(loginUser({ email, password }));
   };
 
-  const allFieldsEntered = email && password;
+  useEffect(
+    () => {
+      if (isUserLoggedIn) {
+        navigate(state?.from ? state.from : "/");
+      }
+    },
+    // eslint-disable-next-line
+    [isUserLoggedIn]
+  );
 
+  console.log(currentUser);
   return (
     <div className="flex flex-col items-center h-screen mt-10">
       <h1 className="text-3xl font-bold mb-2">Log in to Circle Media</h1>
@@ -41,7 +58,7 @@ export const Login = () => {
           }`}
           disabled={!allFieldsEntered}
         >
-          Login
+          {status === "loading" ? "Logging in..." : "Login"}
         </button>
       </form>
       <p>
