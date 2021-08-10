@@ -6,7 +6,7 @@ export const PrivateRoute = ({ path, ...props }) => {
   const { isUserLoggedIn } = useSelector((state) => state.auth);
 
   return isUserLoggedIn ? (
-    <Route {...props} />
+    <Route {...props} path={path}/>
   ) : (
     <Navigate to="/login" replace state={{ from: path }} />
   );
