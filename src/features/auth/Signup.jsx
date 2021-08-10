@@ -66,7 +66,7 @@ export const Signup = () => {
         />
 
         <input
-          type="text"
+          type="password"
           placeholder="Enter password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}

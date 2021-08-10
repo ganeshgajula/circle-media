@@ -45,7 +45,7 @@ export const Login = () => {
           className="p-2 border rounded-md"
         />
         <input
-          type="text"
+          type="password"
           placeholder="Enter password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
