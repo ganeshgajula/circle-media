@@ -33,16 +33,32 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const initializeUser = createAsyncThunk("auth/initializeUser",async(email,thunkAPI) => {
+  try{
+    const response = await axios.get(`http://localhost:4000/users/${email}/user`);
+    return response.data;
+  }catch(error){
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+})
+
 const initialState = {
   isUserLoggedIn: false,
   status: "idle",
-  currentUser: JSON.parse(localStorage?.getItem("userCredentials")) || null,
+  currentUser: null,
 };
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    logout:(state) => {
+      state.isUserLoggedIn = false;
+      state.status="idle";
+      state.currentUser = null;
+      localStorage?.removeItem("userCredentials");
+    }
+  },
   extraReducers: {
     [signUpUser.pending]: (state) => {
       state.status = "loading";
@@ -79,7 +95,8 @@ export const authSlice = createSlice({
           username: action.payload.username,
           firstname: action.payload.firstname,
           lastname: action.payload.lastname,
-          email: action.payload.email,
+          email:action.payload.email,
+          isUserLoggedIn:true,
         })
       );
     },
@@ -90,7 +107,13 @@ export const authSlice = createSlice({
         autoClose: 2200,
       });
     },
+    [initializeUser.fulfilled]: (state,action) => {
+      state.currentUser = action.payload.user;
+      state.isUserLoggedIn = true;
+    }
   },
 });
+
+export const {logout} = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,8 +15,19 @@ import {
   PrivateRoute,
 } from "./components";
 import { Signup, Login } from "./features/auth";
+import {initializeUser} from "./features/auth/authSlice"
+import {useDispatch} from "react-redux"
 
 function App() {
+  const dispatch = useDispatch()
+  const loginStatus = JSON.parse(localStorage.getItem("userCredentials"))
+
+  useEffect(() => {
+    if(loginStatus){
+      dispatch(initializeUser(loginStatus?.email));
+    }
+  },[dispatch,loginStatus]);
+
   return (
     <div>
       <ToastContainer />
