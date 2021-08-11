@@ -11,7 +11,6 @@ export const SinglePostPage = () => {
   );
   const navigate = useNavigate();
 
-  console.log(post);
   return post ? (
     <div>
       <div className="flex items-center px-3 py-2 border-b border-gray-100 sticky top-0 w-full bg-white cursor-pointer">
