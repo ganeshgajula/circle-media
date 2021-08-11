@@ -11,9 +11,14 @@ import {
   MoreIcon,
 } from "../../assets";
 import { LogoutPopover } from "..";
+import { useSelector } from "react-redux";
 
 export const SideNavbar = () => {
   const [showLogoutPopover, setShowLogoutPopover] = useState(false);
+  const {currentUser} = useSelector(state => state.auth);
+  const firstNameInitial = currentUser?.firstname[0];
+  const lastNameInitial = currentUser?.lastname[0];
+  const userInitials = `${firstNameInitial}${lastNameInitial}`;
 
   return (
     <nav className="flex flex-col h-screen xl:w-17 px-3 py-3">
@@ -69,19 +74,21 @@ export const SideNavbar = () => {
       {showLogoutPopover && (
         <LogoutPopover setShowLogoutPopover={setShowLogoutPopover} />
       )}
-      <div
-        className="flex items-center sm:mt-52 md:mt-48 lg:mt-64 px-3 py-3 cursor-pointer xl:hover:bg-blue-50 rounded-full"
-        onClick={() => setShowLogoutPopover(true)}
-      >
-        <span className="text-2xl mr-2 bg-blue-500 text-white px-1.5 py-1.5 rounded-full ">
-          GG
-        </span>
-        <span className="mr-6 space-y-0 hidden flex-col xl:flex">
-          <p className="font-bold">Ganesh Gajula</p>
-          <p>@ganeshgajula_</p>
-        </span>
-        <div className="hidden xl:block">
-          <MoreIcon />
+      <div className="fixed bottom-12">
+        <div
+          className="flex items-center px-3 py-3 cursor-pointer xl:hover:bg-blue-50 rounded-full"
+          onClick={() => setShowLogoutPopover(true)}
+          >
+          <div className="h-12 w-12 mr-4 rounded-full bg-blue-500 text-white flex items-center justify-center">
+            <span className="text-xl font-semibold">{userInitials}</span>
+          </div>
+          <span className="mr-6 space-y-0 hidden flex-col xl:flex">
+            <p className="font-bold">{currentUser?.firstname} {currentUser?.lastname}</p>
+            <p>@{currentUser?.username}</p>
+          </span>
+          <div className="hidden xl:block">
+            <MoreIcon />
+          </div>
         </div>
       </div>
     </nav>

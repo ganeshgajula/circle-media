@@ -1,20 +1,23 @@
 import React, { useRef, useState } from "react";
 import { UploadImageIcon, UploadEmojiIcon } from "../../assets";
 import { newPostCreated } from "./postSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export const NewPost = () => {
   const maxCharacterLimit = 280;
   const inputEl = useRef(null);
   const [postContent, setPostContent] = useState("");
-
   const dispatch = useDispatch();
+  const {currentUser} = useSelector(state => state.auth);
+  const firstNameInitial = currentUser?.firstname[0];
+  const lastNameInitial = currentUser?.lastname[0];
+  const userInitials = `${firstNameInitial}${lastNameInitial}`;
 
   return (
     <div>
       <div className="flex px-3 py-3 border-b border-gray-100">
         <div className="h-12 w-14 mr-4 rounded-full bg-blue-500 text-white flex items-center justify-center">
-          <span className="text-2xl font-semibold">GG</span>
+          <span className="text-xl font-semibold">{userInitials}</span>
         </div>
         <div className="flex flex-col w-full">
           <textarea
@@ -55,7 +58,6 @@ export const NewPost = () => {
                   dispatch(newPostCreated(postContent));
                   setPostContent("");
                 }}
-                // style={{ opacity: !postContent ? 0.5 : 1 }}
                 disabled={!postContent}
               >
                 Post
