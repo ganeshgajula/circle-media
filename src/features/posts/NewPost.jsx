@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { UploadImageIcon, UploadEmojiIcon } from "../../assets";
-import { newPostCreated } from "./postSlice";
+import { createNewPost } from "./postSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export const NewPost = () => {
@@ -55,7 +55,7 @@ export const NewPost = () => {
                     : "bg-primary text-white text-lg font-bold px-4 py-1 rounded-full "
                 }
                 onClick={() => {
-                  dispatch(newPostCreated(postContent));
+                  dispatch(createNewPost({userId:currentUser._id,postContent}));
                   setPostContent("");
                 }}
                 disabled={!postContent}
