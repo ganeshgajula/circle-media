@@ -1,2 +1,2 @@
-export const isPostPresent = (array, id) =>
-  array.find((post) => post.postId === id);
+export const isUserPresent = (array, id) =>
+  array.find((user) => user?._id === id);

@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { isPostPresent } from "../../utils/utils";
+import { isUserPresent } from "../../utils/utils";
 import {
   ReplyIcon,
   RepostIcon,
@@ -14,25 +14,30 @@ import {
 } from "../../assets";
 import {
   likeButtonPressed,
-  repostButtonPressed,
+  retweetButtonPressed,
   bookmarkButtonPressed,
 } from "./postSlice";
 import { TimeAgo } from "./TimeAgo";
 
 export const PostCard = ({ post }) => {
-  const feed = useSelector((state) => state.feed);
+  const {currentUser} = useSelector(state => state.auth)
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const firstNameInitial = currentUser?.firstname[0];
+  const lastNameInitial = currentUser?.lastname[0];
+  const userInitials = `${firstNameInitial}${lastNameInitial}`;
+
   return (
     <div
       className="flex flex-col px-3 pt-3 pb-1 border-b border-gray-100 cursor-pointer"
       onClick={() => {
-        navigate(`/posts/${post.postId}`);
+        navigate(`/posts/${post._id}`);
       }}
     >
       <div
         className={`${
-          !isPostPresent(feed.repostedPosts, post.postId) && "hidden"
+          !isUserPresent(post.retweetedBy,currentUser._id) && "hidden"
         } flex items-center space-x-2 pb-2 ml-8`}
       >
         <UserRepostedIcon />
@@ -48,7 +53,7 @@ export const PostCard = ({ post }) => {
             navigate("/profile");
           }}
         >
-          <span className="text-2xl font-semibold">GG</span>
+          <span className="text-2xl font-semibold">{userInitials}</span>
         </div>
         <div className="flex flex-col w-full">
           <div className="flex space-x-1 items-center">
@@ -60,34 +65,34 @@ export const PostCard = ({ post }) => {
               }}
             >
               <span className="font-bold text-base hover:underline">
-                Ganesh Gajula
+                {currentUser.firstname} {currentUser.lastname}
               </span>
-              <span className="gray-text ml-1">@ganeshgajula_</span>
+              <span className="gray-text ml-1">@{currentUser?.username}</span>
             </span>
             <span className="gray-text">
-              · <TimeAgo timestamp={post.date} />
+              · <TimeAgo timestamp={post.postDate} />
             </span>
           </div>
 
-          <article className="mb-1 text-base">{post.postContent}</article>
+          <article className="mb-1 text-base">{post.content}</article>
           <div className="flex items-center justify-between mr-4 sm:mr-7 md:mr-10 lg:mr-14">
             <button className="flex items-center cursor-pointer blue-color reply-svg">
               <span className="p-2 hover:bg-blue-100 rounded-full">
                 <ReplyIcon />
               </span>
-              <span className={post.replies < 1 && "hidden"}>
-                {post.replies}
+              <span className={post.replies.length < 1 && "hidden"}>
+                {post.replies.length}
               </span>
             </button>
             <button
               className="flex items-center cursor-pointer red-color like-svg"
               onClick={(e) => {
                 e.stopPropagation();
-                dispatch(likeButtonPressed({ post }));
+                dispatch(likeButtonPressed({postAuthorId:currentUser._id,postId:post._id,likedByUserId:currentUser._id}));
               }}
             >
               <span className="p-2 hover:bg-red-100 rounded-full">
-                {!isPostPresent(feed.likedPosts, post.postId) ? (
+                {!isUserPresent(post.likedBy,currentUser._id) ? (
                   <LikeIcon />
                 ) : (
                   <FilledLikeIcon />
@@ -95,24 +100,24 @@ export const PostCard = ({ post }) => {
               </span>
               <span
                 style={{
-                  display: post.likes < 1 && "none",
-                  color: !isPostPresent(feed.likedPosts, post.postId)
+                  display: post.likedBy.length < 1 && "none",
+                  color: !isUserPresent(post.likedBy, currentUser._id)
                     ? "inherit"
                     : "red",
                 }}
               >
-                {post.likes}
+                {post.likedBy.length}
               </span>
             </button>
             <button
               className="flex items-center cursor-pointer green-color repost-svg"
               onClick={(e) => {
                 e.stopPropagation();
-                dispatch(repostButtonPressed({ post }));
+                dispatch(retweetButtonPressed({postAuthorId:currentUser._id,postId:post._id,retweetedByUserId:currentUser._id}));
               }}
             >
               <span className="p-2 hover:bg-green-100 rounded-full">
-                {!isPostPresent(feed.repostedPosts, post.postId) ? (
+                {!isUserPresent(post.retweetedBy, currentUser._id) ? (
                   <RepostIcon />
                 ) : (
                   <FilledRepostIcon />
@@ -120,13 +125,13 @@ export const PostCard = ({ post }) => {
               </span>
               <span
                 style={{
-                  display: post.reposts < 1 && "none",
-                  color: !isPostPresent(feed.repostedPosts, post.postId)
+                  display: post.retweetedBy.length < 1 && "none",
+                  color: !isUserPresent(post.retweetedBy, currentUser._id)
                     ? "inherit"
                     : "#17bf63",
                 }}
               >
-                {post.reposts}
+                {post.retweetedBy.length}
               </span>
             </button>
             <button
@@ -137,7 +142,7 @@ export const PostCard = ({ post }) => {
               }}
             >
               <span className="p-2 hover:bg-yellow-100 rounded-full">
-                {!isPostPresent(feed.bookmarkedPosts, post.postId) ? (
+                {!isUserPresent(post.bookmarkedBy, currentUser._id) ? (
                   <AddToBookmarkIcon />
                 ) : (
                   <FilledAddedToBookmarkIcon />

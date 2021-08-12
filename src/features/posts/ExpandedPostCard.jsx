@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { isPostPresent } from "../../utils/utils";
+import { isUserPresent } from "../../utils/utils";
 import {
   ReplyIcon,
   RepostIcon,
@@ -14,7 +14,7 @@ import {
 } from "../../assets";
 import {
   likeButtonPressed,
-  repostButtonPressed,
+  retweetButtonPressed,
   bookmarkButtonPressed,
 } from "./postSlice";
 import { TimeAndDateInfo } from "./TimeAndDateInfo";
@@ -22,18 +22,23 @@ import { NewReply } from "./NewReply";
 import { PostReplies } from "./PostReplies";
 
 export const ExpandedPostCard = ({ post }) => {
-  const feed = useSelector((state) => state.feed);
+  const {currentUser:{_id,firstname,lastname,username}} = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const firstNameInitial = firstname[0];
+  const lastNameInitial = lastname[0];
+  const userInitials = `${firstNameInitial}${lastNameInitial}`
+
   return (
     <div>
       <div
-        key={post.postId}
+        key={post._id}
         className="flex flex-col px-3 pt-3 pb-1 border-b border-gray-100"
       >
         <div
           className={`${
-            !isPostPresent(feed.repostedPosts, post.postId) && "hidden"
+            !isUserPresent(post.retweetedBy,_id) && "hidden"
           } flex items-center space-x-2 pb-2 ml-8`}
         >
           <UserRepostedIcon />
@@ -46,19 +51,19 @@ export const ExpandedPostCard = ({ post }) => {
             className="bg-blue-500 mr-3 text-white h-12 w-12 rounded-full flex items-center justify-center"
             onClick={() => navigate("/profile")}
           >
-            <span className="text-2xl font-semibold">GG</span>
+            <span className="text-2xl font-semibold">{userInitials}</span>
           </div>
           <div className="flex flex-col" onClick={() => navigate("/profile")}>
             <div className="font-bold text-base hover:underline">
-              Ganesh Gajula
+              {firstname} {lastname}
             </div>
-            <div className="gray-text">@ganeshgajula_</div>
+            <div className="gray-text">@{username}</div>
           </div>
         </div>
         <article className="my-4 ml-1 text-xl font-medium">
-          {post.postContent}
+          {post.content}
         </article>
-        <TimeAndDateInfo timestamp={post.date} />
+        <TimeAndDateInfo timestamp={post.postDate} />
         <div className="flex items-center justify-between mr-4 sm:mr-7 md:mr-10 lg:mr-14 py-2">
           <button className="flex items-center cursor-pointer blue-color reply-svg">
             <span className="p-2 hover:bg-blue-100 rounded-full">
@@ -71,7 +76,7 @@ export const ExpandedPostCard = ({ post }) => {
             onClick={() => dispatch(likeButtonPressed({ post }))}
           >
             <span className="p-2 hover:bg-red-100 rounded-full">
-              {!isPostPresent(feed.likedPosts, post.postId) ? (
+              {!isUserPresent(post.likedBy,_id) ? (
                 <LikeIcon />
               ) : (
                 <FilledLikeIcon />
@@ -80,7 +85,7 @@ export const ExpandedPostCard = ({ post }) => {
             <span
               style={{
                 display: post.likes < 1 && "none",
-                color: !isPostPresent(feed.likedPosts, post.postId)
+                color: !isUserPresent(post.likedBy,_id)
                   ? "inherit"
                   : "red",
               }}
@@ -90,10 +95,10 @@ export const ExpandedPostCard = ({ post }) => {
           </button>
           <button
             className="flex items-center cursor-pointer green-color repost-svg"
-            onClick={() => dispatch(repostButtonPressed({ post }))}
+            onClick={() => dispatch(retweetButtonPressed({ post }))}
           >
             <span className="p-2 hover:bg-green-100 rounded-full">
-              {!isPostPresent(feed.repostedPosts, post.postId) ? (
+              {!isUserPresent(post.retweetedBy,_id) ? (
                 <RepostIcon />
               ) : (
                 <FilledRepostIcon />
@@ -102,7 +107,7 @@ export const ExpandedPostCard = ({ post }) => {
             <span
               style={{
                 display: post.reposts < 1 && "none",
-                color: !isPostPresent(feed.repostedPosts, post.postId)
+                color: !isUserPresent(post.retweetedBy,_id)
                   ? "inherit"
                   : "#17bf63",
               }}
@@ -115,7 +120,7 @@ export const ExpandedPostCard = ({ post }) => {
             onClick={() => dispatch(bookmarkButtonPressed({ post }))}
           >
             <span className="p-2 hover:bg-yellow-100 rounded-full">
-              {!isPostPresent(feed.bookmarkedPosts, post.postId) ? (
+              {!isUserPresent(post.bookmarkedBy,_id) ? (
                 <AddToBookmarkIcon />
               ) : (
                 <FilledAddedToBookmarkIcon />
@@ -125,13 +130,13 @@ export const ExpandedPostCard = ({ post }) => {
         </div>
         <div className="border-t border-gray-100 py-2">
           <p className="text-gray-500 ml-16">
-            Replying to <span className="text-primary">@ganeshgajula_</span>
+            Replying to <span className="text-primary">@{username}</span>
           </p>
-          <NewReply postId={post.postId} />
+          <NewReply postId={post._id} />
         </div>
       </div>
       <div className="h-3 bg-extra-light-gray"></div>
-      <PostReplies replies={post.allReplies} />
+      <PostReplies replies={post.replies} />
     </div>
   );
 };

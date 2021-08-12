@@ -1,17 +1,22 @@
 import React, { useState, useRef } from "react";
 import { replyButtonPressed } from "./postSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export const NewReply = ({ postId }) => {
+  const {currentUser:{firstname,lastname}} = useSelector(state => state.auth)
   const [replyContent, setReplyContent] = useState("");
   const inputEl = useRef(null);
   const dispatch = useDispatch();
   const maxCharacterLimit = 280;
 
+  const firstNameInitial = firstname[0];
+  const lastNameInitial = lastname[0];
+  const userInitials = `${firstNameInitial}${lastNameInitial}`
+
   return (
     <div className="flex pt-2">
       <div className="h-12 w-14 rounded-full bg-blue-500 text-white flex items-center justify-center mr-4">
-        <span className="text-2xl font-semibold">GG</span>
+        <span className="text-2xl font-semibold">{userInitials}</span>
       </div>
       <div className="flex flex-col w-full">
         <textarea
