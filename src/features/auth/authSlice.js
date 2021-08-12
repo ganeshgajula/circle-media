@@ -53,10 +53,10 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     logout:(state) => {
-      state.isUserLoggedIn=false;
-      state.status="idle";
       state.currentUser=null;
       localStorage?.removeItem("userCredentials");
+      state.isUserLoggedIn=false;
+      state.status="idle";
     }
   },
   extraReducers: {
