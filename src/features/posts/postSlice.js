@@ -1,128 +1,104 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { toast } from "react-toastify";
+
+export const loadPosts = createAsyncThunk("posts/loadPosts",async(userId,thunkAPI) => {
+  try{
+    const response = await axios.get(`http://localhost:4000/posts/${userId}`);
+    console.log(response.data);
+    return response.data;
+  }catch(error){
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+})
+
+export const createNewPost =  createAsyncThunk("posts/createNewPost",async(post,thunkAPI) => {
+  try{
+    const response = await axios.post(`http://localhost:4000/posts/${post.userId}`,{content:post.postContent});
+    console.log(response.data);
+    return response.data;
+  }catch(error){
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+})
+
+export const likeButtonPressed = createAsyncThunk("posts/likeButtonPressed",async(postDetails,thunkAPI) => {
+  try{
+    const response = await axios.post(`http://localhost:4000/posts/${postDetails.postAuthorId}/${postDetails.postId}/likes`,{likedByUserId:postDetails.likedByUserId});
+    return response.data;
+  }catch(error){
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+})
+
+export const retweetButtonPressed = createAsyncThunk("posts/retweetButtonPressed",async(postDetails,thunkAPI) => {
+  try{
+    const response = await axios.post(`http://localhost:4000/posts/${postDetails.postAuthorId}/${postDetails.postId}/retweets`,{retweetedByUserId:postDetails.retweetedByUserId});
+    return response.data;
+  }catch(error){
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+})
 
 const initialState = {
-  posts: [
-    {
-      postId: nanoid(),
-      postContent: "Sample post",
-      likes: 0,
-      replies: 0,
-      reposts: 0,
-      bookmarks: 0,
-      date: new Date().toISOString(),
-      allReplies: [
-        {
-          id: nanoid(),
-          name: "Ganesh Gajula",
-          username: "ganeshgajula_",
-          date: new Date().toISOString(),
-          replyText: "Another sample check post",
-        },
-      ],
-    },
-  ],
-  likedPosts: [],
-  repostedPosts: [],
-  bookmarkedPosts: [],
+  status:"idle",
+  error:null,
+  posts:[],
+  feed:[],
 };
 
 export const postsSlice = createSlice({
   name: "posts",
   initialState,
-  reducers: {
-    newPostCreated: (state, action) => {
-      state.posts.push({
-        postId: nanoid(),
-        postContent: action.payload,
-        likes: 0,
-        replies: 0,
-        reposts: 0,
-        bookmarks: 0,
-        date: new Date().toISOString(),
-        allReplies: [],
+  reducers:{},
+  extraReducers:{
+    [loadPosts.pending]: (state) => {
+      state.status="loading";
+    },
+    [loadPosts.fulfilled]: (state,action) => {
+      state.status="fulfilled";
+      state.posts=action.payload.posts.posts;
+    },
+    [loadPosts.rejected]: (state) => {
+      state.status="rejected";
+    },
+    [createNewPost.pending]: (state) => {
+      state.status="loading";
+      toast.info("post creation in progress.", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      })
+    },
+    [createNewPost.fulfilled]:(state,action) => {
+      state.status="fulfilled";
+      state.posts=action.payload.posts.posts;
+      toast.success("post successful",{position:toast.POSITION.BOTTOM_CENTER,autoClose:2000});
+    },
+    [createNewPost.rejected]:(state,action) => {
+      state.status="rejected";
+      toast.error(action.payload.message,{
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
       });
     },
-    likeButtonPressed: (state, action) => {
-      const isPostLiked = state.likedPosts.find(
-        (post) => post.postId === action.payload.post.postId
-      );
-
-      const postIndex = state.posts.findIndex(
-        (post) => post.postId === action.payload.post.postId
-      );
-
-      const addPostToLikedAndIncrementCount = () => {
-        state.likedPosts.push(action.payload.post);
-        if (postIndex !== -1) state.posts[postIndex].likes += 1;
-      };
-
-      const removePostFromLikedAndDecrementCount = () => {
-        state.likedPosts.pop(action.payload.post);
-        if (postIndex !== -1) state.posts[postIndex].likes -= 1;
-      };
-
-      !isPostLiked
-        ? addPostToLikedAndIncrementCount()
-        : removePostFromLikedAndDecrementCount();
+    [likeButtonPressed.fulfilled]:(state,action) => {
+      state.posts = action.payload.posts.posts;
     },
-    repostButtonPressed: (state, action) => {
-      const isPostReposted = state.repostedPosts.find(
-        (post) => post.postId === action.payload.post.postId
-      );
-
-      const postIndex = state.posts.findIndex(
-        (post) => post.postId === action.payload.post.postId
-      );
-
-      const addPostToRepostsAndIncrementCount = () => {
-        state.repostedPosts.push(action.payload.post);
-        if (postIndex !== -1) state.posts[postIndex].reposts += 1;
-      };
-
-      const removePostFromRepostsAndDecrementCount = () => {
-        state.repostedPosts.pop(action.payload.post);
-        if (postIndex !== -1) state.posts[postIndex].reposts -= 1;
-      };
-
-      !isPostReposted
-        ? addPostToRepostsAndIncrementCount()
-        : removePostFromRepostsAndDecrementCount();
+    [likeButtonPressed.rejected]:(state,action) => {
+      state.error="error";
+      toast.error(action.payload.message,{position:toast.POSITION.BOTTOM_CENTER,autoClose:1500});
     },
-    bookmarkButtonPressed: (state, action) => {
-      const isPostBookmarked = state.bookmarkedPosts.find(
-        (post) => post.postId === action.payload.post.postId
-      );
-
-      const addToBookmarks = () => {
-        state.bookmarkedPosts.push(action.payload.post);
-      };
-
-      const removeFromBookmarks = () => {
-        state.bookmarkedPosts.pop(action.payload.post);
-      };
-
-      !isPostBookmarked ? addToBookmarks() : removeFromBookmarks();
+    [retweetButtonPressed.fulfilled]:(state,action) => {
+      state.posts = action.payload.posts.posts;
     },
-    replyButtonPressed: (state, action) => {
-      const postIndex = state.posts.findIndex(
-        (post) => post.postId === action.payload.postId
-      );
-
-      state.posts[postIndex].allReplies.push({
-        id: nanoid(),
-        name: action.payload.name,
-        username: action.payload.username,
-        date: action.payload.date,
-        replyText: action.payload.replyText,
-      });
+    [retweetButtonPressed.rejected]:(state,action) => {
+      state.error="error";
+      toast.error(action.payload.message,{position:toast.POSITION.BOTTOM_CENTER,autoClose:1500});
     },
-  },
+  }
 });
 
 export const {
-  newPostCreated,
-  likeButtonPressed,
-  repostButtonPressed,
   bookmarkButtonPressed,
   replyButtonPressed,
 } = postsSlice.actions;
