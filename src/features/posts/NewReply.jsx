@@ -1,9 +1,11 @@
 import React, { useState, useRef } from "react";
-import { replyButtonPressed } from "./postSlice";
+import { createNewReply } from "./postSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export const NewReply = ({ postId }) => {
-  const {currentUser:{firstname,lastname}} = useSelector(state => state.auth)
+  const {
+    currentUser: { _id, firstname, lastname },
+  } = useSelector((state) => state.auth);
   const [replyContent, setReplyContent] = useState("");
   const inputEl = useRef(null);
   const dispatch = useDispatch();
@@ -11,7 +13,7 @@ export const NewReply = ({ postId }) => {
 
   const firstNameInitial = firstname[0];
   const lastNameInitial = lastname[0];
-  const userInitials = `${firstNameInitial}${lastNameInitial}`
+  const userInitials = `${firstNameInitial}${lastNameInitial}`;
 
   return (
     <div className="flex pt-2">
@@ -49,12 +51,10 @@ export const NewReply = ({ postId }) => {
             } ml-4 text-xs`}
             onClick={() => {
               dispatch(
-                replyButtonPressed({
+                createNewReply({
+                  postAuthorId: _id,
                   postId,
-                  name: "Tanay Pratap",
-                  username: "tanaypratap",
-                  date: new Date().toISOString(),
-                  replyText: replyContent,
+                  content: replyContent,
                 })
               );
               setReplyContent("");
