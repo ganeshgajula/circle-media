@@ -5,8 +5,8 @@ import authReducer from "../features/auth/authSlice";
 
 export const store = configureStore({
   reducer: {
-    feed: postsReducer,
-    users: usersReducer,
     auth: authReducer,
+    users: usersReducer,
+    feed: postsReducer,
   },
 });
