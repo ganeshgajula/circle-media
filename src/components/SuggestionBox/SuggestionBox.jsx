@@ -30,7 +30,7 @@ export const SuggestionBox = () => {
                 key={_id}
                 className="flex items-center justify-between px-3 py-2 border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
               >
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-3 mr-12">
                   <div className="h-12 w-12 bg-blue-500 text-white rounded-full flex items-center justify-center">
                     <span className="font-semibold text-lg">
                       {userInitials}
