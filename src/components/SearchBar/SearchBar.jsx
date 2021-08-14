@@ -22,7 +22,7 @@ export const SearchBar = () => {
           placeholder="Search"
         />
 
-        <div style={{ display: !searchPopOver && "none" }}>
+        <div className={!searchPopOver && "hidden"}>
           <CloseIcon
             setSearchPopOver={setSearchPopOver}
             setSearchedKeyword={setSearchedKeyword}

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { VerifiedBadgeIcon } from "../../assets";
 
 export const SuggestionBox = () => {
-  const users = useSelector((state) => state.users);
+  const { users } = useSelector((state) => state.users);
   const [showMoreSuggestions, setShowMoreSuggestions] = useState(false);
 
   const showOnlyThreeProfiles = 3;
@@ -18,29 +18,32 @@ export const SuggestionBox = () => {
         Who to follow
       </div>
       <div>
-        {users.users
+        {users
           .slice(0, arrayEndValue)
-          .map(({ userId, name, userName }) => {
-            let initials = "";
-            name
-              .split(" ")
-              .map((username) => (initials += username[0].toUpperCase()));
+          .map(({ _id, firstname, lastname, username }) => {
+            const firstNameInitial = firstname[0];
+            const lastNameInitial = lastname[0];
+            const userInitials = `${firstNameInitial}${lastNameInitial}`;
 
             return (
               <div
-                key={userId}
+                key={_id}
                 className="flex items-center justify-between px-3 py-2 border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
               >
                 <div className="flex items-center space-x-3">
                   <div className="h-12 w-12 bg-blue-500 text-white rounded-full flex items-center justify-center">
-                    <span className="font-semibold text-lg">{initials}</span>
+                    <span className="font-semibold text-lg">
+                      {userInitials}
+                    </span>
                   </div>
                   <div>
                     <div className="flex items-center space-x-1">
-                      <h3 className="font-bold">{name}</h3>
+                      <h3 className="font-bold">
+                        {firstname} {lastname}
+                      </h3>
                       <VerifiedBadgeIcon />
                     </div>
-                    <p className="text-gray-500">@{userName}</p>
+                    <p className="text-gray-500">@{username}</p>
                   </div>
                 </div>
                 <button className="text-primary font-semibold border border-blue-400 rounded-2xl px-3 py-1 hover:bg-blue-100">
