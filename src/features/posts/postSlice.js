@@ -83,7 +83,7 @@ export const createNewReply = createAsyncThunk(
     try {
       const response = await axios.post(
         `http://localhost:4000/posts/${reply.postAuthorId}/${reply.postId}/replies`,
-        { message: reply.content }
+        { replierId: reply.replierId, message: reply.content }
       );
       console.log(response.data);
       return response.data;

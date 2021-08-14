@@ -32,6 +32,7 @@ export const ExpandedPostCard = ({ post }) => {
   const lastNameInitial = lastname[0];
   const userInitials = `${firstNameInitial}${lastNameInitial}`;
 
+  console.log(post.replies);
   return (
     <div>
       <div

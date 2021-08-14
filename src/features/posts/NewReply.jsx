@@ -55,10 +55,12 @@ export const NewReply = ({ postId }) => {
                   postAuthorId: _id,
                   postId,
                   content: replyContent,
+                  replierId: _id,
                 })
               );
               setReplyContent("");
             }}
+            disabled={!replyContent && true}
           >
             Reply
           </button>
