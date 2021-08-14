@@ -5,13 +5,11 @@ import { useSelector } from "react-redux";
 
 export const FooterNavbar = () => {
   const [showSideDrawer, setShowSideDrawer] = useState(false);
+  const { currentUser } = useSelector((state) => state.auth);
 
-  const user = useSelector((state) => state.users);
-
-  let initials = "";
-  user.users[0].name
-    .split(" ")
-    .map((word) => (initials += word[0].toUpperCase()));
+  const firstNameInitial = currentUser?.firstname[0];
+  const lastNameInitial = currentUser?.lastname[0];
+  const userInitials = `${firstNameInitial}${lastNameInitial}`;
 
   return (
     <>
@@ -30,7 +28,7 @@ export const FooterNavbar = () => {
           className="h-8 w-8 bg-blue-500 text-white flex items-center justify-center rounded-full"
           onClick={() => setShowSideDrawer(true)}
         >
-          <span className="text-base font-medium">{initials}</span>
+          <span className="text-base font-medium">{userInitials}</span>
         </div>
       </div>
     </>

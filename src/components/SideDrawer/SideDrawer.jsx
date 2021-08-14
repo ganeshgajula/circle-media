@@ -1,20 +1,20 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   CloseThinIcon,
   ProfileSmallIcon,
   BookmarkSmallIcon,
   LogoutIcon,
 } from "../../assets";
+import { logout } from "../../features/auth/authSlice";
 
 export const SideDrawer = ({ setShowSideDrawer }) => {
-  const user = useSelector((state) => state.users);
+  const { currentUser } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
-  let initials = "";
-
-  user.users[0].name
-    .split(" ")
-    .map((word) => (initials += word[0].toUpperCase()));
+  const firstNameInitial = currentUser?.firstname[0];
+  const lastNameInitial = currentUser?.lastname[0];
+  const userInitials = `${firstNameInitial}${lastNameInitial}`;
 
   return (
     <div className="flex items-center justify-center fixed h-full w-full top-0 left-0 z-10 modal-bg">
@@ -25,22 +25,22 @@ export const SideDrawer = ({ setShowSideDrawer }) => {
         </div>
         <div className="px-4 py-3 ">
           <div className="h-10 w-10 bg-blue-500 text-white rounded-full flex items-center justify-center">
-            <span className="text-lg font-bold">{initials}</span>
+            <span className="text-lg font-bold">{userInitials}</span>
           </div>
           <div className="mt-3 font-bold text-gray-900">
-            {user.users[0].name}
+            {currentUser?.firstname} {currentUser?.lastname}
           </div>
           <p className="text-sm text-gray-500 font-medium">
-            @{user.users[0].userName}
+            @{currentUser?.username}
           </p>
         </div>
         <div className="px-4 py-2 flex items-center">
           <span className="mr-6 flex space-x-1">
-            <span className="font-bold">20</span>
+            <span className="font-bold">{currentUser?.following.length}</span>
             <span>Following</span>
           </span>
           <span className="flex space-x-1">
-            <span className="font-bold">50</span>
+            <span className="font-bold">{currentUser?.followers.length}</span>
             <span>Followers</span>
           </span>
         </div>
@@ -53,7 +53,12 @@ export const SideDrawer = ({ setShowSideDrawer }) => {
             <BookmarkSmallIcon />
             <span>Bookmarks</span>
           </div>
-          <div className="flex px-4 py-4 space-x-3">
+          <div
+            className="flex px-4 py-4 space-x-3"
+            onClick={() => {
+              dispatch(logout());
+            }}
+          >
             <LogoutIcon />
             <span>Logout</span>
           </div>
