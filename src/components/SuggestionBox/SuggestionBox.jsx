@@ -1,10 +1,14 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { VerifiedBadgeIcon } from "../../assets";
+import { followUnfollowUser } from "../../features/users/usersSlice";
+import { isUserIdPresent } from "../../utils/utils";
 
 export const SuggestionBox = () => {
   const { users } = useSelector((state) => state.users);
+  const { currentUser } = useSelector((state) => state.auth);
   const [showMoreSuggestions, setShowMoreSuggestions] = useState(false);
+  const dispatch = useDispatch();
 
   const showOnlyThreeProfiles = 3;
   const showOnlyFiveProfiles = 5;
@@ -20,7 +24,7 @@ export const SuggestionBox = () => {
       <div>
         {users
           .slice(0, arrayEndValue)
-          .map(({ _id, firstname, lastname, username }) => {
+          .map(({ _id, firstname, lastname, username, email }) => {
             const firstNameInitial = firstname[0];
             const lastNameInitial = lastname[0];
             const userInitials = `${firstNameInitial}${lastNameInitial}`;
@@ -28,7 +32,9 @@ export const SuggestionBox = () => {
             return (
               <div
                 key={_id}
-                className="flex items-center justify-between px-3 py-2 border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
+                className={`${
+                  _id === currentUser?._id && "hidden"
+                } flex items-center justify-between px-3 py-2 border-b border-gray-200 hover:bg-gray-100 cursor-pointer`}
               >
                 <div className="flex items-center space-x-3 mr-12">
                   <div className="h-12 w-12 bg-blue-500 text-white rounded-full flex items-center justify-center">
@@ -46,8 +52,24 @@ export const SuggestionBox = () => {
                     <p className="text-gray-500">@{username}</p>
                   </div>
                 </div>
-                <button className="text-primary font-semibold border border-blue-400 rounded-2xl px-3 py-1 hover:bg-blue-100">
-                  Follow
+                <button
+                  className={`${
+                    !isUserIdPresent(currentUser?.following, _id)
+                      ? "border border-blue-400 hover:bg-blue-100 text-primary py-1"
+                      : "bg-primary text-white py-1"
+                  }  font-semibold rounded-2xl px-3 py-1`}
+                  onClick={() =>
+                    dispatch(
+                      followUnfollowUser({
+                        emailId: email,
+                        currentLoggedInUserId: currentUser?._id,
+                      })
+                    )
+                  }
+                >
+                  {!isUserIdPresent(currentUser?.following, _id)
+                    ? "Follow"
+                    : "Following"}
                 </button>
               </div>
             );

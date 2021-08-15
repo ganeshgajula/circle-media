@@ -14,6 +14,21 @@ export const loadUsers = createAsyncThunk(
   }
 );
 
+export const followUnfollowUser = createAsyncThunk(
+  "users/followUnfollowUser",
+  async (userData, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:4000/users/${userData.emailId}/followunfollow`,
+        { userId: userData.currentLoggedInUserId }
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const initialState = {
   status: "idle",
   error: null,
@@ -33,6 +48,32 @@ export const usersSlice = createSlice({
       state.users = action.payload.users;
     },
     [loadUsers.rejected]: (state, action) => {
+      state.error = "error";
+      toast.error(action.payload.message, {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    },
+    [followUnfollowUser.fulfilled]: (state, action) => {
+      const followedOrUnfollowedToUserIndex = state.users.findIndex(
+        (user) => String(user._id) === String(action.payload.followedToUser._id)
+      );
+
+      if (followedOrUnfollowedToUserIndex !== -1) {
+        state.users[followedOrUnfollowedToUserIndex] =
+          action.payload.followedToUser;
+      }
+
+      const followedOrUnfollowedByUserIndex = state.users.findIndex(
+        (user) => String(user._id) === String(action.payload.followedByUser._id)
+      );
+
+      if (followedOrUnfollowedByUserIndex !== -1) {
+        state.users[followedOrUnfollowedByUserIndex] =
+          action.payload.followedByUser;
+      }
+    },
+    [followUnfollowUser.rejected]: (state, action) => {
       state.error = "error";
       toast.error(action.payload.message, {
         position: toast.POSITION.BOTTOM_CENTER,
