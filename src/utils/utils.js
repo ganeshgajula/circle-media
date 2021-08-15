@@ -1,1 +1,2 @@
-export const isUserIdPresent = (array,id) => array.find(userId => userId === id);
+export const isUserIdPresent = (array, id) =>
+  array?.find((userId) => userId === id);
