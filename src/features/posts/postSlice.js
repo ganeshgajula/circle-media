@@ -31,6 +31,32 @@ export const createNewPost = createAsyncThunk(
   }
 );
 
+export const getSinglePost = createAsyncThunk(
+  "posts/getSinglePost",
+  async (postDetails, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/posts/${postDetails.postAuthorId}/${postDetails.postId}`
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const loadAllPosts = createAsyncThunk(
+  "posts/loadAllPosts",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get("http://localhost:4000/posts");
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const likeButtonPressed = createAsyncThunk(
   "posts/likeButtonPressed",
   async (postDetails, thunkAPI) => {
@@ -97,6 +123,7 @@ const initialState = {
   status: "idle",
   error: null,
   posts: [],
+  requestedPost: null,
   feed: [],
 };
 
@@ -139,6 +166,34 @@ export const postsSlice = createSlice({
     },
     [createNewPost.rejected]: (state, action) => {
       state.status = "rejected";
+      toast.error(action.payload.message, {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    },
+    [loadAllPosts.pending]: (state) => {
+      state.status = "loading";
+    },
+    [loadAllPosts.fulfilled]: (state, action) => {
+      state.status = "fulfilled";
+      state.feed = action.payload.posts;
+    },
+    [loadAllPosts.rejected]: (state, action) => {
+      state.error = "error";
+      toast.error(action.payload.message, {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    },
+    [getSinglePost.pending]: (state) => {
+      state.status = "loading";
+    },
+    [getSinglePost.fulfilled]: (state, action) => {
+      state.status = "fulfilled";
+      state.requestedPost = action.payload.post;
+    },
+    [getSinglePost.rejected]: (state, action) => {
+      state.error = "error";
       toast.error(action.payload.message, {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1500,
