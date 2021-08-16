@@ -1,31 +1,39 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import { NewPost } from "./NewPost";
 import { useDispatch, useSelector } from "react-redux";
 import { PostCard } from "./PostCard";
 import { loadPosts } from "./postSlice";
+import { EmptyPosts } from "./EmptyPosts";
 
 export const Posts = () => {
-  const {status,posts} = useSelector((state) => state.feed);
-  const {currentUser:{_id:userId}} = useSelector(state => state.auth)
-  const sortedPosts = posts?.slice().sort((a, b) => b.postDate.localeCompare(a.postDate));
+  const { status, posts } = useSelector((state) => state.feed);
+  const {
+    currentUser: { _id: userId },
+  } = useSelector((state) => state.auth);
+  const sortedPosts = posts
+    ?.slice()
+    .sort((a, b) => b.postDate.localeCompare(a.postDate));
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(status === "idle"){
+    if (status === "idle") {
       dispatch(loadPosts(userId));
     }
-  },[dispatch,status,userId])
+  }, [dispatch, status, userId]);
 
-  console.log(posts)
-  console.log(sortedPosts)
+  console.log(posts);
+  console.log(sortedPosts);
+
   return (
     <>
       <NewPost />
       <div className="h-3 bg-extra-light-gray"></div>
       <div>
-        {sortedPosts?.map((post) => (
-          <PostCard post={post} key={post._id} />
-        ))}
+        {sortedPosts?.length > 0 ? (
+          sortedPosts?.map((post) => <PostCard post={post} key={post._id} />)
+        ) : (
+          <EmptyPosts />
+        )}
       </div>
     </>
   );
