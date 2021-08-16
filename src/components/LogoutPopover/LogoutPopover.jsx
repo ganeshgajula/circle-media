@@ -1,10 +1,11 @@
 import React from "react";
 import { CloseThickIcon } from "../../assets";
 import { logout } from "../../features/auth/authSlice";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { resetPosts } from "../../features/posts/postSlice";
 
 export const LogoutPopover = ({ setShowLogoutPopover }) => {
-  const {currentUser} = useSelector(state => state.auth)
+  const { currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const firstNameInitial = currentUser?.firstname[0];
   const lastNameInitial = currentUser?.lastname[0];
@@ -28,7 +29,10 @@ export const LogoutPopover = ({ setShowLogoutPopover }) => {
       </div>
       <div
         className="pl-4 py-3 cursor-pointer hover:bg-gray-100 border-t border-gray-100"
-        onClick={() => dispatch(logout())}
+        onClick={() => {
+          dispatch(logout());
+          dispatch(resetPosts());
+        }}
       >
         Log out <span>@{currentUser?.username}</span>
       </div>
