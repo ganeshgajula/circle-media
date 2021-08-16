@@ -103,7 +103,14 @@ const initialState = {
 export const postsSlice = createSlice({
   name: "posts",
   initialState,
-  reducers: {},
+  reducers: {
+    resetPosts: (state) => {
+      state.status = "idle";
+      state.posts = [];
+      state.feed = [];
+      state.error = null;
+    },
+  },
   extraReducers: {
     [loadPosts.pending]: (state) => {
       state.status = "loading";
@@ -179,5 +186,7 @@ export const postsSlice = createSlice({
     },
   },
 });
+
+export const { resetPosts } = postsSlice.actions;
 
 export default postsSlice.reducer;
