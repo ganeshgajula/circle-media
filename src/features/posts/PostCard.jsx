@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { isUserIdPresent} from "../../utils/utils";
+import { isUserIdPresent } from "../../utils/utils";
 import {
   ReplyIcon,
   RepostIcon,
@@ -20,7 +20,7 @@ import {
 import { TimeAgo } from "./TimeAgo";
 
 export const PostCard = ({ post }) => {
-  const {currentUser} = useSelector(state => state.auth)
+  const { currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ export const PostCard = ({ post }) => {
     >
       <div
         className={`${
-          !isUserIdPresent(post.retweetedBy,currentUser._id) && "hidden"
+          !isUserIdPresent(post.retweetedBy, currentUser._id) && "hidden"
         } flex items-center space-x-2 pb-2 ml-8`}
       >
         <UserRepostedIcon />
@@ -88,11 +88,17 @@ export const PostCard = ({ post }) => {
               className="flex items-center cursor-pointer red-color like-svg"
               onClick={(e) => {
                 e.stopPropagation();
-                dispatch(likeButtonPressed({postAuthorId:currentUser._id,postId:post._id,likedByUserId:currentUser._id}));
+                dispatch(
+                  likeButtonPressed({
+                    postAuthorId: currentUser._id,
+                    postId: post._id,
+                    likedByUserId: currentUser._id,
+                  })
+                );
               }}
             >
               <span className="p-2 hover:bg-red-100 rounded-full">
-                {!isUserIdPresent(post.likedBy,currentUser._id) ? (
+                {!isUserIdPresent(post.likedBy, currentUser._id) ? (
                   <LikeIcon />
                 ) : (
                   <FilledLikeIcon />
@@ -113,7 +119,13 @@ export const PostCard = ({ post }) => {
               className="flex items-center cursor-pointer green-color repost-svg"
               onClick={(e) => {
                 e.stopPropagation();
-                dispatch(retweetButtonPressed({postAuthorId:currentUser._id,postId:post._id,retweetedByUserId:currentUser._id}));
+                dispatch(
+                  retweetButtonPressed({
+                    postAuthorId: currentUser._id,
+                    postId: post._id,
+                    retweetedByUserId: currentUser._id,
+                  })
+                );
               }}
             >
               <span className="p-2 hover:bg-green-100 rounded-full">
@@ -138,13 +150,19 @@ export const PostCard = ({ post }) => {
               className="flex cursor-pointer yellow-color bookmark-svg"
               onClick={(e) => {
                 e.stopPropagation();
-                dispatch(bookmarkButtonPressed({postAuthorId:currentUser._id,postId:post._id,bookmarkedByUserId:currentUser._id}));
+                dispatch(
+                  bookmarkButtonPressed({
+                    postAuthorId: currentUser._id,
+                    postId: post._id,
+                    bookmarkedByUserId: currentUser._id,
+                  })
+                );
               }}
             >
               <span className="p-2 hover:bg-yellow-100 rounded-full">
                 {!isUserIdPresent(post.bookmarkedBy, currentUser._id) ? (
                   <AddToBookmarkIcon />
-                  ) : (
+                ) : (
                   <FilledAddedToBookmarkIcon />
                 )}
               </span>

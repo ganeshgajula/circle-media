@@ -10,7 +10,7 @@ export const SinglePostPage = () => {
     state.feed.posts.find((post) => post._id === postId)
   );
   const navigate = useNavigate();
-  
+
   return post ? (
     <div>
       <div className="flex items-center px-3 py-2 border-b border-gray-100 sticky top-0 w-full bg-white cursor-pointer">
