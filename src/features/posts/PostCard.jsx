@@ -24,10 +24,11 @@ export const PostCard = ({ post }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const firstNameInitial = currentUser?.firstname[0];
-  const lastNameInitial = currentUser?.lastname[0];
+  const firstNameInitial = post.userId.firstname[0];
+  const lastNameInitial = post.userId.lastname[0];
   const userInitials = `${firstNameInitial}${lastNameInitial}`;
 
+  console.log(post);
   return (
     <div
       className="flex flex-col px-3 pt-3 pb-1 border-b border-gray-100 cursor-pointer"
@@ -65,9 +66,9 @@ export const PostCard = ({ post }) => {
               }}
             >
               <span className="font-bold text-base hover:underline">
-                {currentUser.firstname} {currentUser.lastname}
+                {post.userId.firstname} {post.userId.lastname}
               </span>
-              <span className="gray-text ml-1">@{currentUser?.username}</span>
+              <span className="gray-text ml-1">@{post.userId.username}</span>
             </span>
             <span className="gray-text">
               · <TimeAgo timestamp={post.postDate} />
@@ -90,7 +91,7 @@ export const PostCard = ({ post }) => {
                 e.stopPropagation();
                 dispatch(
                   likeButtonPressed({
-                    postAuthorId: currentUser._id,
+                    postAuthorId: post.userId._id,
                     postId: post._id,
                     likedByUserId: currentUser._id,
                   })
@@ -121,7 +122,7 @@ export const PostCard = ({ post }) => {
                 e.stopPropagation();
                 dispatch(
                   retweetButtonPressed({
-                    postAuthorId: currentUser._id,
+                    postAuthorId: post.userId._id,
                     postId: post._id,
                     retweetedByUserId: currentUser._id,
                   })
@@ -152,7 +153,7 @@ export const PostCard = ({ post }) => {
                 e.stopPropagation();
                 dispatch(
                   bookmarkButtonPressed({
-                    postAuthorId: currentUser._id,
+                    postAuthorId: post.userId._id,
                     postId: post._id,
                     bookmarkedByUserId: currentUser._id,
                   })

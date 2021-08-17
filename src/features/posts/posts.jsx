@@ -13,35 +13,42 @@ export const Posts = () => {
   //   ?.slice()
   //   .sort((a, b) => b.postDate.localeCompare(a.postDate));
 
-  const followingUsersDocs = feed?.filter((user) =>
-    currentUser?.following.includes(user.userId)
-  );
+  // const followingUsersDocs = feed?.filter((user) =>
+  //   currentUser?.following.includes(user.userId)
+  // );
 
-  let addFollowingUserPosts = [];
-  const followingUserPosts = followingUsersDocs.map((user) =>
-    addFollowingUserPosts.concat(user.posts)
-  );
+  // let addFollowingUserPosts = [];
+  // const followingUserPosts = followingUsersDocs.map((user) =>
+  //   addFollowingUserPosts.concat(user.posts)
+  // );
 
-  const finalFeed = [];
-  followingUserPosts.map((userPosts) =>
-    userPosts.map((post) => finalFeed.push(post))
-  );
+  // const finalFeed = [];
+  // followingUserPosts.map((userPosts) =>
+  //   userPosts.map((post) => finalFeed.push(post))
+  // );
 
-  const sortedPosts = finalFeed
+  // const sortedPosts = finalFeed
+  //   ?.slice()
+  //   .sort((a, b) => b.postDate.localeCompare(a.postDate));
+
+  console.log(posts);
+  const sortedPosts = posts
     ?.slice()
     .sort((a, b) => b.postDate.localeCompare(a.postDate));
 
   useEffect(() => {
     if (status === "idle") {
+      currentUser?.following.forEach((userId) => dispatch(loadPosts(userId)));
+
       dispatch(loadPosts(currentUser._id));
-      dispatch(loadAllPosts());
+      // dispatch(loadAllPosts());
     }
-  }, [dispatch, status, currentUser._id]);
+  }, [dispatch, status, currentUser.following, currentUser._id]);
 
   console.log(feed);
-  console.log(followingUsersDocs);
-  console.log(followingUserPosts);
-  console.log(finalFeed);
+  // console.log(followingUsersDocs);
+  // console.log(followingUserPosts);
+  // console.log(finalFeed);
   console.log(posts);
   console.log(sortedPosts);
 

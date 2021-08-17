@@ -143,8 +143,10 @@ export const postsSlice = createSlice({
       state.status = "loading";
     },
     [loadPosts.fulfilled]: (state, action) => {
-      state.status = "fulfilled";
-      state.posts = action.payload.posts.posts;
+      return {
+        ...state,
+        posts: state.posts.concat(action.payload.posts.posts),
+      };
     },
     [loadPosts.rejected]: (state) => {
       state.status = "rejected";
