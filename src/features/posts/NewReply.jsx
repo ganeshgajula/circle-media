@@ -2,10 +2,11 @@ import React, { useState, useRef } from "react";
 import { createNewReply } from "./postSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-export const NewReply = ({ postId }) => {
+export const NewReply = ({ postId, postAuthorId }) => {
   const {
     currentUser: { _id, firstname, lastname },
   } = useSelector((state) => state.auth);
+  const { status } = useSelector((state) => state.feed);
   const [replyContent, setReplyContent] = useState("");
   const inputEl = useRef(null);
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ export const NewReply = ({ postId }) => {
             onClick={() => {
               dispatch(
                 createNewReply({
-                  postAuthorId: _id,
+                  postAuthorId,
                   postId,
                   content: replyContent,
                   replierId: _id,
@@ -62,7 +63,7 @@ export const NewReply = ({ postId }) => {
             }}
             disabled={!replyContent && true}
           >
-            Reply
+            {status === "loading" ? "Replying.." : "Reply"}
           </button>
         </div>
       </div>

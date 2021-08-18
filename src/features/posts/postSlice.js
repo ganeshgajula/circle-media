@@ -108,9 +108,8 @@ export const createNewReply = createAsyncThunk(
     try {
       const response = await axios.post(
         `http://localhost:4000/posts/${reply.postAuthorId}/${reply.postId}/replies`,
-        { replierId: reply.replierId, message: reply.content }
+        { replierId: reply.replierId, content: reply.content }
       );
-      console.log(response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -248,8 +247,23 @@ export const postsSlice = createSlice({
         autoClose: 1500,
       });
     },
+    [createNewReply.pending]: (state) => {
+      state.status = "loading";
+    },
     [createNewReply.fulfilled]: (state, action) => {
-      state.posts = action.payload.posts.posts;
+      state.status = "fulfilled";
+      const repliedToPostIndex = state.posts.findIndex(
+        (post) => post._id === action.payload.repliedToPost._id
+      );
+
+      if (repliedToPostIndex !== -1) {
+        state.posts.splice(repliedToPostIndex, 1);
+        state.posts.push(action.payload.repliedToPost);
+      }
+      toast.success("Reply added", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
     },
     [createNewReply.rejected]: (state, action) => {
       state.error = "error";
