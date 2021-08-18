@@ -86,37 +86,6 @@ export const PostCard = ({ post }) => {
               </span>
             </button>
             <button
-              className="flex items-center cursor-pointer red-color like-svg"
-              onClick={(e) => {
-                e.stopPropagation();
-                dispatch(
-                  likeButtonPressed({
-                    postAuthorId: post.userId._id,
-                    postId: post._id,
-                    likedByUserId: currentUser._id,
-                  })
-                );
-              }}
-            >
-              <span className="p-2 hover:bg-red-100 rounded-full">
-                {!isUserIdPresent(post.likedBy, currentUser._id) ? (
-                  <LikeIcon />
-                ) : (
-                  <FilledLikeIcon />
-                )}
-              </span>
-              <span
-                style={{
-                  display: post.likedBy.length < 1 && "none",
-                  color: !isUserIdPresent(post.likedBy, currentUser._id)
-                    ? "inherit"
-                    : "red",
-                }}
-              >
-                {post.likedBy.length}
-              </span>
-            </button>
-            <button
               className="flex items-center cursor-pointer green-color repost-svg"
               onClick={(e) => {
                 e.stopPropagation();
@@ -145,6 +114,37 @@ export const PostCard = ({ post }) => {
                 }}
               >
                 {post.retweetedBy.length}
+              </span>
+            </button>
+            <button
+              className="flex items-center cursor-pointer red-color like-svg"
+              onClick={(e) => {
+                e.stopPropagation();
+                dispatch(
+                  likeButtonPressed({
+                    postAuthorId: post.userId._id,
+                    postId: post._id,
+                    likedByUserId: currentUser._id,
+                  })
+                );
+              }}
+            >
+              <span className="p-2 hover:bg-red-100 rounded-full">
+                {!isUserIdPresent(post.likedBy, currentUser._id) ? (
+                  <LikeIcon />
+                ) : (
+                  <FilledLikeIcon />
+                )}
+              </span>
+              <span
+                style={{
+                  display: post.likedBy.length < 1 && "none",
+                  color: !isUserIdPresent(post.likedBy, currentUser._id)
+                    ? "inherit"
+                    : "red",
+                }}
+              >
+                {post.likedBy.length}
               </span>
             </button>
             <button
