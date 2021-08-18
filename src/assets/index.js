@@ -29,4 +29,7 @@ export {
   BookmarkSmallIcon,
   LogoutIcon,
   LeftArrow,
+  EditIcon,
+  DeleteIcon,
+  CloseThickIconMinified,
 } from "./svgs";
