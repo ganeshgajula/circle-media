@@ -10,8 +10,9 @@ export const Posts = () => {
   const { status, posts } = useSelector((state) => state.feed);
   const { currentUser } = useSelector((state) => state.auth);
 
-  const followingUsersPosts = posts?.filter(({ userId: { _id } }) =>
-    currentUser?.following.includes(_id)
+  const followingUsersPosts = posts?.filter(
+    ({ userId: { _id } }) =>
+      currentUser?.following.includes(_id) || currentUser._id === _id
   );
 
   const sortedPosts = followingUsersPosts

@@ -35,7 +35,6 @@ export const createNewPost = createAsyncThunk(
         `http://localhost:4000/posts/${post.userId}`,
         { content: post.postContent }
       );
-      console.log(response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -169,7 +168,7 @@ export const postsSlice = createSlice({
     },
     [createNewPost.fulfilled]: (state, action) => {
       state.status = "fulfilled";
-      state.posts = action.payload.posts.posts;
+      state.posts.push(action.payload.post);
       toast.success("post successful", {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 2000,
