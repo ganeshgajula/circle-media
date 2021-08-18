@@ -97,3 +97,11 @@
 .modal-bg {
   background-color: rgba(0, 0, 0, 0.4);
 }
+
+.fill-delete-svg {
+  fill: #f4212e;
+}
+
+.text-delete {
+  color: #f4212e;
+}
