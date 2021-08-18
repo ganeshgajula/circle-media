@@ -2,55 +2,27 @@ import React, { useEffect } from "react";
 import { NewPost } from "./NewPost";
 import { useDispatch, useSelector } from "react-redux";
 import { PostCard } from "./PostCard";
-import { loadAllPosts, loadPosts } from "./postSlice";
+import { loadAllPosts } from "./postSlice";
 import { EmptyPosts } from "./EmptyPosts";
 
 export const Posts = () => {
   const dispatch = useDispatch();
-  const { status, posts, feed } = useSelector((state) => state.feed);
+  const { status, posts } = useSelector((state) => state.feed);
   const { currentUser } = useSelector((state) => state.auth);
-  // const sortedPosts = posts
-  //   ?.slice()
-  //   .sort((a, b) => b.postDate.localeCompare(a.postDate));
 
-  // const followingUsersDocs = feed?.filter((user) =>
-  //   currentUser?.following.includes(user.userId)
-  // );
+  const followingUsersPosts = posts?.filter(({ userId: { _id } }) =>
+    currentUser?.following.includes(_id)
+  );
 
-  // let addFollowingUserPosts = [];
-  // const followingUserPosts = followingUsersDocs.map((user) =>
-  //   addFollowingUserPosts.concat(user.posts)
-  // );
-
-  // const finalFeed = [];
-  // followingUserPosts.map((userPosts) =>
-  //   userPosts.map((post) => finalFeed.push(post))
-  // );
-
-  // const sortedPosts = finalFeed
-  //   ?.slice()
-  //   .sort((a, b) => b.postDate.localeCompare(a.postDate));
-
-  console.log(posts);
-  const sortedPosts = posts
+  const sortedPosts = followingUsersPosts
     ?.slice()
     .sort((a, b) => b.postDate.localeCompare(a.postDate));
 
   useEffect(() => {
     if (status === "idle") {
-      currentUser?.following.forEach((userId) => dispatch(loadPosts(userId)));
-
-      dispatch(loadPosts(currentUser._id));
-      // dispatch(loadAllPosts());
+      dispatch(loadAllPosts());
     }
-  }, [dispatch, status, currentUser.following, currentUser._id]);
-
-  console.log(feed);
-  // console.log(followingUsersDocs);
-  // console.log(followingUserPosts);
-  // console.log(finalFeed);
-  console.log(posts);
-  console.log(sortedPosts);
+  }, [dispatch, status]);
 
   return (
     <>

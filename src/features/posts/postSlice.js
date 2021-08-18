@@ -2,7 +2,19 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export const loadPosts = createAsyncThunk(
+export const loadAllPosts = createAsyncThunk(
+  "posts/loadAllPosts",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get("http://localhost:4000/posts");
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const loadUserPosts = createAsyncThunk(
   "posts/loadPosts",
   async (userId, thunkAPI) => {
     try {
@@ -38,18 +50,6 @@ export const getSinglePost = createAsyncThunk(
       const response = await axios.get(
         `http://localhost:4000/posts/${postDetails.postAuthorId}/${postDetails.postId}`
       );
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
-    }
-  }
-);
-
-export const loadAllPosts = createAsyncThunk(
-  "posts/loadAllPosts",
-  async (_, thunkAPI) => {
-    try {
-      const response = await axios.get("http://localhost:4000/posts");
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -95,7 +95,6 @@ export const bookmarkButtonPressed = createAsyncThunk(
         `http://localhost:4000/posts/${postDetails.postAuthorId}/${postDetails.postId}/bookmarks`,
         { bookmarkedByUserId: postDetails.bookmarkedByUserId }
       );
-      console.log(response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -124,7 +123,6 @@ const initialState = {
   error: null,
   posts: [],
   requestedPost: null,
-  feed: [],
 };
 
 export const postsSlice = createSlice({
@@ -134,21 +132,33 @@ export const postsSlice = createSlice({
     resetPosts: (state) => {
       state.status = "idle";
       state.posts = [];
-      state.feed = [];
       state.error = null;
+      state.requestedPost = null;
     },
   },
   extraReducers: {
-    [loadPosts.pending]: (state) => {
+    [loadAllPosts.pending]: (state) => {
       state.status = "loading";
     },
-    [loadPosts.fulfilled]: (state, action) => {
-      return {
-        ...state,
-        posts: state.posts.concat(action.payload.posts.posts),
-      };
+    [loadAllPosts.fulfilled]: (state, action) => {
+      state.status = "fulfilled";
+      state.posts = action.payload.posts;
     },
-    [loadPosts.rejected]: (state) => {
+    [loadAllPosts.rejected]: (state, action) => {
+      state.error = "error";
+      toast.error(action.payload.message, {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    },
+    [loadUserPosts.pending]: (state) => {
+      state.status = "loading";
+    },
+    [loadUserPosts.fulfilled]: (state, action) => {
+      state.status = "fulfilled";
+      state.posts = action.payload.posts;
+    },
+    [loadUserPosts.rejected]: (state) => {
       state.status = "rejected";
     },
     [createNewPost.pending]: (state) => {
@@ -173,20 +183,6 @@ export const postsSlice = createSlice({
         autoClose: 1500,
       });
     },
-    [loadAllPosts.pending]: (state) => {
-      state.status = "loading";
-    },
-    [loadAllPosts.fulfilled]: (state, action) => {
-      state.status = "fulfilled";
-      state.feed = action.payload.posts;
-    },
-    [loadAllPosts.rejected]: (state, action) => {
-      state.error = "error";
-      toast.error(action.payload.message, {
-        position: toast.POSITION.BOTTOM_CENTER,
-        autoClose: 1500,
-      });
-    },
     [getSinglePost.pending]: (state) => {
       state.status = "loading";
     },
@@ -202,7 +198,14 @@ export const postsSlice = createSlice({
       });
     },
     [likeButtonPressed.fulfilled]: (state, action) => {
-      state.posts = action.payload.posts.posts;
+      const likedPostIndex = state.posts.findIndex(
+        (post) => post._id === action.payload.likedPost._id
+      );
+
+      if (likedPostIndex !== -1) {
+        state.posts.splice(likedPostIndex, 1);
+        state.posts.push(action.payload.likedPost);
+      }
     },
     [likeButtonPressed.rejected]: (state, action) => {
       state.error = "error";
@@ -212,7 +215,14 @@ export const postsSlice = createSlice({
       });
     },
     [retweetButtonPressed.fulfilled]: (state, action) => {
-      state.posts = action.payload.posts.posts;
+      const retweetedPostIndex = state.posts.findIndex(
+        (post) => post._id === action.payload.retweetedPost._id
+      );
+
+      if (retweetedPostIndex !== -1) {
+        state.posts.splice(retweetedPostIndex, 1);
+        state.posts.push(action.payload.retweetedPost);
+      }
     },
     [retweetButtonPressed.rejected]: (state, action) => {
       state.error = "error";
@@ -222,7 +232,14 @@ export const postsSlice = createSlice({
       });
     },
     [bookmarkButtonPressed.fulfilled]: (state, action) => {
-      state.posts = action.payload.posts.posts;
+      const bookmarkedPostIndex = state.posts.findIndex(
+        (post) => post._id === action.payload.bookmarkedPost._id
+      );
+
+      if (bookmarkedPostIndex !== -1) {
+        state.posts.splice(bookmarkedPostIndex, 1);
+        state.posts.push(action.payload.bookmarkedPost);
+      }
     },
     [bookmarkButtonPressed.rejected]: (state, action) => {
       state.error = "error";
