@@ -131,6 +131,21 @@ export const updatePostContent = createAsyncThunk(
   }
 );
 
+export const updateReplyContent = createAsyncThunk(
+  "posts/updateReplyContent",
+  async (postDetails, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:4000/posts/${postDetails.postAuthorId}/${postDetails.postId}/replies/${postDetails.repliedMsgId}`,
+        { content: postDetails.content }
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const initialState = {
   status: "idle",
   error: null,
@@ -310,6 +325,37 @@ export const postsSlice = createSlice({
       });
     },
     [updatePostContent.rejected]: (state, action) => {
+      state.error = "error";
+      toast.error(action.payload.message, {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    },
+    [updateReplyContent.pending]: (state) => {
+      state.status = "loading";
+      toast.info("reply update in progress..", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1000,
+      });
+    },
+    [updateReplyContent.fulfilled]: (state, action) => {
+      state.status = "fulfilled";
+
+      const updatedPostIndex = state.posts.findIndex(
+        (post) => post._id === action.payload.postAfterReplyUpdate._id
+      );
+
+      if (updatedPostIndex !== -1) {
+        state.posts.splice(updatedPostIndex, 1);
+        state.posts.push(action.payload.postAfterReplyUpdate);
+      }
+
+      toast.success("Reply message updated!", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    },
+    [updateReplyContent.rejected]: (state, action) => {
       state.error = "error";
       toast.error(action.payload.message, {
         position: toast.POSITION.BOTTOM_CENTER,

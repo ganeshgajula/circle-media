@@ -240,7 +240,11 @@ export const ExpandedPostCard = ({ post }) => {
         </div>
       </div>
       <div className="h-3 bg-extra-light-gray"></div>
-      <PostReplies replies={post.replies} />
+      <PostReplies
+        replies={post.replies}
+        postAuthorId={post.userId._id}
+        postId={post._id}
+      />
     </div>
   );
 };
