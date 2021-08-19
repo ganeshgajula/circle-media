@@ -251,7 +251,7 @@ export const CloseThickIcon = () => (
 );
 
 export const CloseThickIconMinified = () => (
-  <svg width="0.9rem" height="0.9rem" viewBox="0 0 24 24">
+  <svg width="0.8rem" height="0.8rem" viewBox="0 0 24 24">
     <path
       d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91z"
       fill="currentColor"
@@ -320,6 +320,28 @@ export const DeleteIcon = () => (
   <svg
     width="1.2rem"
     height="1.2rem"
+    viewBox="0 0 24 24"
+    className="fill-delete-svg"
+  >
+    <g>
+      <path d="M20.746 5.236h-3.75V4.25c0-1.24-1.01-2.25-2.25-2.25h-5.5c-1.24 0-2.25 1.01-2.25 2.25v.986h-3.75c-.414 0-.75.336-.75.75s.336.75.75.75h.368l1.583 13.262c.216 1.193 1.31 2.027 2.658 2.027h8.282c1.35 0 2.442-.834 2.664-2.072l1.577-13.217h.368c.414 0 .75-.336.75-.75s-.335-.75-.75-.75zM8.496 4.25c0-.413.337-.75.75-.75h5.5c.413 0 .75.337.75.75v.986h-7V4.25zm8.822 15.48c-.1.55-.664.795-1.18.795H7.854c-.517 0-1.083-.246-1.175-.75L5.126 6.735h13.74L17.32 19.732z"></path>
+      <path d="M10 17.75c.414 0 .75-.336.75-.75v-7c0-.414-.336-.75-.75-.75s-.75.336-.75.75v7c0 .414.336.75.75.75zm4 0c.414 0 .75-.336.75-.75v-7c0-.414-.336-.75-.75-.75s-.75.336-.75.75v7c0 .414.336.75.75.75z"></path>
+    </g>
+  </svg>
+);
+export const EditIconMinified = () => (
+  <svg width="1rem" height="1rem" viewBox="0 0 24 24">
+    <path
+      d="M14.06 9l.94.94L5.92 19H5v-.92L14.06 9m3.6-6c-.25 0-.51.1-.7.29l-1.83 1.83l3.75 3.75l1.83-1.83c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29m-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"
+      fill="currentColor"
+    ></path>
+  </svg>
+);
+
+export const DeleteIconMinified = () => (
+  <svg
+    width="1rem"
+    height="1rem"
     viewBox="0 0 24 24"
     className="fill-delete-svg"
   >

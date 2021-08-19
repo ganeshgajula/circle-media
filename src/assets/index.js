@@ -31,5 +31,7 @@ export {
   LeftArrow,
   EditIcon,
   DeleteIcon,
+  EditIconMinified,
+  DeleteIconMinified,
   CloseThickIconMinified,
 } from "./svgs";
