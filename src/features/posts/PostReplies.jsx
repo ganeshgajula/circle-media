@@ -10,10 +10,10 @@ export const PostReplies = ({
   postAuthorId,
   postId,
   setShowDeleteReplyModal,
-  setSelectedReplyMsg,
+  setSelectedReplyMsgId,
+  selectedReplyMsgId,
 }) => {
   const [showReplyActions, setShowReplyActions] = useState(false);
-  const [clickedMsgId, setClickedMsgId] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [replyContent, setReplyContent] = useState("");
   const inputEl = useRef(null);
@@ -29,10 +29,9 @@ export const PostReplies = ({
 
   const showReplyActionsHandler = (repliedMsgId, content) => {
     setShowReplyActions(true);
-    setClickedMsgId(repliedMsgId);
+    setSelectedReplyMsgId(repliedMsgId);
     setReplyContent(content);
     setIsEditMode(false);
-    setSelectedReplyMsg(repliedMsgId);
   };
 
   const modifyReplyContent = () => {
@@ -41,7 +40,7 @@ export const PostReplies = ({
       updateReplyContent({
         postAuthorId,
         postId,
-        repliedMsgId: clickedMsgId,
+        repliedMsgId: selectedReplyMsgId,
         content: replyContent,
       })
     );
@@ -62,7 +61,7 @@ export const PostReplies = ({
         <div key={_id} className="flex px-3 py-3 border-b border-gray-100">
           <div
             className={`${
-              showReplyActions && clickedMsgId === _id && "mt-4"
+              showReplyActions && selectedReplyMsgId === _id && "mt-4"
             } h-10 w-12 bg-blue-500 text-white rounded-full flex items-center justify-center mr-4`}
           >
             <span className="text-lg font-semibold">{userInitials}</span>
@@ -78,7 +77,7 @@ export const PostReplies = ({
                   · <TimeAgo timestamp={date} />
                 </span>
               </span>
-              {showReplyActions && clickedMsgId === _id && (
+              {showReplyActions && selectedReplyMsgId === _id && (
                 <ReplyActionsPopOver
                   setShowReplyActions={setShowReplyActions}
                   setIsEditMode={setIsEditMode}
@@ -89,8 +88,8 @@ export const PostReplies = ({
               )}
               <span
                 className={`${
-                  showReplyActions && clickedMsgId === _id && "hidden"
-                } ${isEditMode && clickedMsgId === _id && "hidden"} ${
+                  showReplyActions && selectedReplyMsgId === _id && "hidden"
+                } ${isEditMode && selectedReplyMsgId === _id && "hidden"} ${
                   currentUser._id !== userId &&
                   currentUser._id !== postAuthorId &&
                   "hidden"
@@ -100,7 +99,7 @@ export const PostReplies = ({
                 <MoreIcon />
               </span>
             </div>
-            {isEditMode && clickedMsgId === _id ? (
+            {isEditMode && selectedReplyMsgId === _id ? (
               <form onSubmit={modifyReplyContent}>
                 <textarea
                   type="text"

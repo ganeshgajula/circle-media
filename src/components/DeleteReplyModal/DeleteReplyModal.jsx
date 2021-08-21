@@ -4,7 +4,7 @@ import { deleteReply } from "../../features/posts/postSlice";
 
 export const DeleteReplyModal = ({
   setShowDeleteReplyModal,
-  selectedReplyMsg,
+  selectedReplyMsgId,
   postId,
 }) => {
   const {
@@ -31,7 +31,7 @@ export const DeleteReplyModal = ({
                 deleteReply({
                   postAuthorId: _id,
                   postId,
-                  repliedMsgId: selectedReplyMsg,
+                  repliedMsgId: selectedReplyMsgId,
                 })
               );
             }}

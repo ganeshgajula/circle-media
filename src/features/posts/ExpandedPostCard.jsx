@@ -36,7 +36,7 @@ export const ExpandedPostCard = ({ post }) => {
   const [postContent, setPostContent] = useState(post.content);
   const [showDeletePostModal, setShowDeletePostModal] = useState(false);
   const [showDeleteReplyModal, setShowDeleteReplyModal] = useState(false);
-  const [selectedReplyMsg, setSelectedReplyMsg] = useState(null);
+  const [selectedReplyMsgId, setSelectedReplyMsgId] = useState(null);
   const inputEl = useRef(null);
   const maxCharacterLimit = 280;
 
@@ -257,7 +257,8 @@ export const ExpandedPostCard = ({ post }) => {
         postAuthorId={post.userId._id}
         postId={post._id}
         setShowDeleteReplyModal={setShowDeleteReplyModal}
-        setSelectedReplyMsg={setSelectedReplyMsg}
+        setSelectedReplyMsgId={setSelectedReplyMsgId}
+        selectedReplyMsgId={selectedReplyMsgId}
       />
       {showDeletePostModal && (
         <DeletePostModal
@@ -268,7 +269,7 @@ export const ExpandedPostCard = ({ post }) => {
       {showDeleteReplyModal && (
         <DeleteReplyModal
           setShowDeleteReplyModal={setShowDeleteReplyModal}
-          selectedReplyMsg={selectedReplyMsg}
+          selectedReplyMsgId={selectedReplyMsgId}
           postId={post._id}
         />
       )}
