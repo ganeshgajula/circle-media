@@ -23,7 +23,11 @@ import { TimeAndDateInfo } from "./TimeAndDateInfo";
 import { NewReply } from "./NewReply";
 import { PostReplies } from "./PostReplies";
 import { PostActionsPopover } from "./PostActionsPopover";
-import { DeletePostModal, DeleteReplyModal } from "../../components";
+import {
+  DeletePostModal,
+  DeleteReplyModal,
+  HideReplyModal,
+} from "../../components";
 
 export const ExpandedPostCard = ({ post }) => {
   const {
@@ -36,6 +40,7 @@ export const ExpandedPostCard = ({ post }) => {
   const [postContent, setPostContent] = useState(post.content);
   const [showDeletePostModal, setShowDeletePostModal] = useState(false);
   const [showDeleteReplyModal, setShowDeleteReplyModal] = useState(false);
+  const [showHideReplyModal, setShowHideReplyModal] = useState(false);
   const [selectedReplyMsgId, setSelectedReplyMsgId] = useState(null);
   const inputEl = useRef(null);
   const maxCharacterLimit = 280;
@@ -259,6 +264,7 @@ export const ExpandedPostCard = ({ post }) => {
         setShowDeleteReplyModal={setShowDeleteReplyModal}
         setSelectedReplyMsgId={setSelectedReplyMsgId}
         selectedReplyMsgId={selectedReplyMsgId}
+        setShowHideReplyModal={setShowHideReplyModal}
       />
       {showDeletePostModal && (
         <DeletePostModal
@@ -269,6 +275,13 @@ export const ExpandedPostCard = ({ post }) => {
       {showDeleteReplyModal && (
         <DeleteReplyModal
           setShowDeleteReplyModal={setShowDeleteReplyModal}
+          selectedReplyMsgId={selectedReplyMsgId}
+          postId={post._id}
+        />
+      )}
+      {showHideReplyModal && (
+        <HideReplyModal
+          setShowHideReplyModal={setShowHideReplyModal}
           selectedReplyMsgId={selectedReplyMsgId}
           postId={post._id}
         />

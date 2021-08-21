@@ -12,6 +12,7 @@ export const PostReplies = ({
   setShowDeleteReplyModal,
   setSelectedReplyMsgId,
   selectedReplyMsgId,
+  setShowHideReplyModal,
 }) => {
   const [showReplyActions, setShowReplyActions] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -20,6 +21,8 @@ export const PostReplies = ({
   const maxCharacterLimit = 280;
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
+
+  const activeReplies = replies.filter((reply) => reply.isActive);
 
   useEffect(() => {
     if (isEditMode) {
@@ -46,7 +49,7 @@ export const PostReplies = ({
     );
   };
 
-  return replies.map(
+  return activeReplies.map(
     ({
       _id,
       content,
@@ -84,6 +87,7 @@ export const PostReplies = ({
                   postAuthorId={postAuthorId}
                   repliedByUserId={userId}
                   setShowDeleteReplyModal={setShowDeleteReplyModal}
+                  setShowHideReplyModal={setShowHideReplyModal}
                 />
               )}
               <span

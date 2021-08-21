@@ -13,6 +13,7 @@ export const ReplyActionsPopOver = ({
   postAuthorId,
   repliedByUserId,
   setShowDeleteReplyModal,
+  setShowHideReplyModal,
 }) => {
   const { currentUser } = useSelector((state) => state.auth);
 
@@ -51,6 +52,10 @@ export const ReplyActionsPopOver = ({
           className={`${
             currentUser._id === repliedByUserId && "hidden"
           } flex items-center p-1 cursor-pointer`}
+          onClick={() => {
+            setShowHideReplyModal(true);
+            setShowReplyActions(false);
+          }}
         >
           <HideReplyIcon />
           <span className="ml-2 text-xs">Hide reply</span>

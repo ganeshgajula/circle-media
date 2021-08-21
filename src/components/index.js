@@ -8,3 +8,4 @@ export { SideDrawer } from "./SideDrawer";
 export { PrivateRoute } from "./PrivateRoute";
 export { DeletePostModal } from "./DeletePostModal";
 export { DeleteReplyModal } from "./DeleteReplyModal";
+export { HideReplyModal } from "./HideReplyModal";

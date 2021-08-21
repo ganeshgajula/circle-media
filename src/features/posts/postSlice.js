@@ -174,6 +174,21 @@ export const deleteReply = createAsyncThunk(
   }
 );
 
+export const hideReply = createAsyncThunk(
+  "posts/hideReply",
+  async (postDetails, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:4000/posts/${postDetails.postAuthorId}/${postDetails.postId}/replies/${postDetails.repliedMsgId}`,
+        { isActive: false }
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const initialState = {
   status: "idle",
   error: null,
@@ -437,6 +452,30 @@ export const postsSlice = createSlice({
     },
     [deleteReply.rejected]: (state, action) => {
       state.error = "error";
+      toast.error(action.payload.message, {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    },
+    [hideReply.fulfilled]: (state, action) => {
+      state.status = "fulfilled";
+
+      const updatedPostIndex = state.posts.findIndex(
+        (post) => post._id === action.payload.postAfterReplyUpdate._id
+      );
+
+      if (updatedPostIndex !== -1) {
+        state.posts.splice(updatedPostIndex, 1);
+        state.posts.push(action.payload.postAfterReplyUpdate);
+      }
+
+      toast.success("Reply hidden successfully", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    },
+    [hideReply.rejected]: (state, action) => {
+      state.status = "rejected";
       toast.error(action.payload.message, {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1500,
