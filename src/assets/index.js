@@ -34,4 +34,5 @@ export {
   EditIconMinified,
   DeleteIconMinified,
   CloseThickIconMinified,
+  HideReplyIcon,
 } from "./svgs";
