@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { isUserIdPresent } from "../../utils/utils";
@@ -23,6 +23,7 @@ import { TimeAndDateInfo } from "./TimeAndDateInfo";
 import { NewReply } from "./NewReply";
 import { PostReplies } from "./PostReplies";
 import { PostActionsPopover } from "./PostActionsPopover";
+import { DeletePostModal, DeleteReplyModal } from "../../components";
 
 export const ExpandedPostCard = ({ post }) => {
   const {
@@ -33,6 +34,9 @@ export const ExpandedPostCard = ({ post }) => {
   const [showPostActions, setShowPostActions] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [postContent, setPostContent] = useState(post.content);
+  const [showDeletePostModal, setShowDeletePostModal] = useState(false);
+  const [showDeleteReplyModal, setShowDeleteReplyModal] = useState(false);
+  const [selectedReplyMsg, setSelectedReplyMsg] = useState(null);
   const inputEl = useRef(null);
   const maxCharacterLimit = 280;
 
@@ -50,6 +54,12 @@ export const ExpandedPostCard = ({ post }) => {
       })
     );
   };
+
+  useEffect(() => {
+    if (isEditMode) {
+      inputEl.current.focus();
+    }
+  }, [isEditMode]);
 
   return (
     <div>
@@ -86,6 +96,8 @@ export const ExpandedPostCard = ({ post }) => {
             <PostActionsPopover
               setShowPostActions={setShowPostActions}
               setIsEditMode={setIsEditMode}
+              setShowDeletePostModal={setShowDeletePostModal}
+              inputEl={inputEl}
             />
           )}
           <span
@@ -233,7 +245,7 @@ export const ExpandedPostCard = ({ post }) => {
         </div>
         <div className="border-t border-gray-100 py-2">
           <p className="text-gray-500 ml-16">
-            Replying to{" "}
+            Replying to
             <span className="text-primary">@{post.userId.username}</span>
           </p>
           <NewReply postId={post._id} postAuthorId={post.userId._id} />
@@ -244,7 +256,22 @@ export const ExpandedPostCard = ({ post }) => {
         replies={post.replies}
         postAuthorId={post.userId._id}
         postId={post._id}
+        setShowDeleteReplyModal={setShowDeleteReplyModal}
+        setSelectedReplyMsg={setSelectedReplyMsg}
       />
+      {showDeletePostModal && (
+        <DeletePostModal
+          setShowDeletePostModal={setShowDeletePostModal}
+          postId={post._id}
+        />
+      )}
+      {showDeleteReplyModal && (
+        <DeleteReplyModal
+          setShowDeleteReplyModal={setShowDeleteReplyModal}
+          selectedReplyMsg={selectedReplyMsg}
+          postId={post._id}
+        />
+      )}
     </div>
   );
 };

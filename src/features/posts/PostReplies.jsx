@@ -1,11 +1,17 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MoreIcon } from "../../assets";
 import { updateReplyContent } from "./postSlice";
 import { ReplyActionsPopOver } from "./ReplyActionsPopover";
 import { TimeAgo } from "./TimeAgo";
 
-export const PostReplies = ({ replies, postAuthorId, postId }) => {
+export const PostReplies = ({
+  replies,
+  postAuthorId,
+  postId,
+  setShowDeleteReplyModal,
+  setSelectedReplyMsg,
+}) => {
   const [showReplyActions, setShowReplyActions] = useState(false);
   const [clickedMsgId, setClickedMsgId] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -15,11 +21,18 @@ export const PostReplies = ({ replies, postAuthorId, postId }) => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
 
+  useEffect(() => {
+    if (isEditMode) {
+      inputEl.current.focus();
+    }
+  }, [isEditMode]);
+
   const showReplyActionsHandler = (repliedMsgId, content) => {
     setShowReplyActions(true);
     setClickedMsgId(repliedMsgId);
     setReplyContent(content);
     setIsEditMode(false);
+    setSelectedReplyMsg(repliedMsgId);
   };
 
   const modifyReplyContent = () => {
@@ -69,16 +82,19 @@ export const PostReplies = ({ replies, postAuthorId, postId }) => {
                 <ReplyActionsPopOver
                   setShowReplyActions={setShowReplyActions}
                   setIsEditMode={setIsEditMode}
+                  postAuthorId={postAuthorId}
+                  repliedByUserId={userId}
+                  setShowDeleteReplyModal={setShowDeleteReplyModal}
                 />
               )}
               <span
                 className={`${
                   showReplyActions && clickedMsgId === _id && "hidden"
                 } ${isEditMode && clickedMsgId === _id && "hidden"} ${
-                  currentUser._id !== userId && "hidden"
-                } ${
-                  currentUser._id !== postAuthorId && "hidden"
-                } "mr-2 cursor-pointer"`}
+                  currentUser._id !== userId &&
+                  currentUser._id !== postAuthorId &&
+                  "hidden"
+                } mr-2 cursor-pointer`}
                 onClick={() => showReplyActionsHandler(_id, content)}
               >
                 <MoreIcon />

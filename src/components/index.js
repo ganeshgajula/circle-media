@@ -6,3 +6,5 @@ export { LogoutPopover } from "./LogoutPopover";
 export { FooterNavbar } from "./FooterNavbar";
 export { SideDrawer } from "./SideDrawer";
 export { PrivateRoute } from "./PrivateRoute";
+export { DeletePostModal } from "./DeletePostModal";
+export { DeleteReplyModal } from "./DeleteReplyModal";

@@ -146,6 +146,34 @@ export const updateReplyContent = createAsyncThunk(
   }
 );
 
+export const deletePost = createAsyncThunk(
+  "posts/deletePost",
+  async (postDetails, thunkAPI) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:4000/posts/${postDetails.postAuthorId}/${postDetails.postId}`
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const deleteReply = createAsyncThunk(
+  "posts/deleteReply",
+  async (postDetails, thunkAPI) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:4000/posts/${postDetails.postAuthorId}/${postDetails.postId}/replies/${postDetails.repliedMsgId}`
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const initialState = {
   status: "idle",
   error: null,
@@ -356,6 +384,58 @@ export const postsSlice = createSlice({
       });
     },
     [updateReplyContent.rejected]: (state, action) => {
+      state.error = "error";
+      toast.error(action.payload.message, {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    },
+    [deletePost.pending]: (state) => {
+      state.status = "loading";
+    },
+    [deletePost.fulfilled]: (state, action) => {
+      state.status = "fulfilled";
+      const postIndex = state.posts.findIndex(
+        (post) => post._id === action.payload.post._id
+      );
+
+      if (postIndex !== -1) {
+        state.posts.splice(postIndex, 1);
+      }
+
+      toast.success("Post deleted", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    },
+    [deletePost.rejected]: (state, action) => {
+      state.error = "error";
+      toast.error(action.payload.message, {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    },
+    [deleteReply.pending]: (state) => {
+      state.status = "loading";
+    },
+    [deleteReply.fulfilled]: (state, action) => {
+      state.status = "fulfilled";
+
+      const postIndex = state.posts.findIndex(
+        (post) => post._id === action.payload.post._id
+      );
+
+      if (postIndex !== -1) {
+        state.posts.splice(postIndex, 1);
+        state.posts.push(action.payload.post);
+      }
+
+      toast.success("Reply deleted", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    },
+    [deleteReply.rejected]: (state, action) => {
       state.error = "error";
       toast.error(action.payload.message, {
         position: toast.POSITION.BOTTOM_CENTER,
