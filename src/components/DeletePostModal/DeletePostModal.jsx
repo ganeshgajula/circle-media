@@ -26,7 +26,7 @@ export const DeletePostModal = ({ setShowDeletePostModal, postId }) => {
             onClick={() => {
               setShowDeletePostModal(false);
               dispatch(deletePost({ postAuthorId: _id, postId }));
-              navigate("/");
+              navigate("/", { replace: true });
             }}
           >
             Delete
