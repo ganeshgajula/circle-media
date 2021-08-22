@@ -24,7 +24,7 @@ export const SuggestionBox = () => {
       <div>
         {users
           .slice(0, arrayEndValue)
-          .map(({ _id, firstname, lastname, username, email }) => {
+          .map(({ _id, firstname, lastname, username }) => {
             const firstNameInitial = firstname[0];
             const lastNameInitial = lastname[0];
             const userInitials = `${firstNameInitial}${lastNameInitial}`;
@@ -61,7 +61,7 @@ export const SuggestionBox = () => {
                   onClick={() =>
                     dispatch(
                       followUnfollowUser({
-                        emailId: email,
+                        username,
                         currentLoggedInUserId: currentUser?._id,
                       })
                     )

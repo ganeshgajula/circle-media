@@ -6,7 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import { Notifications } from "./pages";
 import { Home } from "./features/posts/Home";
 import { SinglePostPage } from "./features/posts/SinglePostPage";
-import { Profile } from "./features/posts/Profile";
+import { UserProfile } from "./features/users/UserProfile";
 import {
   SideNavbar,
   SearchBar,
@@ -27,7 +27,7 @@ function App() {
 
   useEffect(() => {
     if (loginStatus) {
-      dispatch(initializeUser(loginStatus?.email));
+      dispatch(initializeUser(loginStatus?.username));
     }
   }, [loginStatus, dispatch]);
 
@@ -58,7 +58,10 @@ function App() {
                       path="/posts/:postId"
                       element={<SinglePostPage />}
                     />
-                    <PrivateRoute path="/profile" element={<Profile />} />
+                    <PrivateRoute
+                      path="/profile/:username"
+                      element={<UserProfile />}
+                    />
                     <PrivateRoute
                       path="/bookmarks"
                       element={<BookmarkedPosts />}

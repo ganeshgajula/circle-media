@@ -35,9 +35,11 @@ export const loginUser = createAsyncThunk(
 
 export const initializeUser = createAsyncThunk(
   "auth/initializeUser",
-  async (email, thunkAPI) => {
+  async (username, thunkAPI) => {
     try {
-      const response = await axios.get(`http://localhost:4000/users/${email}`);
+      const response = await axios.get(
+        `http://localhost:4000/users/${username}`
+      );
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -98,7 +100,6 @@ export const authSlice = createSlice({
           username: action.payload.username,
           firstname: action.payload.firstname,
           lastname: action.payload.lastname,
-          email: action.payload.email,
           isUserLoggedIn: true,
         })
       );

@@ -19,7 +19,7 @@ export const followUnfollowUser = createAsyncThunk(
   async (userData, thunkAPI) => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/users/${userData.emailId}/followunfollow`,
+        `http://localhost:4000/users/${userData.username}/followunfollow`,
         { userId: userData.currentLoggedInUserId }
       );
       return response.data;
