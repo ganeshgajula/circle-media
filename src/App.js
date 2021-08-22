@@ -18,6 +18,7 @@ import { Signup, Login } from "./features/auth";
 import { initializeUser } from "./features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUsers } from "./features/users/usersSlice";
+import { BookmarkedPosts } from "./features/posts/BookmarkedPosts";
 
 function App() {
   const { status } = useSelector((state) => state.users);
@@ -58,6 +59,10 @@ function App() {
                       element={<SinglePostPage />}
                     />
                     <PrivateRoute path="/profile" element={<Profile />} />
+                    <PrivateRoute
+                      path="/bookmarks"
+                      element={<BookmarkedPosts />}
+                    />
                     <PrivateRoute
                       path="/notifications"
                       element={<Notifications />}
