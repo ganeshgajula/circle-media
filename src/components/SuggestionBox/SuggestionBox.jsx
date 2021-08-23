@@ -31,20 +31,22 @@ export const SuggestionBox = () => {
             const userInitials = `${firstNameInitial}${lastNameInitial}`;
 
             return (
-              <Link
-                to={`/profile/${username}`}
+              <div
                 key={_id}
                 className={`${
                   _id === currentUser?._id && "hidden"
                 } flex items-center justify-between px-3 py-2 border-b border-gray-200 hover:bg-gray-100 cursor-pointer`}
               >
                 <div className="flex items-center space-x-3 mr-12">
-                  <div className="h-12 w-12 bg-blue-500 text-white rounded-full flex items-center justify-center">
+                  <Link
+                    to={`/profile/${username}`}
+                    className="h-12 w-12 bg-blue-500 text-white rounded-full flex items-center justify-center"
+                  >
                     <span className="font-semibold text-lg">
                       {userInitials}
                     </span>
-                  </div>
-                  <div>
+                  </Link>
+                  <Link to={`/profile/${username}`}>
                     <div className="flex items-center space-x-1">
                       <h3 className="font-bold">
                         {firstname} {lastname}
@@ -52,7 +54,7 @@ export const SuggestionBox = () => {
                       <VerifiedBadgeIcon />
                     </div>
                     <p className="text-gray-500">@{username}</p>
-                  </div>
+                  </Link>
                 </div>
                 <button
                   className={`${
@@ -73,7 +75,7 @@ export const SuggestionBox = () => {
                     ? "Follow"
                     : "Following"}
                 </button>
-              </Link>
+              </div>
             );
           })}
       </div>
