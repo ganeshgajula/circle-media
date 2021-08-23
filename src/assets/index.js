@@ -38,4 +38,5 @@ export {
   LocationIcon,
   LinkIcon,
   CalenderIcon,
+  CloseMidThinIcon,
 } from "./svgs";
