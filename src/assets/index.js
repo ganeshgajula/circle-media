@@ -35,4 +35,7 @@ export {
   DeleteIconMinified,
   CloseThickIconMinified,
   HideReplyIcon,
+  LocationIcon,
+  LinkIcon,
+  CalenderIcon,
 } from "./svgs";
