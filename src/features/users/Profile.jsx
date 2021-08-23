@@ -17,7 +17,7 @@ export const Profile = () => {
   } = useSelector((state) => state.auth);
   const selectedUser = users.find((user) => user.username === username);
   const selectedUserPosts = posts.filter(
-    ({ userId }) => userId.username === selectedUser.username
+    ({ userId }) => userId.username === selectedUser?.username
   );
   const sortedUserPosts = selectedUserPosts
     ?.slice()
@@ -26,12 +26,14 @@ export const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const firstNameInitial = selectedUser.firstname[0];
-  const lastNameInitial = selectedUser.lastname[0];
+  const firstNameInitial = selectedUser?.firstname[0];
+  const lastNameInitial = selectedUser?.lastname[0];
   const userInitials = `${firstNameInitial}${lastNameInitial}`;
 
+  console.log(_id);
   console.log(users);
   console.log(selectedUser);
+  console.log(username);
   console.log(posts);
   console.log(selectedUserPosts);
   return (
@@ -45,9 +47,9 @@ export const Profile = () => {
         </span>
         <span className="ml-6">
           <div className="text-xl font-bold ">
-            {selectedUser.firstname} {selectedUser.lastname}
+            {selectedUser?.firstname} {selectedUser?.lastname}
           </div>
-          <small>173 Tweets</small>
+          <small>{selectedUserPosts.length} Posts</small>
         </span>
       </div>
       <div className="p-3 ">
@@ -57,41 +59,41 @@ export const Profile = () => {
               <span className="text-3xl font-semibold">{userInitials}</span>
             </div>
             <div className="font-bold text-xl mt-1">
-              {selectedUser.firstname} {selectedUser.lastname}
+              {selectedUser?.firstname} {selectedUser?.lastname}
             </div>
-            <div className="text-gray-500">@{selectedUser.username}</div>
+            <div className="text-gray-500">@{selectedUser?.username}</div>
           </div>
-          {selectedUser._id === _id ? (
+          {selectedUser?._id === _id ? (
             <button className="font-semibold border border-gray-300 rounded-full px-4 py-1">
               Edit Profile
             </button>
           ) : (
             <button
               className={`${
-                !isUserIdPresent(following, selectedUser._id)
+                !isUserIdPresent(following, selectedUser?._id)
                   ? "border border-blue-400 text-primary  hover:bg-blue-50 "
                   : "bg-primary text-white py-1"
               } font-semibold rounded-2xl px-4 py-1`}
               onClick={() =>
                 dispatch(
                   followUnfollowUser({
-                    username: selectedUser.username,
+                    username: selectedUser?.username,
                     currentLoggedInUserId: _id,
                   })
                 )
               }
             >
-              {!isUserIdPresent(following, selectedUser._id)
+              {!isUserIdPresent(following, selectedUser?._id)
                 ? "Follow"
                 : "Following"}
             </button>
           )}
         </div>
-        <p className="my-2">{selectedUser.bio}</p>
+        <p className="my-2">{selectedUser?.bio}</p>
         <div className="flex space-x-3">
           <span className="flex items-center space-x-1">
             <LocationIcon />
-            <span>{selectedUser.location}</span>
+            <span>{selectedUser?.location}</span>
           </span>
           <span className="flex items-center space-x-1">
             <LinkIcon />
@@ -101,26 +103,26 @@ export const Profile = () => {
               rel="noreferrer"
               className="text-primary hover:underline"
             >
-              {selectedUser.link}
+              {selectedUser?.link}
             </a>
           </span>
           <span className="flex items-center space-x-1">
             <CalenderIcon />
             <span>
-              Joined <MonthAndYearInfo timestamp={selectedUser.joinedOn} />
+              Joined <MonthAndYearInfo timestamp={selectedUser?.joinedOn} />
             </span>
           </span>
         </div>
         <div className="flex items-center my-2 space-x-5">
           <span className="text-sm">
             <span className="font-extrabold mr-1">
-              {selectedUser.following.length}
+              {selectedUser?.following.length}
             </span>
             Following
           </span>
           <span className="text-sm">
             <span className="font-extrabold mr-1">
-              {selectedUser.followers.length}
+              {selectedUser?.followers.length}
             </span>
             Followers
           </span>
