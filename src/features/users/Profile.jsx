@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { CalenderIcon, LeftArrow, LinkIcon, LocationIcon } from "../../assets";
 import { isUserIdPresent } from "../../utils/utils";
 import { EmptyPosts } from "../posts/EmptyPosts";
 import { PostCard } from "../posts/PostCard";
+import { EditProfileModal } from "./EditProfileModal";
 import { MonthAndYearInfo } from "./MonthAndYearInfo";
 import { followUnfollowUser } from "./usersSlice";
 
@@ -25,15 +26,14 @@ export const Profile = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showEditProfileModal, setShowEditProfileModal] = useState(false);
 
   const firstNameInitial = selectedUser?.firstname[0];
   const lastNameInitial = selectedUser?.lastname[0];
   const userInitials = `${firstNameInitial}${lastNameInitial}`;
 
-  console.log(_id);
   console.log(users);
   console.log(selectedUser);
-  console.log(username);
   console.log(posts);
   console.log(selectedUserPosts);
   return (
@@ -64,7 +64,10 @@ export const Profile = () => {
             <div className="text-gray-500">@{selectedUser?.username}</div>
           </div>
           {selectedUser?._id === _id ? (
-            <button className="font-semibold border border-gray-300 rounded-full px-4 py-1">
+            <button
+              className="font-semibold border border-gray-300 rounded-full px-4 py-1 hover:bg-gray-100"
+              onClick={() => setShowEditProfileModal(true)}
+            >
               Edit Profile
             </button>
           ) : (
@@ -98,7 +101,7 @@ export const Profile = () => {
           <span className="flex items-center space-x-1">
             <LinkIcon />
             <a
-              href="https://ganeshgajula.com"
+              href={`https://${selectedUser?.link}`}
               target="_blank"
               rel="noreferrer"
               className="text-primary hover:underline"
@@ -137,6 +140,17 @@ export const Profile = () => {
           ))
         )}
       </div>
+      {showEditProfileModal && (
+        <EditProfileModal
+          setShowEditProfileModal={setShowEditProfileModal}
+          userFirstName={selectedUser.firstname}
+          userLastName={selectedUser.lastname}
+          userBio={selectedUser.bio}
+          userLink={selectedUser.link}
+          userLocation={selectedUser.location}
+          username={selectedUser.username}
+        />
+      )}
     </div>
   );
 };

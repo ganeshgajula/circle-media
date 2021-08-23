@@ -29,6 +29,27 @@ export const followUnfollowUser = createAsyncThunk(
   }
 );
 
+export const editUserProfile = createAsyncThunk(
+  "users/editUserProfile",
+  async (userData, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:4000/users/${userData.username}`,
+        {
+          firstname: userData.firstname,
+          lastname: userData.lastname,
+          bio: userData.bio,
+          link: userData.link,
+          location: userData.location,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const initialState = {
   status: "idle",
   error: null,
@@ -74,6 +95,37 @@ export const usersSlice = createSlice({
       }
     },
     [followUnfollowUser.rejected]: (state, action) => {
+      state.error = "error";
+      toast.error(action.payload.message, {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    },
+    [editUserProfile.pending]: (state) => {
+      state.status = "loading";
+      toast.info("Updating user info..", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    },
+    [editUserProfile.fulfilled]: (state, action) => {
+      state.status = "fulfilled";
+
+      const userIndex = state.users.findIndex(
+        (user) => user._id === action.payload.updatedUser._id
+      );
+
+      if (userIndex !== -1) {
+        state.users.splice(userIndex, 1);
+        state.users.push(action.payload.updatedUser);
+      }
+
+      toast.success("Profile updated successfully!", {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500,
+      });
+    },
+    [editUserProfile.rejected]: (state, action) => {
       state.error = "error";
       toast.error(action.payload.message, {
         position: toast.POSITION.BOTTOM_CENTER,
