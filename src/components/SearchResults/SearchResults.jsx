@@ -1,8 +1,14 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-export const SearchResults = ({ searchedKeyword }) => {
+export const SearchResults = ({
+  searchedKeyword,
+  setSearchPopOver,
+  setSearchedKeyword,
+}) => {
   const { users } = useSelector((state) => state.users);
+  const navigate = useNavigate();
 
   const matchedUsersList = users.filter(
     (user) =>
@@ -23,6 +29,11 @@ export const SearchResults = ({ searchedKeyword }) => {
             <div
               key={_id}
               className="flex items-center space-x-4 px-3 py-2 cursor-pointer hover:bg-gray-100"
+              onClick={() => {
+                navigate(`/profile/${username}`);
+                setSearchPopOver(false);
+                setSearchedKeyword("");
+              }}
             >
               <div className="h-12 w-12 bg-blue-500 text-white rounded-full flex items-center justify-center">
                 <span className="text-xl font-semibold">{userInitials}</span>

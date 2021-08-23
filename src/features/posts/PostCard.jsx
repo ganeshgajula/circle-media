@@ -23,7 +23,6 @@ export const PostCard = ({ post }) => {
   const { currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const firstNameInitial = post.userId.firstname[0];
   const lastNameInitial = post.userId.lastname[0];
   const userInitials = `${firstNameInitial}${lastNameInitial}`;
@@ -51,10 +50,10 @@ export const PostCard = ({ post }) => {
           className="bg-blue-500 mr-4 text-white h-12 w-14 rounded-full flex items-center justify-center"
           onClick={(e) => {
             e.stopPropagation();
-            navigate("/profile");
+            navigate(`/profile/${post.userId.username}`);
           }}
         >
-          <span className="text-2xl font-semibold">{userInitials}</span>
+          <span className="text-xl font-semibold">{userInitials}</span>
         </div>
         <div className="flex flex-col w-full">
           <div className="flex space-x-1 items-center">
@@ -62,7 +61,7 @@ export const PostCard = ({ post }) => {
               className="flex items-center"
               onClick={(e) => {
                 e.stopPropagation();
-                navigate("/profile");
+                navigate(`/profile/${post.userId.username}`);
               }}
             >
               <span className="font-bold text-base hover:underline">

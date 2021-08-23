@@ -6,7 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import { Notifications } from "./pages";
 import { Home } from "./features/posts/Home";
 import { SinglePostPage } from "./features/posts/SinglePostPage";
-import { UserProfile } from "./features/users/UserProfile";
+import { Profile } from "./features/users/Profile";
 import {
   SideNavbar,
   SearchBar,
@@ -60,7 +60,7 @@ function App() {
                     />
                     <PrivateRoute
                       path="/profile/:username"
-                      element={<UserProfile />}
+                      element={<Profile />}
                     />
                     <PrivateRoute
                       path="/bookmarks"

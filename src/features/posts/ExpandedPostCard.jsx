@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { isUserIdPresent } from "../../utils/utils";
 import {
@@ -34,7 +34,6 @@ export const ExpandedPostCard = ({ post }) => {
     currentUser: { _id },
   } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [showPostActions, setShowPostActions] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [postContent, setPostContent] = useState(post.content);
@@ -84,18 +83,21 @@ export const ExpandedPostCard = ({ post }) => {
         </div>
         <div className="flex justify-between">
           <span className="flex items-center">
-            <div
+            <Link
+              to={`/profile/${post.userId.username}`}
               className="bg-blue-500 mr-3 text-white h-12 w-12 rounded-full flex items-center justify-center"
-              onClick={() => navigate("/profile")}
             >
-              <span className="text-2xl font-semibold">{userInitials}</span>
-            </div>
-            <div className="flex flex-col" onClick={() => navigate("/profile")}>
+              <span className="text-xl font-semibold">{userInitials}</span>
+            </Link>
+            <Link
+              to={`/profile/${post.userId.username}`}
+              className="flex flex-col"
+            >
               <div className="font-bold text-base hover:underline">
                 {post.userId.firstname} {post.userId.lastname}
               </div>
               <div className="gray-text">@{post.userId.username}</div>
-            </div>
+            </Link>
           </span>
           {showPostActions && (
             <PostActionsPopover

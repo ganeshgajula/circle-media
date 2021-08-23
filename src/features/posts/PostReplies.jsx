@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { MoreIcon } from "../../assets";
 import { updateReplyContent } from "./postSlice";
@@ -62,16 +63,20 @@ export const PostReplies = ({
 
       return (
         <div key={_id} className="flex px-3 py-3 border-b border-gray-100">
-          <div
+          <Link
+            to={`/profile/${username}`}
             className={`${
               showReplyActions && selectedReplyMsgId === _id && "mt-4"
             } h-10 w-12 bg-blue-500 text-white rounded-full flex items-center justify-center mr-4`}
           >
             <span className="text-lg font-semibold">{userInitials}</span>
-          </div>
+          </Link>
           <div className="flex flex-col w-full">
             <div className="flex items-center justify-between">
-              <span className="flex space-x-1 items-center">
+              <Link
+                to={`/profile/${username}`}
+                className="flex space-x-1 items-center"
+              >
                 <span className="font-bold text-base hover:underline">
                   {firstname} {lastname}
                 </span>
@@ -79,7 +84,7 @@ export const PostReplies = ({
                 <span>
                   · <TimeAgo timestamp={date} />
                 </span>
-              </span>
+              </Link>
               {showReplyActions && selectedReplyMsgId === _id && (
                 <ReplyActionsPopOver
                   setShowReplyActions={setShowReplyActions}

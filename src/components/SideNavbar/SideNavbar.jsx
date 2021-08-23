@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 
 export const SideNavbar = () => {
   const [showLogoutPopover, setShowLogoutPopover] = useState(false);
-  const {currentUser} = useSelector(state => state.auth);
+  const { currentUser } = useSelector((state) => state.auth);
   const firstNameInitial = currentUser?.firstname[0];
   const lastNameInitial = currentUser?.lastname[0];
   const userInitials = `${firstNameInitial}${lastNameInitial}`;
@@ -62,7 +62,7 @@ export const SideNavbar = () => {
             </span>
           </li>
         </Link>
-        <Link to="/profile">
+        <Link to={`/profile/${currentUser?.username}`}>
           <li className="flex items-center px-3 py-3 cursor-pointer xl:hover:bg-blue-50 rounded-full primary-color nav-svg">
             <ProfileIcon />
             <span className="ml-4 font-bold text-xl hidden xl:block">
@@ -78,12 +78,14 @@ export const SideNavbar = () => {
         <div
           className="flex items-center px-3 py-3 cursor-pointer xl:hover:bg-blue-50 rounded-full"
           onClick={() => setShowLogoutPopover(true)}
-          >
+        >
           <div className="h-12 w-12 mr-4 rounded-full bg-blue-500 text-white flex items-center justify-center">
             <span className="text-xl font-semibold">{userInitials}</span>
           </div>
           <span className="mr-6 space-y-0 hidden flex-col xl:flex">
-            <p className="font-bold">{currentUser?.firstname} {currentUser?.lastname}</p>
+            <p className="font-bold">
+              {currentUser?.firstname} {currentUser?.lastname}
+            </p>
             <p>@{currentUser?.username}</p>
           </span>
           <div className="hidden xl:block">

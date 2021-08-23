@@ -29,7 +29,13 @@ export const SearchBar = () => {
           />
         </div>
       </div>
-      {searchPopOver && <SearchResults searchedKeyword={searchedKeyword} />}
+      {searchPopOver && (
+        <SearchResults
+          searchedKeyword={searchedKeyword}
+          setSearchPopOver={setSearchPopOver}
+          setSearchedKeyword={setSearchedKeyword}
+        />
+      )}
     </div>
   );
 };

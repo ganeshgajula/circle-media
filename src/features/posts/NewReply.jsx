@@ -1,10 +1,11 @@
 import React, { useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import { createNewReply } from "./postSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 export const NewReply = ({ postId, postAuthorId }) => {
   const {
-    currentUser: { _id, firstname, lastname },
+    currentUser: { _id, firstname, lastname, username },
   } = useSelector((state) => state.auth);
   const { status } = useSelector((state) => state.feed);
   const [replyContent, setReplyContent] = useState("");
@@ -18,9 +19,12 @@ export const NewReply = ({ postId, postAuthorId }) => {
 
   return (
     <div className="flex pt-2">
-      <div className="h-12 w-14 rounded-full bg-blue-500 text-white flex items-center justify-center mr-4">
-        <span className="text-2xl font-semibold">{userInitials}</span>
-      </div>
+      <Link
+        to={`/profile/${username}`}
+        className="h-12 w-14 rounded-full bg-blue-500 text-white flex items-center justify-center mr-4"
+      >
+        <span className="text-xl font-semibold">{userInitials}</span>
+      </Link>
       <div className="flex flex-col w-full">
         <textarea
           type="text"

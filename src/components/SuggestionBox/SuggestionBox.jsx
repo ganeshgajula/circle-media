@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { VerifiedBadgeIcon } from "../../assets";
 import { followUnfollowUser } from "../../features/users/usersSlice";
 import { isUserIdPresent } from "../../utils/utils";
+import { Link } from "react-router-dom";
 
 export const SuggestionBox = () => {
   const { users } = useSelector((state) => state.users);
@@ -30,7 +31,8 @@ export const SuggestionBox = () => {
             const userInitials = `${firstNameInitial}${lastNameInitial}`;
 
             return (
-              <div
+              <Link
+                to={`/profile/${username}`}
                 key={_id}
                 className={`${
                   _id === currentUser?._id && "hidden"
@@ -71,7 +73,7 @@ export const SuggestionBox = () => {
                     ? "Follow"
                     : "Following"}
                 </button>
-              </div>
+              </Link>
             );
           })}
       </div>
