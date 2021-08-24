@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { isUserIdPresent } from "../../utils/utils";
+import { isUserIdPresent, isUserPresent } from "../../utils/utils";
 import {
   ReplyIcon,
   RepostIcon,
@@ -37,7 +37,7 @@ export const PostCard = ({ post }) => {
     >
       <div
         className={`${
-          !isUserIdPresent(post.retweetedBy, currentUser._id) && "hidden"
+          !isUserPresent(post.retweetedBy, currentUser._id) && "hidden"
         } flex items-center space-x-2 pb-2 ml-8`}
       >
         <UserRepostedIcon />
@@ -98,7 +98,7 @@ export const PostCard = ({ post }) => {
               }}
             >
               <span className="p-2 hover:bg-green-100 rounded-full">
-                {!isUserIdPresent(post.retweetedBy, currentUser._id) ? (
+                {!isUserPresent(post.retweetedBy, currentUser._id) ? (
                   <RepostIcon />
                 ) : (
                   <FilledRepostIcon />
@@ -107,7 +107,7 @@ export const PostCard = ({ post }) => {
               <span
                 style={{
                   display: post.retweetedBy.length < 1 && "none",
-                  color: !isUserIdPresent(post.retweetedBy, currentUser._id)
+                  color: !isUserPresent(post.retweetedBy, currentUser._id)
                     ? "inherit"
                     : "#17bf63",
                 }}
@@ -129,7 +129,7 @@ export const PostCard = ({ post }) => {
               }}
             >
               <span className="p-2 hover:bg-red-100 rounded-full">
-                {!isUserIdPresent(post.likedBy, currentUser._id) ? (
+                {!isUserPresent(post.likedBy, currentUser._id) ? (
                   <LikeIcon />
                 ) : (
                   <FilledLikeIcon />
@@ -138,7 +138,7 @@ export const PostCard = ({ post }) => {
               <span
                 style={{
                   display: post.likedBy.length < 1 && "none",
-                  color: !isUserIdPresent(post.likedBy, currentUser._id)
+                  color: !isUserPresent(post.likedBy, currentUser._id)
                     ? "inherit"
                     : "red",
                 }}
