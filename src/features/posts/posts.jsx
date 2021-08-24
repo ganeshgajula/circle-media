@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { PostCard } from "./PostCard";
 import { loadAllPosts } from "./postSlice";
 import { EmptyPosts } from "./EmptyPosts";
+import { isUserPresent } from "../../utils/utils";
 
 export const Posts = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ export const Posts = () => {
 
   const followingUsersPosts = posts?.filter(
     ({ userId: { _id } }) =>
-      currentUser?.following.includes(_id) || currentUser._id === _id
+      isUserPresent(currentUser?.following, _id) || currentUser?._id === _id
   );
 
   const sortedPosts = followingUsersPosts
