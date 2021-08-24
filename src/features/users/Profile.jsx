@@ -1,22 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { CalenderIcon, LeftArrow, LinkIcon, LocationIcon } from "../../assets";
-import { isUserIdPresent } from "../../utils/utils";
+import { isUserPresent } from "../../utils/utils";
 import { EmptyPosts } from "../posts/EmptyPosts";
 import { PostCard } from "../posts/PostCard";
 import { EditProfileModal } from "./EditProfileModal";
 import { MonthAndYearInfo } from "./MonthAndYearInfo";
-import { followUnfollowUser } from "./usersSlice";
+import { followUnfollowUser, getSelectedUser } from "./usersSlice";
+import { Link } from "react-router-dom";
 
 export const Profile = () => {
   const { username } = useParams();
-  const { users } = useSelector((state) => state.users);
+  const { users, selectedUser } = useSelector((state) => state.users);
   const { status, posts } = useSelector((state) => state.feed);
   const {
     currentUser: { _id, following },
   } = useSelector((state) => state.auth);
-  const selectedUser = users.find((user) => user.username === username);
   const selectedUserPosts = posts.filter(
     ({ userId }) => userId.username === selectedUser?.username
   );
@@ -32,10 +32,19 @@ export const Profile = () => {
   const lastNameInitial = selectedUser?.lastname[0];
   const userInitials = `${firstNameInitial}${lastNameInitial}`;
 
+  useEffect(() => {
+    if (users.length > 0) {
+      dispatch(getSelectedUser(username));
+    }
+  }, [dispatch, username, users.length]);
+
   console.log(users);
+  console.log(username);
   console.log(selectedUser);
+  console.log(selectedUser?.following);
   console.log(posts);
   console.log(selectedUserPosts);
+
   return (
     <div>
       <div className="flex items-center px-2 py-1 border-b border-gray-100 sticky top-0 w-full bg-white cursor-pointer">
@@ -73,7 +82,7 @@ export const Profile = () => {
           ) : (
             <button
               className={`${
-                !isUserIdPresent(following, selectedUser?._id)
+                !isUserPresent(following, selectedUser?._id)
                   ? "border border-blue-400 text-primary  hover:bg-blue-50 "
                   : "bg-primary text-white py-1"
               } font-semibold rounded-2xl px-4 py-1`}
@@ -86,7 +95,7 @@ export const Profile = () => {
                 )
               }
             >
-              {!isUserIdPresent(following, selectedUser?._id)
+              {!isUserPresent(following, selectedUser?._id)
                 ? "Follow"
                 : "Following"}
             </button>
@@ -117,18 +126,24 @@ export const Profile = () => {
           </span>
         </div>
         <div className="flex items-center my-2 space-x-5">
-          <span className="text-sm">
+          <Link
+            to={`/profile/${selectedUser?.username}/following`}
+            className="text-sm hover:underline"
+          >
             <span className="font-extrabold mr-1">
               {selectedUser?.following.length}
             </span>
             Following
-          </span>
-          <span className="text-sm">
+          </Link>
+          <Link
+            to={`/profile/${selectedUser?.username}/followers`}
+            className="text-sm hover:underline"
+          >
             <span className="font-extrabold mr-1">
               {selectedUser?.followers.length}
             </span>
             Followers
-          </span>
+          </Link>
         </div>
       </div>
       <div className="border-t border-gray-100 p-2">

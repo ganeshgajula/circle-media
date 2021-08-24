@@ -19,6 +19,8 @@ import { initializeUser } from "./features/auth/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUsers } from "./features/users/usersSlice";
 import { BookmarkedPosts } from "./features/posts/BookmarkedPosts";
+import { Followers } from "./features/users/Followers";
+import { Following } from "./features/users/Following";
 
 function App() {
   const { status } = useSelector((state) => state.users);
@@ -61,6 +63,14 @@ function App() {
                     <PrivateRoute
                       path="/profile/:username"
                       element={<Profile />}
+                    />
+                    <PrivateRoute
+                      path="/profile/:username/following"
+                      element={<Following />}
+                    />
+                    <PrivateRoute
+                      path="/profile/:username/followers"
+                      element={<Followers />}
                     />
                     <PrivateRoute
                       path="/bookmarks"

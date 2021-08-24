@@ -54,12 +54,20 @@ const initialState = {
   status: "idle",
   error: null,
   users: [],
+  selectedUser: null,
 };
 
 export const usersSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {},
+  reducers: {
+    getSelectedUser: (state, action) => {
+      const selectedUser = state.users.find(
+        (user) => user.username === action.payload
+      );
+      state.selectedUser = selectedUser;
+    },
+  },
   extraReducers: {
     [loadUsers.pending]: (state) => {
       state.status = "loading";
@@ -134,5 +142,7 @@ export const usersSlice = createSlice({
     },
   },
 });
+
+export const { getSelectedUser } = usersSlice.actions;
 
 export default usersSlice.reducer;
