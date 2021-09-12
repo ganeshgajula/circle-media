@@ -1,22 +1,16 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { CloseMidThinIcon } from "../../assets";
 import { editUserProfile } from "./usersSlice";
 
-export const EditProfileModal = ({
-  setShowEditProfileModal,
-  userFirstName,
-  userLastName,
-  userBio,
-  userLocation,
-  userLink,
-  username,
-}) => {
-  const [firstname, setFirstName] = useState(userFirstName);
-  const [lastname, setLastName] = useState(userLastName);
-  const [bio, setBio] = useState(userBio);
-  const [location, setLocation] = useState(userLocation);
-  const [link, setLink] = useState(userLink);
+export const EditProfileModal = ({ setShowEditProfileModal }) => {
+  const { selectedUser } = useSelector((state) => state.users);
+  const username = selectedUser.username;
+  const [firstname, setFirstName] = useState(selectedUser.firstname);
+  const [lastname, setLastName] = useState(selectedUser.lastname);
+  const [bio, setBio] = useState(selectedUser.bio);
+  const [location, setLocation] = useState(selectedUser.location);
+  const [link, setLink] = useState(selectedUser.link);
   const dispatch = useDispatch();
 
   return (

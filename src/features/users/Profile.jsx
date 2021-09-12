@@ -12,7 +12,11 @@ import { Link } from "react-router-dom";
 
 export const Profile = () => {
   const { username } = useParams();
-  const { users, selectedUser } = useSelector((state) => state.users);
+  const {
+    users,
+    selectedUser,
+    status: userStatus,
+  } = useSelector((state) => state.users);
   const { status, posts } = useSelector((state) => state.feed);
   const {
     currentUser: { _id, following },
@@ -33,10 +37,10 @@ export const Profile = () => {
   const userInitials = `${firstNameInitial}${lastNameInitial}`;
 
   useEffect(() => {
-    if (users.length > 0) {
+    if (users.length > 0 && userStatus === "fulfilled") {
       dispatch(getSelectedUser(username));
     }
-  }, [dispatch, username, users.length]);
+  }, [dispatch, username, users.length, userStatus]);
 
   console.log(users);
   console.log(username);
@@ -156,15 +160,7 @@ export const Profile = () => {
         )}
       </div>
       {showEditProfileModal && (
-        <EditProfileModal
-          setShowEditProfileModal={setShowEditProfileModal}
-          userFirstName={selectedUser.firstname}
-          userLastName={selectedUser.lastname}
-          userBio={selectedUser.bio}
-          userLink={selectedUser.link}
-          userLocation={selectedUser.location}
-          username={selectedUser.username}
-        />
+        <EditProfileModal setShowEditProfileModal={setShowEditProfileModal} />
       )}
     </div>
   );
