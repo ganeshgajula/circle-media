@@ -14,19 +14,6 @@ export const loadAllPosts = createAsyncThunk(
   }
 );
 
-export const loadUserPosts = createAsyncThunk(
-  "posts/loadPosts",
-  async (userId, thunkAPI) => {
-    try {
-      const response = await axios.get(`http://localhost:4000/posts/${userId}`);
-      console.log(response.data);
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
-    }
-  }
-);
-
 export const createNewPost = createAsyncThunk(
   "posts/createNewPost",
   async (post, thunkAPI) => {
@@ -221,16 +208,6 @@ export const postsSlice = createSlice({
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1500,
       });
-    },
-    [loadUserPosts.pending]: (state) => {
-      state.status = "loading";
-    },
-    [loadUserPosts.fulfilled]: (state, action) => {
-      state.status = "fulfilled";
-      state.posts = action.payload.posts;
-    },
-    [loadUserPosts.rejected]: (state) => {
-      state.status = "rejected";
     },
     [createNewPost.pending]: (state) => {
       state.status = "loading";
