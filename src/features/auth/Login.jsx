@@ -10,24 +10,18 @@ export const Login = () => {
   const { state } = useLocation();
   const dispatch = useDispatch();
   const allFieldsEntered = email && password;
-  const { isUserLoggedIn, status, currentUser } = useSelector(
-    (state) => state.auth
-  );
+  const { token, status, currentUser } = useSelector((state) => state.auth);
 
   const loginHandler = (e) => {
     e.preventDefault();
     dispatch(loginUser({ email, password }));
   };
 
-  useEffect(
-    () => {
-      if (isUserLoggedIn) {
-        navigate(state?.from ? state.from : "/");
-      }
-    },
-    // eslint-disable-next-line
-    [isUserLoggedIn]
-  );
+  useEffect(() => {
+    if (token) {
+      navigate(state?.from ? state.from : "/");
+    }
+  }, [token, state, navigate]);
 
   console.log(currentUser);
   return (

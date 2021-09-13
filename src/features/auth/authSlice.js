@@ -10,7 +10,7 @@ export const signUpUser = createAsyncThunk(
         "http://localhost:4000/users/signup",
         userCredentials
       );
-      return response.data.savedUser;
+      return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
@@ -26,7 +26,7 @@ export const loginUser = createAsyncThunk(
         url: "http://localhost:4000/users/authenticate",
         headers: userCredentials,
       });
-      return response.data.user;
+      return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
@@ -47,9 +47,21 @@ export const initializeUser = createAsyncThunk(
   }
 );
 
+const setupAuthHeaderForServiceCalls = (token) => {
+  if (token) {
+    return (axios.defaults.headers.common["Authorization"] = token);
+  }
+  delete axios.defaults.headers.common["Authorization"];
+};
+
+const { token: savedToken, username: savedUsername } = JSON.parse(
+  localStorage.getItem("userCredentials")
+) || { token: null, username: null };
+
 const initialState = {
-  isUserLoggedIn: false,
   status: "idle",
+  token: savedToken,
+  username: savedUsername,
   currentUser: null,
 };
 
@@ -58,10 +70,12 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
+      state.token = null;
+      state.username = null;
       state.currentUser = null;
-      localStorage?.removeItem("userCredentials");
-      state.isUserLoggedIn = false;
       state.status = "idle";
+      setupAuthHeaderForServiceCalls(null);
+      localStorage?.removeItem("userCredentials");
     },
   },
   extraReducers: {
@@ -87,8 +101,9 @@ export const authSlice = createSlice({
     },
     [loginUser.fulfilled]: (state, action) => {
       state.status = "fulfilled";
-      state.isUserLoggedIn = true;
-      state.currentUser = action.payload;
+      state.token = action.payload.token;
+      state.currentUser = action.payload.user;
+      setupAuthHeaderForServiceCalls(action.payload.token);
       toast.success("Login successful", {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 2200,
@@ -96,11 +111,8 @@ export const authSlice = createSlice({
       localStorage?.setItem(
         "userCredentials",
         JSON.stringify({
-          userId: action.payload._id,
-          username: action.payload.username,
-          firstname: action.payload.firstname,
-          lastname: action.payload.lastname,
-          isUserLoggedIn: true,
+          token: action.payload.token,
+          username: action.payload.user.username,
         })
       );
     },
@@ -113,7 +125,7 @@ export const authSlice = createSlice({
     },
     [initializeUser.fulfilled]: (state, action) => {
       state.currentUser = action.payload.user;
-      state.isUserLoggedIn = true;
+      setupAuthHeaderForServiceCalls(state.token);
     },
   },
 });

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import axios from "axios";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,20 +17,38 @@ import {
 } from "./components";
 import { Signup, Login } from "./features/auth";
 import { initializeUser } from "./features/auth/authSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BookmarkedPosts } from "./features/posts/BookmarkedPosts";
 import { Followers } from "./features/users/Followers";
 import { Following } from "./features/users/Following";
+import { loadUsers } from "./features/users/usersSlice";
+import { loadAllPosts } from "./features/posts/postSlice";
+
+const setupAuthHeaderForServiceCalls = (token) => {
+  if (token) {
+    return (axios.defaults.headers.common["Authorization"] = token);
+  }
+  delete axios.defaults.headers.common["Authorization"];
+};
 
 function App() {
   const dispatch = useDispatch();
-  const loginStatus = JSON.parse(localStorage.getItem("userCredentials"));
+  const { token, username } = useSelector((state) => state.auth);
+
+  token && setupAuthHeaderForServiceCalls(token);
 
   useEffect(() => {
-    if (loginStatus) {
-      dispatch(initializeUser(loginStatus?.username));
+    if (token && username) {
+      dispatch(initializeUser(username));
     }
-  }, [loginStatus, dispatch]);
+  }, [token, username, dispatch]);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(loadUsers());
+      dispatch(loadAllPosts());
+    }
+  }, [token, dispatch]);
 
   return (
     <div>
