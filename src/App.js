@@ -16,14 +16,12 @@ import {
 } from "./components";
 import { Signup, Login } from "./features/auth";
 import { initializeUser } from "./features/auth/authSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { loadUsers } from "./features/users/usersSlice";
+import { useDispatch } from "react-redux";
 import { BookmarkedPosts } from "./features/posts/BookmarkedPosts";
 import { Followers } from "./features/users/Followers";
 import { Following } from "./features/users/Following";
 
 function App() {
-  const { status } = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const loginStatus = JSON.parse(localStorage.getItem("userCredentials"));
 
@@ -32,12 +30,6 @@ function App() {
       dispatch(initializeUser(loginStatus?.username));
     }
   }, [loginStatus, dispatch]);
-
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(loadUsers());
-    }
-  }, [status, dispatch]);
 
   return (
     <div>
