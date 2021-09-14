@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { CalenderIcon, LeftArrow, LinkIcon, LocationIcon } from "../../assets";
 import { isUserPresent } from "../../utils/utils";
-import { EmptyPosts } from "../posts/EmptyPosts";
 import { PostCard } from "../posts/PostCard";
 import { EditProfileModal } from "./EditProfileModal";
 import { MonthAndYearInfo } from "./MonthAndYearInfo";
