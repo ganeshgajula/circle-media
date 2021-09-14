@@ -150,7 +150,7 @@ export const Profile = () => {
       </div>
       <div className="border-t border-gray-100 p-2">
         {sortedUserPosts?.length === 0 && status === "fulfilled" ? (
-          <EmptyPosts />
+          <p>User doesn't have any posts.</p>
         ) : (
           sortedUserPosts?.map((post) => (
             <PostCard post={post} key={post._id} />
