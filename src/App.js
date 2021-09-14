@@ -34,14 +34,13 @@ const setupAuthHeaderForServiceCalls = (token) => {
 function App() {
   const dispatch = useDispatch();
   const { token, username } = useSelector((state) => state.auth);
-
-  token && setupAuthHeaderForServiceCalls(token);
+  const { users } = useSelector((state) => state.users);
 
   useEffect(() => {
     if (token && username) {
       dispatch(initializeUser(username));
     }
-  }, [token, username, dispatch]);
+  }, [token, username, dispatch, users]);
 
   useEffect(() => {
     if (token) {
@@ -50,6 +49,7 @@ function App() {
     }
   }, [token, dispatch]);
 
+  token && setupAuthHeaderForServiceCalls(token);
   return (
     <div>
       <ToastContainer />

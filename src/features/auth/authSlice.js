@@ -102,6 +102,7 @@ export const authSlice = createSlice({
     [loginUser.fulfilled]: (state, action) => {
       state.status = "fulfilled";
       state.token = action.payload.token;
+      state.username = action.payload.user.username;
       state.currentUser = action.payload.user;
       setupAuthHeaderForServiceCalls(action.payload.token);
       toast.success("Login successful", {
