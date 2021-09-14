@@ -37,7 +37,7 @@ export const PostCard = ({ post }) => {
     >
       <div
         className={`${
-          !isUserPresent(post.retweetedBy, currentUser._id) && "hidden"
+          !isUserPresent(post.retweetedBy, currentUser?._id) && "hidden"
         } flex items-center space-x-2 pb-2 ml-8`}
       >
         <UserRepostedIcon />
@@ -92,13 +92,13 @@ export const PostCard = ({ post }) => {
                   retweetButtonPressed({
                     postAuthorId: post.userId._id,
                     postId: post._id,
-                    retweetedByUserId: currentUser._id,
+                    retweetedByUserId: currentUser?._id,
                   })
                 );
               }}
             >
               <span className="p-2 hover:bg-green-100 rounded-full">
-                {!isUserPresent(post.retweetedBy, currentUser._id) ? (
+                {!isUserPresent(post.retweetedBy, currentUser?._id) ? (
                   <RepostIcon />
                 ) : (
                   <FilledRepostIcon />
@@ -107,7 +107,7 @@ export const PostCard = ({ post }) => {
               <span
                 style={{
                   display: post.retweetedBy.length < 1 && "none",
-                  color: !isUserPresent(post.retweetedBy, currentUser._id)
+                  color: !isUserPresent(post.retweetedBy, currentUser?._id)
                     ? "inherit"
                     : "#17bf63",
                 }}
@@ -123,13 +123,13 @@ export const PostCard = ({ post }) => {
                   likeButtonPressed({
                     postAuthorId: post.userId._id,
                     postId: post._id,
-                    likedByUserId: currentUser._id,
+                    likedByUserId: currentUser?._id,
                   })
                 );
               }}
             >
               <span className="p-2 hover:bg-red-100 rounded-full">
-                {!isUserPresent(post.likedBy, currentUser._id) ? (
+                {!isUserPresent(post.likedBy, currentUser?._id) ? (
                   <LikeIcon />
                 ) : (
                   <FilledLikeIcon />
@@ -138,7 +138,7 @@ export const PostCard = ({ post }) => {
               <span
                 style={{
                   display: post.likedBy.length < 1 && "none",
-                  color: !isUserPresent(post.likedBy, currentUser._id)
+                  color: !isUserPresent(post.likedBy, currentUser?._id)
                     ? "inherit"
                     : "red",
                 }}
@@ -154,13 +154,13 @@ export const PostCard = ({ post }) => {
                   bookmarkButtonPressed({
                     postAuthorId: post.userId._id,
                     postId: post._id,
-                    bookmarkedByUserId: currentUser._id,
+                    bookmarkedByUserId: currentUser?._id,
                   })
                 );
               }}
             >
               <span className="p-2 hover:bg-yellow-100 rounded-full">
-                {!isUserIdPresent(post.bookmarkedBy, currentUser._id) ? (
+                {!isUserIdPresent(post.bookmarkedBy, currentUser?._id) ? (
                   <AddToBookmarkIcon />
                 ) : (
                   <FilledAddedToBookmarkIcon />

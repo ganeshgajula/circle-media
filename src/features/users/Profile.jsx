@@ -18,9 +18,7 @@ export const Profile = () => {
     status: userStatus,
   } = useSelector((state) => state.users);
   const { status, posts } = useSelector((state) => state.feed);
-  const {
-    currentUser: { _id, following },
-  } = useSelector((state) => state.auth);
+  const { currentUser } = useSelector((state) => state.auth);
   const selectedUserPosts = posts.filter(
     ({ userId }) => userId.username === selectedUser?.username
   );
@@ -40,7 +38,7 @@ export const Profile = () => {
     if (users.length > 0 && userStatus === "fulfilled") {
       dispatch(getSelectedUser(username));
     }
-  }, [dispatch, username, users.length, userStatus]);
+  }, [dispatch, username, users, userStatus]);
 
   console.log(users);
   console.log(username);
@@ -76,7 +74,7 @@ export const Profile = () => {
             </div>
             <div className="text-gray-500">@{selectedUser?.username}</div>
           </div>
-          {selectedUser?._id === _id ? (
+          {selectedUser?._id === currentUser?._id ? (
             <button
               className="font-semibold border border-gray-300 rounded-full px-4 py-1 hover:bg-gray-100"
               onClick={() => setShowEditProfileModal(true)}
@@ -86,7 +84,7 @@ export const Profile = () => {
           ) : (
             <button
               className={`${
-                !isUserPresent(following, selectedUser?._id)
+                !isUserPresent(currentUser?.following, selectedUser?._id)
                   ? "border border-blue-400 text-primary  hover:bg-blue-50 "
                   : "bg-primary text-white py-1"
               } font-semibold rounded-2xl px-4 py-1`}
@@ -94,12 +92,12 @@ export const Profile = () => {
                 dispatch(
                   followUnfollowUser({
                     username: selectedUser?.username,
-                    currentLoggedInUserId: _id,
+                    currentLoggedInUserId: currentUser?._id,
                   })
                 )
               }
             >
-              {!isUserPresent(following, selectedUser?._id)
+              {!isUserPresent(currentUser?.following, selectedUser?._id)
                 ? "Follow"
                 : "Following"}
             </button>
