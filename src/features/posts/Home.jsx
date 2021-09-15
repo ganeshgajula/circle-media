@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { TitleIcon } from "../../assets";
 import { useDispatch } from "react-redux";
 import { loadUsers } from "../users/usersSlice";
-import { Posts } from "./Posts";
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -17,7 +16,6 @@ export const Home = () => {
         <span className="text-xl font-extrabold">Home</span>
         <TitleIcon />
       </div>
-      <Posts />
     </div>
   );
 };
