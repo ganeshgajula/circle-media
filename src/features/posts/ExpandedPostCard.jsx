@@ -65,6 +65,9 @@ export const ExpandedPostCard = ({ post }) => {
     }
   }, [isEditMode]);
 
+  const isPostLikedOrRetweeted =
+    post.retweetedBy.length > 0 || post.likedBy.length > 0;
+
   return (
     <div>
       <div
@@ -162,7 +165,35 @@ export const ExpandedPostCard = ({ post }) => {
           </article>
         )}
         <TimeAndDateInfo timestamp={post.postDate} />
-        <div className="flex items-center justify-between mr-4 sm:mr-7 md:mr-10 lg:mr-14 py-2">
+        {isPostLikedOrRetweeted && (
+          <div className="flex items-center mr-4 sm:mr-7 md:mr-10 lg:mr-14 py-3 border-b border-gray-100">
+            {post.retweetedBy.length > 0 && (
+              <Link
+                to={`/posts/${post._id}/retweets`}
+                className="cursor-pointer hover:underline pl-1"
+              >
+                <span className="font-bold">{post.retweetedBy.length}</span>
+                <span className="pl-1 text-gray-500">
+                  {post.retweetedBy.length > 1 ? "Retweets" : "Retweet"}
+                </span>
+              </Link>
+            )}
+            {post.likedBy.length > 0 && (
+              <Link
+                to={`/posts/${post._id}/likes`}
+                className={`${
+                  post.retweetedBy.length > 0 && "ml-5"
+                } cursor-pointer hover:underline`}
+              >
+                <span className="font-bold">{post.likedBy.length}</span>
+                <span className="pl-1 text-gray-500">
+                  {post.likedBy.length > 1 ? "Likes" : "Like"}
+                </span>
+              </Link>
+            )}
+          </div>
+        )}
+        <div className="flex items-center justify-between mr-4 sm:mr-7 md:mr-10 lg:mr-14 py-2 ">
           <button className="flex items-center cursor-pointer blue-color reply-svg">
             <span className="p-2 hover:bg-blue-100 rounded-full">
               <ReplyIcon />
@@ -253,7 +284,7 @@ export const ExpandedPostCard = ({ post }) => {
         <div className="border-t border-gray-100 py-2">
           <p className="text-gray-500 ml-16">
             Replying to
-            <span className="text-primary">@{post.userId.username}</span>
+            <span className="text-primary pl-1">@{post.userId.username}</span>
           </p>
           <NewReply postId={post._id} postAuthorId={post.userId._id} />
         </div>

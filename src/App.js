@@ -23,6 +23,8 @@ import { Followers } from "./features/users/Followers";
 import { Following } from "./features/users/Following";
 import { loadUsers } from "./features/users/usersSlice";
 import { loadAllPosts } from "./features/posts/postSlice";
+import { Likes } from "./features/posts/Likes";
+import { Retweets } from "./features/posts/Retweets";
 
 const setupAuthHeaderForServiceCalls = (token) => {
   if (token) {
@@ -90,6 +92,14 @@ function App() {
                     <PrivateRoute
                       path="/notifications"
                       element={<Notifications />}
+                    />
+                    <PrivateRoute
+                      path="/posts/:postId/likes"
+                      element={<Likes />}
+                    />
+                    <PrivateRoute
+                      path="/posts/:postId/retweets"
+                      element={<Retweets />}
                     />
                   </Routes>
                 </main>
