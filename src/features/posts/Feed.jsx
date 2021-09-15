@@ -6,7 +6,7 @@ import { loadAllPosts } from "./postSlice";
 import { EmptyPosts } from "./EmptyPosts";
 import { isUserPresent } from "../../utils/utils";
 
-export const Posts = () => {
+export const Feed = () => {
   const dispatch = useDispatch();
   const { status, posts } = useSelector((state) => state.feed);
   const { currentUser } = useSelector((state) => state.auth);
@@ -27,7 +27,7 @@ export const Posts = () => {
   }, [dispatch, status]);
 
   return (
-    <>
+    <div>
       <NewPost />
       <div className="h-3 bg-extra-light-gray"></div>
       <div>
@@ -37,6 +37,6 @@ export const Posts = () => {
           sortedPosts?.map((post) => <PostCard post={post} key={post._id} />)
         )}
       </div>
-    </>
+    </div>
   );
 };
