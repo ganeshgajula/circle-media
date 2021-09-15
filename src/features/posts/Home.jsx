@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { Posts } from "../../features/posts/Posts";
+import { Posts } from "./Posts";
+
 import { TitleIcon } from "../../assets";
 import { useDispatch } from "react-redux";
 import { loadUsers } from "../users/usersSlice";
