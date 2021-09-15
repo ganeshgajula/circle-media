@@ -30,23 +30,25 @@ export const UserCard = ({ firstname, lastname, username, _id }) => {
           <div className="text-sm text-gray-600">@{username}</div>
         </span>
       </span>
-      <button
-        className={`${
-          !isUserPresent(following, _id)
-            ? "border border-blue-400 text-primary hover:bg-blue-50"
-            : "bg-primary text-white py-1"
-        } font-semibold rounded-2xl px-4 py-1 `}
-        onClick={() =>
-          dispatch(
-            followUnfollowUser({
-              username: username,
-              currentLoggedInUserId,
-            })
-          )
-        }
-      >
-        {!isUserPresent(following, _id) ? "Follow" : "Following"}
-      </button>
+      {_id !== currentLoggedInUserId && (
+        <button
+          className={`${
+            !isUserPresent(following, _id)
+              ? "border border-blue-400 text-primary hover:bg-blue-50"
+              : "bg-primary text-white py-1"
+          } font-semibold rounded-2xl px-4 py-1 `}
+          onClick={() =>
+            dispatch(
+              followUnfollowUser({
+                username: username,
+                currentLoggedInUserId,
+              })
+            )
+          }
+        >
+          {!isUserPresent(following, _id) ? "Follow" : "Following"}
+        </button>
+      )}
     </Link>
   );
 };
