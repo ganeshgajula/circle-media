@@ -13,7 +13,7 @@ export const Following = () => {
       <div className="flex items-center px-3 py-2 border-b border-gray-100 sticky top-0 w-full bg-white cursor-pointer">
         <span
           className="p-2 hover:bg-blue-50 rounded-full"
-          onClick={() => navigate(`/profile/${selectedUser?.username}`)}
+          onClick={() => navigate(-1)}
         >
           <LeftArrow />
         </span>

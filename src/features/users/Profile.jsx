@@ -50,7 +50,7 @@ export const Profile = () => {
     <div>
       <div className="flex items-center px-2 py-1 border-b border-gray-100 sticky top-0 w-full bg-white cursor-pointer">
         <span
-          onClick={() => navigate("/")}
+          onClick={() => navigate(-1)}
           className="p-2 hover:bg-blue-50 rounded-full"
         >
           <LeftArrow />
