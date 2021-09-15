@@ -6,7 +6,9 @@ export const loadAllPosts = createAsyncThunk(
   "posts/loadAllPosts",
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get("http://localhost:4000/posts");
+      const response = await axios.get(
+        "https://api-circlemedia.herokuapp.com/posts"
+      );
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -19,7 +21,7 @@ export const createNewPost = createAsyncThunk(
   async (post, thunkAPI) => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/posts/${post.userId}`,
+        `https://api-circlemedia.herokuapp.com/posts/${post.userId}`,
         { content: post.postContent }
       );
       return response.data;
@@ -34,7 +36,7 @@ export const getSinglePost = createAsyncThunk(
   async (postDetails, thunkAPI) => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/posts/${postDetails.postAuthorId}/${postDetails.postId}`
+        `https://api-circlemedia.herokuapp.com/posts/${postDetails.postAuthorId}/${postDetails.postId}`
       );
       return response.data;
     } catch (error) {
@@ -48,7 +50,7 @@ export const likeButtonPressed = createAsyncThunk(
   async (postDetails, thunkAPI) => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/posts/${postDetails.postAuthorId}/${postDetails.postId}/likes`,
+        `https://api-circlemedia.herokuapp.com/posts/${postDetails.postAuthorId}/${postDetails.postId}/likes`,
         { likedByUserId: postDetails.likedByUserId }
       );
       return response.data;
@@ -63,7 +65,7 @@ export const retweetButtonPressed = createAsyncThunk(
   async (postDetails, thunkAPI) => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/posts/${postDetails.postAuthorId}/${postDetails.postId}/retweets`,
+        `https://api-circlemedia.herokuapp.com/posts/${postDetails.postAuthorId}/${postDetails.postId}/retweets`,
         { retweetedByUserId: postDetails.retweetedByUserId }
       );
       return response.data;
@@ -78,7 +80,7 @@ export const bookmarkButtonPressed = createAsyncThunk(
   async (postDetails, thunkAPI) => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/posts/${postDetails.postAuthorId}/${postDetails.postId}/bookmarks`,
+        `https://api-circlemedia.herokuapp.com/posts/${postDetails.postAuthorId}/${postDetails.postId}/bookmarks`,
         { bookmarkedByUserId: postDetails.bookmarkedByUserId }
       );
       return response.data;
@@ -93,7 +95,7 @@ export const createNewReply = createAsyncThunk(
   async (reply, thunkAPI) => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/posts/${reply.postAuthorId}/${reply.postId}/replies`,
+        `https://api-circlemedia.herokuapp.com/posts/${reply.postAuthorId}/${reply.postId}/replies`,
         { replierId: reply.replierId, content: reply.content }
       );
       return response.data;
@@ -108,7 +110,7 @@ export const updatePostContent = createAsyncThunk(
   async (postDetails, thunkAPI) => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/posts/${postDetails.postAuthorId}/${postDetails.postId}`,
+        `https://api-circlemedia.herokuapp.com/posts/${postDetails.postAuthorId}/${postDetails.postId}`,
         { content: postDetails.content }
       );
       return response.data;
@@ -123,7 +125,7 @@ export const updateReplyContent = createAsyncThunk(
   async (postDetails, thunkAPI) => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/posts/${postDetails.postAuthorId}/${postDetails.postId}/replies/${postDetails.repliedMsgId}`,
+        `https://api-circlemedia.herokuapp.com/posts/${postDetails.postAuthorId}/${postDetails.postId}/replies/${postDetails.repliedMsgId}`,
         { content: postDetails.content }
       );
       return response.data;
@@ -138,7 +140,7 @@ export const deletePost = createAsyncThunk(
   async (postDetails, thunkAPI) => {
     try {
       const response = await axios.delete(
-        `http://localhost:4000/posts/${postDetails.postAuthorId}/${postDetails.postId}`
+        `https://api-circlemedia.herokuapp.com/posts/${postDetails.postAuthorId}/${postDetails.postId}`
       );
       return response.data;
     } catch (error) {
@@ -152,7 +154,7 @@ export const deleteReply = createAsyncThunk(
   async (postDetails, thunkAPI) => {
     try {
       const response = await axios.delete(
-        `http://localhost:4000/posts/${postDetails.postAuthorId}/${postDetails.postId}/replies/${postDetails.repliedMsgId}`
+        `https://api-circlemedia.herokuapp.com/posts/${postDetails.postAuthorId}/${postDetails.postId}/replies/${postDetails.repliedMsgId}`
       );
       return response.data;
     } catch (error) {
@@ -166,7 +168,7 @@ export const hideReply = createAsyncThunk(
   async (postDetails, thunkAPI) => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/posts/${postDetails.postAuthorId}/${postDetails.postId}/replies/${postDetails.repliedMsgId}`,
+        `https://api-circlemedia.herokuapp.com/posts/${postDetails.postAuthorId}/${postDetails.postId}/replies/${postDetails.repliedMsgId}`,
         { isActive: false }
       );
       return response.data;

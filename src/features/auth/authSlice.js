@@ -7,7 +7,7 @@ export const signUpUser = createAsyncThunk(
   async (userCredentials, thunkAPI) => {
     try {
       const response = await axios.post(
-        "http://localhost:4000/users/signup",
+        "https://api-circlemedia.herokuapp.com/users/signup",
         userCredentials
       );
       return response.data;
@@ -23,7 +23,7 @@ export const loginUser = createAsyncThunk(
     try {
       const response = await axios({
         method: "POST",
-        url: "http://localhost:4000/users/authenticate",
+        url: "https://api-circlemedia.herokuapp.com/users/authenticate",
         headers: userCredentials,
       });
       return response.data;
@@ -38,7 +38,7 @@ export const initializeUser = createAsyncThunk(
   async (username, thunkAPI) => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/users/${username}`
+        `https://api-circlemedia.herokuapp.com/users/${username}`
       );
       return response.data;
     } catch (error) {

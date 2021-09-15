@@ -6,7 +6,9 @@ export const loadUsers = createAsyncThunk(
   "users/loadUsers",
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get("http://localhost:4000/users");
+      const response = await axios.get(
+        "https://api-circlemedia.herokuapp.com/users"
+      );
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -19,7 +21,7 @@ export const followUnfollowUser = createAsyncThunk(
   async (userData, thunkAPI) => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/users/${userData.username}/followunfollow`,
+        `https://api-circlemedia.herokuapp.com/users/${userData.username}/followunfollow`,
         { userId: userData.currentLoggedInUserId }
       );
       return response.data;
@@ -34,7 +36,7 @@ export const editUserProfile = createAsyncThunk(
   async (userData, thunkAPI) => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/users/${userData.username}`,
+        `https://api-circlemedia.herokuapp.com/users/${userData.username}`,
         {
           firstname: userData.firstname,
           lastname: userData.lastname,
