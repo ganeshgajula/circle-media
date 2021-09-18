@@ -28,8 +28,8 @@ export const Signup = () => {
   }, [status, navigate]);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-3xl mb-2 font-bold">Sign up</h1>
+    <div className="flex flex-col items-center mt-8 h-screen">
+      <h1 className="text-4xl mb-2 font-bold">Sign up</h1>
       <form
         onSubmit={signUpHandler}
         className="flex flex-col justify-around h-4/6 w-11/12 sm:w-7/12 md:w-3/12"
