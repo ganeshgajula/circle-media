@@ -4,7 +4,6 @@ import "./App.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Routes, Route } from "react-router-dom";
-import { Notifications } from "./pages";
 import { Home } from "./features/posts/Home";
 import { SinglePostPage } from "./features/posts/SinglePostPage";
 import { Profile } from "./features/users/Profile";
@@ -25,6 +24,7 @@ import { loadUsers } from "./features/users/usersSlice";
 import { loadAllPosts } from "./features/posts/postSlice";
 import { Likes } from "./features/posts/Likes";
 import { Retweets } from "./features/posts/Retweets";
+import { Notifications } from "./features/users/Notifications";
 
 const setupAuthHeaderForServiceCalls = (token) => {
   if (token) {

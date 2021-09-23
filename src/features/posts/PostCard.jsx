@@ -18,6 +18,7 @@ import {
   bookmarkButtonPressed,
 } from "./postSlice";
 import { TimeAgo } from "./TimeAgo";
+import { pushNotification } from "../users/usersSlice";
 
 export const PostCard = ({ post }) => {
   const { currentUser } = useSelector((state) => state.auth);
@@ -126,6 +127,15 @@ export const PostCard = ({ post }) => {
                     likedByUserId: currentUser?._id,
                   })
                 );
+                post.userId._id !== currentUser._id &&
+                  dispatch(
+                    pushNotification({
+                      username: post.userId.username,
+                      originatorUserId: currentUser._id,
+                      type: "Liked",
+                      postId: post._id,
+                    })
+                  );
               }}
             >
               <span className="p-2 hover:bg-red-100 rounded-full">

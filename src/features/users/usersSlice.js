@@ -6,9 +6,7 @@ export const loadUsers = createAsyncThunk(
   "users/loadUsers",
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get(
-        "https://api-circlemedia.herokuapp.com/users"
-      );
+      const response = await axios.get("http://localhost:4000/users");
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -21,7 +19,7 @@ export const followUnfollowUser = createAsyncThunk(
   async (userData, thunkAPI) => {
     try {
       const response = await axios.post(
-        `https://api-circlemedia.herokuapp.com/users/${userData.username}/followunfollow`,
+        `http://localhost:4000/users/${userData.username}/followunfollow`,
         { userId: userData.currentLoggedInUserId }
       );
       return response.data;
@@ -36,7 +34,7 @@ export const editUserProfile = createAsyncThunk(
   async (userData, thunkAPI) => {
     try {
       const response = await axios.post(
-        `https://api-circlemedia.herokuapp.com/users/${userData.username}`,
+        `http://localhost:4000/users/${userData.username}`,
         {
           firstname: userData.firstname,
           lastname: userData.lastname,
@@ -44,6 +42,21 @@ export const editUserProfile = createAsyncThunk(
           link: userData.link,
           location: userData.location,
         }
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const pushNotification = createAsyncThunk(
+  "notification/pushNotification",
+  async ({ username, originatorUserId, type, postId }, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:4000/users/${username}/notifications`,
+        { originatorUserId, type, postId }
       );
       return response.data;
     } catch (error) {
@@ -140,6 +153,22 @@ export const usersSlice = createSlice({
       toast.error(action.payload.message, {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1500,
+      });
+    },
+    [pushNotification.fulfilled]: (state, action) => {
+      const toBeNotifiedUserIndex = state.users.findIndex(
+        (user) => String(user._id) === action.payload.user._id
+      );
+
+      if (toBeNotifiedUserIndex !== -1) {
+        state.users[toBeNotifiedUserIndex] = action.payload.user;
+      }
+    },
+    [pushNotification.rejected]: (state, action) => {
+      state.error = "error";
+      toast.error(action.payload.errorMessage, {
+        position: "bottom-center",
+        autoClose: 2000,
       });
     },
   },
