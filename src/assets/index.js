@@ -39,4 +39,7 @@ export {
   LinkIcon,
   CalenderIcon,
   CloseMidThinIcon,
+  NotifyLikeIcon,
+  NotifyFollowedIcon,
+  NotifyRetweetIcon,
 } from "./svgs";
