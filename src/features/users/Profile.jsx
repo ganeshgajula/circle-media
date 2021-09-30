@@ -7,6 +7,7 @@ import { PostCard } from "../posts/PostCard";
 import { EditProfileModal } from "./EditProfileModal";
 import { MonthAndYearInfo } from "./MonthAndYearInfo";
 import { followUnfollowUser, getSelectedUser } from "./usersSlice";
+import { pushNotification } from "./usersSlice";
 import { Link } from "react-router-dom";
 
 export const Profile = () => {
@@ -87,14 +88,21 @@ export const Profile = () => {
                   ? "border border-blue-400 text-primary  hover:bg-blue-50 "
                   : "bg-primary text-white py-1"
               } font-semibold rounded-2xl px-4 py-1`}
-              onClick={() =>
+              onClick={() => {
                 dispatch(
                   followUnfollowUser({
                     username: selectedUser?.username,
                     currentLoggedInUserId: currentUser?._id,
                   })
-                )
-              }
+                );
+                dispatch(
+                  pushNotification({
+                    username: selectedUser.username,
+                    originatorUserId: currentUser._id,
+                    type: "Followed",
+                  })
+                );
+              }}
             >
               {!isUserPresent(currentUser?.following, selectedUser?._id)
                 ? "Follow"

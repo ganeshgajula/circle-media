@@ -53,7 +53,7 @@ export const editUserProfile = createAsyncThunk(
 );
 
 export const pushNotification = createAsyncThunk(
-  "notification/pushNotification",
+  "users/pushNotification",
   async ({ username, originatorUserId, type, postId }, thunkAPI) => {
     try {
       const response = await axios.post(

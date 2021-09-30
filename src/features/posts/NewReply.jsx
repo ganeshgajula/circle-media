@@ -2,8 +2,9 @@ import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { createNewReply } from "./postSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { pushNotification } from "../users/usersSlice";
 
-export const NewReply = ({ postId, postAuthorId }) => {
+export const NewReply = ({ postId, postAuthorId, authorUsername }) => {
   const {
     currentUser: { _id, firstname, lastname, username },
   } = useSelector((state) => state.auth);
@@ -64,6 +65,15 @@ export const NewReply = ({ postId, postAuthorId }) => {
                 })
               );
               setReplyContent("");
+              postAuthorId !== _id &&
+                dispatch(
+                  pushNotification({
+                    username: authorUsername,
+                    originatorUserId: _id,
+                    type: "Replied",
+                    postId: postId,
+                  })
+                );
             }}
             disabled={!replyContent && true}
           >

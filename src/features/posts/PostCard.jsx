@@ -43,7 +43,7 @@ export const PostCard = ({ post }) => {
       >
         <UserRepostedIcon />
         <span className="font-bold text-sm gray-text hover:underline">
-          You Reposted
+          You Retweeted
         </span>
       </div>
       <div className="flex">
@@ -96,6 +96,15 @@ export const PostCard = ({ post }) => {
                     retweetedByUserId: currentUser?._id,
                   })
                 );
+                post.userId._id !== currentUser._id &&
+                  dispatch(
+                    pushNotification({
+                      username: post.userId.username,
+                      originatorUserId: currentUser._id,
+                      type: "Retweeted",
+                      postId: post._id,
+                    })
+                  );
               }}
             >
               <span className="p-2 hover:bg-green-100 rounded-full">

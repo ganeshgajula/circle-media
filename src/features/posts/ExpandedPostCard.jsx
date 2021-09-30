@@ -28,6 +28,7 @@ import {
   DeleteReplyModal,
   HideReplyModal,
 } from "../../components";
+import { pushNotification } from "../users/usersSlice";
 
 export const ExpandedPostCard = ({ post }) => {
   const {
@@ -68,6 +69,7 @@ export const ExpandedPostCard = ({ post }) => {
   const isPostLikedOrRetweeted =
     post.retweetedBy.length > 0 || post.likedBy.length > 0;
 
+  console.log(post);
   return (
     <div>
       <div
@@ -204,15 +206,24 @@ export const ExpandedPostCard = ({ post }) => {
           </button>
           <button
             className="flex items-center cursor-pointer green-color repost-svg"
-            onClick={() =>
+            onClick={() => {
               dispatch(
                 retweetButtonPressed({
                   postAuthorId: post.userId._id,
                   postId: post._id,
                   retweetedByUserId: _id,
                 })
-              )
-            }
+              );
+              post.userId._id !== _id &&
+                dispatch(
+                  pushNotification({
+                    username: post.userId.username,
+                    originatorUserId: _id,
+                    type: "Retweeted",
+                    postId: post._id,
+                  })
+                );
+            }}
           >
             <span className="p-2 hover:bg-green-100 rounded-full">
               {!isUserPresent(post.retweetedBy, _id) ? (
@@ -234,15 +245,24 @@ export const ExpandedPostCard = ({ post }) => {
           </button>
           <button
             className="flex items-center cursor-pointer red-color like-svg"
-            onClick={() =>
+            onClick={() => {
               dispatch(
                 likeButtonPressed({
                   postAuthorId: post.userId._id,
                   postId: post._id,
                   likedByUserId: _id,
                 })
-              )
-            }
+              );
+              post.userId._id !== _id &&
+                dispatch(
+                  pushNotification({
+                    username: post.userId.username,
+                    originatorUserId: _id,
+                    type: "Liked",
+                    postId: post._id,
+                  })
+                );
+            }}
           >
             <span className="p-2 hover:bg-red-100 rounded-full">
               {!isUserPresent(post.likedBy, _id) ? (
@@ -286,7 +306,11 @@ export const ExpandedPostCard = ({ post }) => {
             Replying to
             <span className="text-primary pl-1">@{post.userId.username}</span>
           </p>
-          <NewReply postId={post._id} postAuthorId={post.userId._id} />
+          <NewReply
+            postId={post._id}
+            postAuthorId={post.userId._id}
+            authorUsername={post.userId.username}
+          />
         </div>
       </div>
       <div className="h-3 bg-extra-light-gray"></div>
