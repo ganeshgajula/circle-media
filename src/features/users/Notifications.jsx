@@ -51,7 +51,7 @@ export const Notifications = () => {
             <ul key={_id}>
               <li
                 className="py-2 px-4 cursor-pointer flex border-b hover:bg-gray-50"
-                onClick={() => navigateBasedOnType(type, username, postId._id)}
+                onClick={() => navigateBasedOnType(type, username, postId?._id)}
               >
                 <div>
                   {type === "Followed" && <NotifyFollowedIcon />}
