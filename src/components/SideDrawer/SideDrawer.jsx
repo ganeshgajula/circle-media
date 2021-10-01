@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   CloseThinIcon,
@@ -11,6 +12,7 @@ import { logout } from "../../features/auth/authSlice";
 export const SideDrawer = ({ setShowSideDrawer }) => {
   const { currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const firstNameInitial = currentUser?.firstname[0];
   const lastNameInitial = currentUser?.lastname[0];
@@ -23,7 +25,13 @@ export const SideDrawer = ({ setShowSideDrawer }) => {
           <span className="text-xl font-extrabold mr-12">Account Info</span>
           <CloseThinIcon setShowSideDrawer={setShowSideDrawer} />
         </div>
-        <div className="px-4 py-3 ">
+        <div
+          className="px-4 py-3"
+          onClick={() => {
+            navigate(`/profile/${currentUser?.username}`);
+            setShowSideDrawer(false);
+          }}
+        >
           <div className="h-10 w-10 bg-blue-500 text-white rounded-full flex items-center justify-center">
             <span className="text-lg font-bold">{userInitials}</span>
           </div>
@@ -35,26 +43,50 @@ export const SideDrawer = ({ setShowSideDrawer }) => {
           </p>
         </div>
         <div className="px-4 py-2 flex items-center">
-          <span className="mr-6 flex space-x-1">
+          <span
+            className="mr-6 flex space-x-1"
+            onClick={() => {
+              navigate(`/profile/${currentUser?.username}/following`);
+              setShowSideDrawer(false);
+            }}
+          >
             <span className="font-bold">{currentUser?.following.length}</span>
             <span>Following</span>
           </span>
-          <span className="flex space-x-1">
+          <span
+            className="flex space-x-1"
+            onClick={() => {
+              navigate(`/profile/${currentUser?.username}/followers`);
+              setShowSideDrawer(false);
+            }}
+          >
             <span className="font-bold">{currentUser?.followers.length}</span>
             <span>Followers</span>
           </span>
         </div>
         <div className="flex flex-col">
-          <div className="flex px-4 py-4 space-x-3">
+          <div
+            className="flex px-4 py-4 space-x-3"
+            onClick={() => {
+              navigate(`/profile/${currentUser?.username}`);
+              setShowSideDrawer(false);
+            }}
+          >
             <ProfileSmallIcon />
             <span>Profile</span>
           </div>
-          <div className="flex px-4 py-4 space-x-3">
+          <div
+            className="flex px-4 py-4 space-x-3"
+            onClick={() => {
+              navigate("/bookmarks");
+              setShowSideDrawer(false);
+            }}
+          >
             <BookmarkSmallIcon />
             <span>Bookmarks</span>
           </div>
           <div
-            className="flex px-4 py-4 space-x-3"
+            className="flex px-4 py-4 space-x-3 cursor-pointer"
             onClick={() => {
               dispatch(logout());
             }}

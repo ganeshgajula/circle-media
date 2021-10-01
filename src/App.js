@@ -25,6 +25,7 @@ import { loadAllPosts } from "./features/posts/postSlice";
 import { Likes } from "./features/posts/Likes";
 import { Retweets } from "./features/posts/Retweets";
 import { Notifications } from "./features/users/Notifications";
+import { Search } from "./features/users/Search";
 
 const setupAuthHeaderForServiceCalls = (token) => {
   if (token) {
@@ -93,6 +94,7 @@ function App() {
                       path="/notifications"
                       element={<Notifications />}
                     />
+                    <PrivateRoute path="/search" element={<Search />} />
                     <PrivateRoute
                       path="/posts/:postId/likes"
                       element={<Likes />}

@@ -104,7 +104,7 @@ export const Profile = () => {
           )}
         </div>
         <p className="my-2">{selectedUser?.bio}</p>
-        <div className="flex space-x-3">
+        <div className="flex flex-col sm:flex-row sm:space-x-3">
           <span className="flex items-center space-x-1">
             <LocationIcon />
             <span>{selectedUser?.location}</span>

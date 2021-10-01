@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { SideDrawer } from "..";
 import { HomeIcon, NavSearchIcon, NotificationIcon } from "../../assets";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export const FooterNavbar = () => {
   const [showSideDrawer, setShowSideDrawer] = useState(false);
@@ -14,23 +15,23 @@ export const FooterNavbar = () => {
   return (
     <>
       {showSideDrawer && <SideDrawer setShowSideDrawer={setShowSideDrawer} />}
-      <div className="flex items-center justify-between bg-white px-9 py-4 z-10">
-        <span>
+      <ul className="flex items-center justify-between bg-white px-9 py-4 z-10">
+        <Link to="/">
           <HomeIcon />
-        </span>
-        <span>
+        </Link>
+        <Link to="/search">
           <NavSearchIcon />
-        </span>
-        <span>
+        </Link>
+        <Link to="/notifications">
           <NotificationIcon />
-        </span>
+        </Link>
         <div
           className="h-8 w-8 bg-blue-500 text-white flex items-center justify-center rounded-full"
           onClick={() => setShowSideDrawer(true)}
         >
           <span className="text-base font-medium">{userInitials}</span>
         </div>
-      </div>
+      </ul>
     </>
   );
 };
