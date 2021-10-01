@@ -7,7 +7,7 @@ import { PostCard } from "../posts/PostCard";
 import { EditProfileModal } from "./EditProfileModal";
 import { MonthAndYearInfo } from "./MonthAndYearInfo";
 import { followUnfollowUser, getSelectedUser } from "./usersSlice";
-import { pushNotification } from "./usersSlice";
+
 import { Link } from "react-router-dom";
 
 export const Profile = () => {
@@ -93,13 +93,6 @@ export const Profile = () => {
                   followUnfollowUser({
                     username: selectedUser?.username,
                     currentLoggedInUserId: currentUser?._id,
-                  })
-                );
-                dispatch(
-                  pushNotification({
-                    username: selectedUser.username,
-                    originatorUserId: currentUser._id,
-                    type: "Followed",
                   })
                 );
               }}

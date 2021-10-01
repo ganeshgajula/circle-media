@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { VerifiedBadgeIcon } from "../../assets";
 import { followUnfollowUser } from "../../features/users/usersSlice";
-import { pushNotification } from "../../features/users/usersSlice";
 import { isUserPresent } from "../../utils/utils";
 import { Link } from "react-router-dom";
 
@@ -68,13 +67,6 @@ export const SuggestionBox = () => {
                       followUnfollowUser({
                         username,
                         currentLoggedInUserId: currentUser?._id,
-                      })
-                    );
-                    dispatch(
-                      pushNotification({
-                        username,
-                        originatorUserId: currentUser._id,
-                        type: "Followed",
                       })
                     );
                   }}
