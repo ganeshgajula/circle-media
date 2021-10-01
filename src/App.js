@@ -26,6 +26,7 @@ import { Likes } from "./features/posts/Likes";
 import { Retweets } from "./features/posts/Retweets";
 import { Notifications } from "./features/users/Notifications";
 import { Search } from "./features/users/Search";
+import { EditProfile } from "./features/users/EditProfile";
 
 const setupAuthHeaderForServiceCalls = (token) => {
   if (token) {
@@ -102,6 +103,10 @@ function App() {
                     <PrivateRoute
                       path="/posts/:postId/retweets"
                       element={<Retweets />}
+                    />
+                    <PrivateRoute
+                      path="/editprofile"
+                      element={<EditProfile />}
                     />
                   </Routes>
                 </main>

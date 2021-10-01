@@ -75,12 +75,20 @@ export const Profile = () => {
             <div className="text-gray-500">@{selectedUser?.username}</div>
           </div>
           {selectedUser?._id === currentUser?._id ? (
-            <button
-              className="font-semibold border border-gray-300 rounded-full px-4 py-1 hover:bg-gray-100"
-              onClick={() => setShowEditProfileModal(true)}
-            >
-              Edit Profile
-            </button>
+            <div>
+              <button
+                className="hidden font-semibold border border-gray-300 rounded-full px-4 py-1 hover:bg-gray-100 sm:flex"
+                onClick={() => setShowEditProfileModal(true)}
+              >
+                Edit Profile
+              </button>
+              <button
+                className="font-semibold border border-gray-300 rounded-full px-4 py-1 hover:bg-gray-100 sm:hidden"
+                onClick={() => navigate("/editprofile")}
+              >
+                Edit Profile
+              </button>
+            </div>
           ) : (
             <button
               className={`${
