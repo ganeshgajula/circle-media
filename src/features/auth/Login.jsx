@@ -11,10 +11,18 @@ export const Login = () => {
   const dispatch = useDispatch();
   const allFieldsEntered = email && password;
   const { token, status, currentUser } = useSelector((state) => state.auth);
+  const [guestLogin, setGuestLogin] = useState(false);
+  const [normalLogin, setNormalLogin] = useState(false);
 
   const loginHandler = (e) => {
     e.preventDefault();
+    setNormalLogin(true);
     dispatch(loginUser({ email, password }));
+  };
+
+  const loginAsGuest = () => {
+    setGuestLogin(true);
+    dispatch(loginUser({ email: "ganesh@gmail.com", password: "ganesh" }));
   };
 
   useEffect(() => {
@@ -29,7 +37,9 @@ export const Login = () => {
       <h1 className="text-3xl font-bold mb-2">Log in to Circle Media</h1>
       <form
         onSubmit={loginHandler}
-        className="flex flex-col justify-around h-2/6 w-11/12 sm:w-7/12 md:w-3/12"
+        className={`flex flex-col justify-around h-1/4 w-11/12 sm:w-7/12 md:w-3/12 ${
+          guestLogin && "h-1/6"
+        }`}
       >
         <input
           type="email"
@@ -49,12 +59,20 @@ export const Login = () => {
           type="submit"
           className={`border py-2 text-lg bg-blue-500 text-white rounded-lg ${
             !allFieldsEntered && "opacity-60 cursor-default"
-          }`}
+          } ${guestLogin && "hidden"}`}
           disabled={!allFieldsEntered}
         >
           {status === "loading" ? "Logging in..." : "Login"}
         </button>
       </form>
+      <button
+        onClick={loginAsGuest}
+        className={`border py-2 text-lg bg-blue-500 text-white rounded-lg mb-3 w-11/12 sm:w-7/12 md:w-3/12 ${
+          guestLogin && "mt-1"
+        } ${normalLogin && "hidden"}`}
+      >
+        {status === "loading" ? "Logging in..." : "Login as Guest"}
+      </button>
       <p>
         Don't have an account?
         <button
