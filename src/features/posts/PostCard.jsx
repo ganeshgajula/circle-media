@@ -75,7 +75,9 @@ export const PostCard = ({ post }) => {
             </span>
           </div>
 
-          <article className="mb-1 text-base">{post.content}</article>
+          <article className="mb-1 text-base whitespace-pre">
+            {post.content}
+          </article>
           <div className="flex items-center justify-between mr-4 sm:mr-7 md:mr-10 lg:mr-14">
             <button className="flex items-center cursor-pointer blue-color reply-svg">
               <span className="p-2 hover:bg-blue-100 rounded-full">
