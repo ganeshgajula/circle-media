@@ -162,7 +162,7 @@ export const ExpandedPostCard = ({ post }) => {
             </div>
           </form>
         ) : (
-          <article className="my-4 ml-1 text-xl font-medium">
+          <article className="my-4 ml-1 text-xl font-medium whitespace-pre">
             {post.content}
           </article>
         )}
