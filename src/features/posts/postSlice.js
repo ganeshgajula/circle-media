@@ -18,11 +18,16 @@ export const loadAllPosts = createAsyncThunk(
 
 export const createNewPost = createAsyncThunk(
   "posts/createNewPost",
-  async (post, thunkAPI) => {
+  async ({ userId, formData }, thunkAPI) => {
     try {
       const response = await axios.post(
-        `https://api-circlemedia.herokuapp.com/posts/${post.userId}`,
-        { content: post.postContent }
+        `https://api-circlemedia.herokuapp.com/posts/${userId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       return response.data;
     } catch (error) {

@@ -7,11 +7,30 @@ export const NewPost = () => {
   const maxCharacterLimit = 280;
   const inputEl = useRef(null);
   const [postContent, setPostContent] = useState("");
+  const [postMedia, setPostMedia] = useState(null);
   const dispatch = useDispatch();
-  const {currentUser} = useSelector(state => state.auth);
+  const { currentUser } = useSelector((state) => state.auth);
   const firstNameInitial = currentUser?.firstname[0];
   const lastNameInitial = currentUser?.lastname[0];
   const userInitials = `${firstNameInitial}${lastNameInitial}`;
+
+  const newPostHandler = () => {
+    let formData = new FormData();
+
+    // formData.append("userId", currentUser._id);
+    formData.append("postContent", postContent);
+    formData.append("postMedia", postMedia);
+
+    // console.log({ postContent, postMedia });
+    // console.log("form", { formData });
+
+    dispatch(createNewPost({ userId: currentUser._id, formData }));
+
+    // dispatch(createNewPost(formData));
+
+    setPostContent("");
+    setPostMedia(null);
+  };
 
   return (
     <div>
@@ -36,8 +55,19 @@ export const NewPost = () => {
           ></textarea>
           <div className="flex justify-between items-center pt-3 border-t border-gray-100">
             <div className="flex space-x-4">
-              <UploadImageIcon />
-              <UploadEmojiIcon />
+              <label htmlFor="media-upload" className="flex">
+                <UploadImageIcon />
+                <input
+                  id="media-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setPostMedia(e.target.files[0])}
+                  className="hidden"
+                />
+              </label>
+              <span>
+                <UploadEmojiIcon />
+              </span>
             </div>
             <div className="flex items-center space-x-5">
               <div
@@ -54,10 +84,7 @@ export const NewPost = () => {
                     ? "bg-blue-300 text-white text-lg font-bold px-4 py-1 rounded-full cursor-auto"
                     : "bg-primary text-white text-lg font-bold px-4 py-1 rounded-full "
                 }
-                onClick={() => {
-                  dispatch(createNewPost({userId:currentUser._id,postContent}));
-                  setPostContent("");
-                }}
+                onClick={newPostHandler}
                 disabled={!postContent}
               >
                 Post

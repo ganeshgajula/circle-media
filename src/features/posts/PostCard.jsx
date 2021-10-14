@@ -78,6 +78,15 @@ export const PostCard = ({ post }) => {
           <article className="mb-1 text-base whitespace-pre">
             {post.content}
           </article>
+
+          {post.media && (
+            <img
+              src={post.media}
+              alt="post-img"
+              className="block mt-1 mb-4 rounded-lg object-cover max-w-full h-auto"
+            />
+          )}
+
           <div className="flex items-center justify-between mr-4 sm:mr-7 md:mr-10 lg:mr-14">
             <button className="flex items-center cursor-pointer blue-color reply-svg">
               <span className="p-2 hover:bg-blue-100 rounded-full">

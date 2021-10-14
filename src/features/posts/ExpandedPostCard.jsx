@@ -162,9 +162,18 @@ export const ExpandedPostCard = ({ post }) => {
             </div>
           </form>
         ) : (
-          <article className="my-4 ml-1 text-xl font-medium whitespace-pre">
-            {post.content}
-          </article>
+          <>
+            <article className="mt-3 mb-2 ml-1 text-xl font-medium whitespace-pre">
+              {post.content}
+            </article>
+            {post.media && (
+              <img
+                src={post.media}
+                alt="post-img"
+                className="block mt-1 mb-4 rounded-lg object-cover max-w-full h-auto"
+              />
+            )}
+          </>
         )}
         <TimeAndDateInfo timestamp={post.postDate} />
         {isPostLikedOrRetweeted && (
