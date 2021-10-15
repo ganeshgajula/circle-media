@@ -33,16 +33,13 @@ export const followUnfollowUser = createAsyncThunk(
 
 export const editUserProfile = createAsyncThunk(
   "users/editUserProfile",
-  async (userData, thunkAPI) => {
+  async ({ username, formData }, thunkAPI) => {
     try {
       const response = await axios.post(
-        `https://api-circlemedia.herokuapp.com/users/${userData.username}`,
+        `https://api-circlemedia.herokuapp.com/users/${username}`,
+        formData,
         {
-          firstname: userData.firstname,
-          lastname: userData.lastname,
-          bio: userData.bio,
-          link: userData.link,
-          location: userData.location,
+          headers: { "Content-Type": "multipart/form-data" },
         }
       );
       return response.data;

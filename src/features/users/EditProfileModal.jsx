@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CloseMidThinIcon } from "../../assets";
 import { editUserProfile } from "./usersSlice";
 
 export const EditProfileModal = ({ setShowEditProfileModal }) => {
   const { selectedUser } = useSelector((state) => state.users);
+
+  const [avatar, setAvatar] = useState(selectedUser.avatar);
   const username = selectedUser.username;
   const [firstname, setFirstName] = useState(selectedUser.firstname);
   const [lastname, setLastName] = useState(selectedUser.lastname);
@@ -13,20 +15,82 @@ export const EditProfileModal = ({ setShowEditProfileModal }) => {
   const [link, setLink] = useState(selectedUser.link);
   const dispatch = useDispatch();
 
+  const [isLinkBroken, setIsLinkBroken] = useState(false);
+
+  const firstNameInitial = firstname[0];
+  const lastNameInitial = lastname[0];
+  const userInitials = `${firstNameInitial}${lastNameInitial}`;
+
+  useEffect(() => {
+    if (selectedUser && !avatar) {
+      setAvatar(
+        `https://res.cloudinary.com/circler/image/twitter_name/c_fill,g_face,w_120,h_120,r_max/ganeshgajula_.jpg`
+      );
+    }
+  }, [avatar, selectedUser]);
+
+  const updateProfileHandler = () => {
+    let formData = new FormData();
+
+    formData.append("avatar", avatar);
+    formData.append("firstname", firstname);
+    formData.append("lastname", lastname);
+    formData.append("bio", bio);
+    formData.append("link", link);
+    formData.append("location", location);
+
+    setShowEditProfileModal(false);
+
+    dispatch(editUserProfile({ username, formData }));
+  };
+
   return (
     <div className="flex items-center justify-center fixed h-full w-full left-0 top-0 z-20 modal-bg">
-      <div className="bg-white max-w-2xl m-auto box-border rounded-2xl h-2/4">
-        <div className="flex items-center px-4 py-3 border-b border-gray-100">
-          <span
-            className="cursor-pointer"
-            onClick={() => setShowEditProfileModal(false)}
-          >
-            <CloseMidThinIcon />
+      <div className="bg-white max-w-2xl m-auto box-border rounded-2xl h-3/5 overflow-auto">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 sticky top-0 bg-white">
+          <span className="flex items-center">
+            <span
+              className="cursor-pointer"
+              onClick={() => setShowEditProfileModal(false)}
+            >
+              <CloseMidThinIcon />
+            </span>
+            <span className="ml-6 font-bold text-lg">Edit Profile</span>
           </span>
-          <span className="ml-6 font-bold text-lg">Edit Profile</span>
+
+          <button
+            type="submit"
+            className="bg-primary text-white px-4 py-1 rounded-md font-bold"
+            onClick={updateProfileHandler}
+          >
+            Save
+          </button>
         </div>
+
         <div className="mt-4 px-4 py-3">
-          <div className="flex space-x-3 items-center">
+          <label htmlFor="profile-image">
+            {isLinkBroken ? (
+              <div className="bg-blue-500 text-white h-20 w-20 rounded-full flex items-center justify-center">
+                <span className="text-3xl font-semibold">{userInitials}</span>
+              </div>
+            ) : (
+              <img
+                onError={() => setIsLinkBroken(true)}
+                src={selectedUser?.avatar ? selectedUser.avatar : avatar}
+                alt="avatar"
+                className="object-cover rounded-full w-20 h-20"
+              />
+            )}
+            <input
+              id="profile-image"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => setAvatar(e.target.files[0])}
+            />
+          </label>
+
+          <div className="flex space-x-3 mt-4 items-center">
             <label htmlFor="firstname">Firstname</label>
             <input
               type="text"
@@ -73,25 +137,6 @@ export const EditProfileModal = ({ setShowEditProfileModal }) => {
                 onChange={(e) => setLocation(e.target.value)}
               />
             </div>
-            <button
-              type="submit"
-              className="bg-primary text-white max-w-max self-center px-4 py-1 rounded-md font-bold mt-8"
-              onClick={() => {
-                setShowEditProfileModal(false);
-                dispatch(
-                  editUserProfile({
-                    username,
-                    firstname,
-                    lastname,
-                    bio,
-                    link,
-                    location,
-                  })
-                );
-              }}
-            >
-              Save
-            </button>
           </div>
         </div>
       </div>

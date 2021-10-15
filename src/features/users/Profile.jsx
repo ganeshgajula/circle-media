@@ -29,6 +29,9 @@ export const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showEditProfileModal, setShowEditProfileModal] = useState(false);
+  const [isLinkBroken, setIsLinkBroken] = useState(false);
+
+  const [avatar, setAvatar] = useState(selectedUser?.avatar);
 
   const firstNameInitial = selectedUser?.firstname[0];
   const lastNameInitial = selectedUser?.lastname[0];
@@ -40,9 +43,17 @@ export const Profile = () => {
     }
   }, [dispatch, username, users, userStatus]);
 
+  useEffect(() => {
+    if (selectedUser && !avatar) {
+      setAvatar(
+        `https://res.cloudinary.com/circler/image/twitter_name/c_fill,g_face,w_120,h_120,r_max/ganeshgajula_.jpg`
+      );
+    }
+  }, [avatar, selectedUser]);
+
   console.log(users);
   console.log(username);
-  console.log(selectedUser);
+  console.log("56", selectedUser);
   console.log(selectedUser?.following);
   console.log(posts);
   console.log(selectedUserPosts);
@@ -66,9 +77,18 @@ export const Profile = () => {
       <div className="p-3 ">
         <div className="flex items-center justify-between w-full">
           <div>
-            <div className="bg-blue-500 text-white h-20 w-20 rounded-full flex items-center justify-center">
-              <span className="text-3xl font-semibold">{userInitials}</span>
-            </div>
+            {isLinkBroken ? (
+              <div className="bg-blue-500 text-white h-20 w-20 rounded-full flex items-center justify-center">
+                <span className="text-3xl font-semibold">{userInitials}</span>
+              </div>
+            ) : (
+              <img
+                onError={() => setIsLinkBroken(true)}
+                src={selectedUser?.avatar ? selectedUser.avatar : avatar}
+                alt="avatar"
+                className="object-cover rounded-full h-20 w-20"
+              />
+            )}
             <div className="font-bold text-xl mt-1">
               {selectedUser?.firstname} {selectedUser?.lastname}
             </div>
