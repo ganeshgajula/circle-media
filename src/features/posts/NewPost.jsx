@@ -17,17 +17,10 @@ export const NewPost = () => {
   const newPostHandler = () => {
     let formData = new FormData();
 
-    // formData.append("userId", currentUser._id);
     formData.append("postContent", postContent);
     formData.append("postMedia", postMedia);
 
-    // console.log({ postContent, postMedia });
-    // console.log("form", { formData });
-
     dispatch(createNewPost({ userId: currentUser._id, formData }));
-
-    // dispatch(createNewPost(formData));
-
     setPostContent("");
     setPostMedia(null);
   };
@@ -35,9 +28,17 @@ export const NewPost = () => {
   return (
     <div>
       <div className="flex px-3 py-3 border-b border-gray-100">
-        <div className="h-12 w-14 mr-4 rounded-full bg-blue-500 text-white flex items-center justify-center">
-          <span className="text-xl font-semibold">{userInitials}</span>
-        </div>
+        {!currentUser?.avatar ? (
+          <div className="h-12 w-14 mr-4 rounded-full bg-blue-500 text-white flex items-center justify-center">
+            <span className="text-xl font-semibold">{userInitials}</span>
+          </div>
+        ) : (
+          <img
+            src={currentUser?.avatar}
+            alt="avatar"
+            className="object-cover rounded-full h-12 w-14 mr-4"
+          />
+        )}
         <div className="flex flex-col w-full">
           <textarea
             type="text"

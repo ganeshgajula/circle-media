@@ -25,7 +25,7 @@ export const SuggestionBox = () => {
       <div>
         {users
           .slice(0, arrayEndValue)
-          .map(({ _id, firstname, lastname, username }) => {
+          .map(({ _id, avatar, firstname, lastname, username }) => {
             const firstNameInitial = firstname[0];
             const lastNameInitial = lastname[0];
             const userInitials = `${firstNameInitial}${lastNameInitial}`;
@@ -38,14 +38,24 @@ export const SuggestionBox = () => {
                 } flex items-center justify-between px-3 py-2 border-b border-gray-200 hover:bg-gray-100 cursor-pointer`}
               >
                 <div className="flex items-center space-x-3 mr-12">
-                  <Link
-                    to={`/profile/${username}`}
-                    className="h-12 w-12 bg-blue-500 text-white rounded-full flex items-center justify-center"
-                  >
-                    <span className="font-semibold text-lg">
-                      {userInitials}
-                    </span>
-                  </Link>
+                  {!avatar ? (
+                    <Link
+                      to={`/profile/${username}`}
+                      className="h-12 w-12 bg-blue-500 text-white rounded-full flex items-center justify-center"
+                    >
+                      <span className="font-semibold text-lg">
+                        {userInitials}
+                      </span>
+                    </Link>
+                  ) : (
+                    <Link to={`/profile/${username}`}>
+                      <img
+                        src={avatar}
+                        alt="avatar"
+                        className="object-cover rounded-full h-12 w-12"
+                      />
+                    </Link>
+                  )}
                   <Link to={`/profile/${username}`}>
                     <div className="flex items-center space-x-1">
                       <h3 className="font-bold">

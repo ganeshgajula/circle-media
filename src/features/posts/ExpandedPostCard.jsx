@@ -88,12 +88,22 @@ export const ExpandedPostCard = ({ post }) => {
         </div>
         <div className="flex justify-between">
           <span className="flex items-center">
-            <Link
-              to={`/profile/${post.userId.username}`}
-              className="bg-blue-500 mr-3 text-white h-12 w-12 rounded-full flex items-center justify-center"
-            >
-              <span className="text-xl font-semibold">{userInitials}</span>
-            </Link>
+            {!post.userId.avatar ? (
+              <Link
+                to={`/profile/${post.userId.username}`}
+                className="bg-blue-500 mr-3 text-white h-12 w-12 rounded-full flex items-center justify-center"
+              >
+                <span className="text-xl font-semibold">{userInitials}</span>
+              </Link>
+            ) : (
+              <Link to={`/profile/${post.userId.username}`} className="mr-3">
+                <img
+                  src={post.userId.avatar}
+                  alt="avatar"
+                  className="object-cover rounded-full h-12 w-12"
+                />
+              </Link>
+            )}
             <Link
               to={`/profile/${post.userId.username}`}
               className="flex flex-col"

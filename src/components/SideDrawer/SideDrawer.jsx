@@ -32,9 +32,17 @@ export const SideDrawer = ({ setShowSideDrawer }) => {
             setShowSideDrawer(false);
           }}
         >
-          <div className="h-10 w-10 bg-blue-500 text-white rounded-full flex items-center justify-center">
-            <span className="text-lg font-bold">{userInitials}</span>
-          </div>
+          {!currentUser?.avatar ? (
+            <div className="h-10 w-10 bg-blue-500 text-white rounded-full flex items-center justify-center">
+              <span className="text-lg font-bold">{userInitials}</span>
+            </div>
+          ) : (
+            <img
+              src={currentUser?.avatar}
+              alt="avatar"
+              className="object-cover rounded-full h-10 w-10"
+            />
+          )}
           <div className="mt-3 font-bold text-gray-900">
             {currentUser?.firstname} {currentUser?.lastname}
           </div>

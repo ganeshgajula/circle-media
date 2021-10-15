@@ -25,12 +25,21 @@ export const FooterNavbar = () => {
         <Link to="/notifications">
           <NotificationIcon />
         </Link>
-        <div
-          className="h-8 w-8 bg-blue-500 text-white flex items-center justify-center rounded-full"
-          onClick={() => setShowSideDrawer(true)}
-        >
-          <span className="text-base font-medium">{userInitials}</span>
-        </div>
+        {!currentUser?.avatar ? (
+          <div
+            className="h-8 w-8 bg-blue-500 text-white flex items-center justify-center rounded-full"
+            onClick={() => setShowSideDrawer(true)}
+          >
+            <span className="text-base font-medium">{userInitials}</span>
+          </div>
+        ) : (
+          <img
+            src={currentUser?.avatar}
+            alt="avatar"
+            onClick={() => setShowSideDrawer(true)}
+            className="object-cover rounded-full h-8 w-8"
+          />
+        )}
       </ul>
     </>
   );

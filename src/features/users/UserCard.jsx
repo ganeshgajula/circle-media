@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { isUserPresent } from "../../utils/utils";
 import { followUnfollowUser } from "./usersSlice";
 
-export const UserCard = ({ firstname, lastname, username, _id }) => {
+export const UserCard = ({ firstname, lastname, username, _id, avatar }) => {
   const {
     currentUser: { following, _id: currentLoggedInUserId },
   } = useSelector((state) => state.auth);
@@ -21,9 +21,17 @@ export const UserCard = ({ firstname, lastname, username, _id }) => {
       className="flex items-center justify-between p-3 hover:bg-gray-50 cursor-pointer"
     >
       <span className="flex items-center">
-        <span className="bg-blue-500 mr-4 text-white h-12 w-12 flex items-center justify-center rounded-full ">
-          <span className="text-xl font-semibold">{userInitials}</span>
-        </span>
+        {!avatar ? (
+          <span className="bg-blue-500 mr-4 text-white h-12 w-12 flex items-center justify-center rounded-full ">
+            <span className="text-xl font-semibold">{userInitials}</span>
+          </span>
+        ) : (
+          <img
+            src={avatar}
+            alt="avatar"
+            className="object-cover rounded-full h-12 w-12 mr-4"
+          />
+        )}
         <span>
           <div className="font-bold">
             {firstname} {lastname}

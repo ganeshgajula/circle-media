@@ -47,15 +47,23 @@ export const PostCard = ({ post }) => {
         </span>
       </div>
       <div className="flex">
-        <div
-          className="bg-blue-500 mr-4 text-white h-12 w-14 rounded-full flex items-center justify-center"
-          onClick={(e) => {
-            e.stopPropagation();
-            navigate(`/profile/${post.userId.username}`);
-          }}
-        >
-          <span className="text-xl font-semibold">{userInitials}</span>
-        </div>
+        {!post.userId.avatar ? (
+          <div
+            className="bg-blue-500 mr-4 text-white h-12 w-14 rounded-full flex items-center justify-center"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/profile/${post.userId.username}`);
+            }}
+          >
+            <span className="text-xl font-semibold">{userInitials}</span>
+          </div>
+        ) : (
+          <img
+            src={post.userId.avatar}
+            alt="avatar"
+            className="object-cover rounded-full h-12 w-14 mr-4"
+          />
+        )}
         <div className="flex flex-col w-full">
           <div className="flex space-x-1 items-center">
             <span

@@ -6,7 +6,7 @@ import { pushNotification } from "../users/usersSlice";
 
 export const NewReply = ({ postId, postAuthorId, authorUsername }) => {
   const {
-    currentUser: { _id, firstname, lastname, username },
+    currentUser: { _id, avatar, firstname, lastname, username },
   } = useSelector((state) => state.auth);
   const { status } = useSelector((state) => state.feed);
   const [replyContent, setReplyContent] = useState("");
@@ -20,12 +20,22 @@ export const NewReply = ({ postId, postAuthorId, authorUsername }) => {
 
   return (
     <div className="flex pt-2">
-      <Link
-        to={`/profile/${username}`}
-        className="h-12 w-14 rounded-full bg-blue-500 text-white flex items-center justify-center mr-4"
-      >
-        <span className="text-xl font-semibold">{userInitials}</span>
-      </Link>
+      {!avatar ? (
+        <Link
+          to={`/profile/${username}`}
+          className="h-12 w-14 rounded-full bg-blue-500 text-white flex items-center justify-center mr-4"
+        >
+          <span className="text-xl font-semibold">{userInitials}</span>
+        </Link>
+      ) : (
+        <Link to={`/profile/${username}`} className="mr-4">
+          <img
+            src={avatar}
+            alt="avatar"
+            className="object-cover rounded-full h-12 w-14"
+          />
+        </Link>
+      )}
       <div className="flex flex-col w-full">
         <textarea
           type="text"

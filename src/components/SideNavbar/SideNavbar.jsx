@@ -79,9 +79,17 @@ export const SideNavbar = () => {
           className="flex items-center px-3 py-3 cursor-pointer xl:hover:bg-blue-50 rounded-full"
           onClick={() => setShowLogoutPopover(true)}
         >
-          <div className="h-12 w-12 mr-4 rounded-full bg-blue-500 text-white flex items-center justify-center">
-            <span className="text-xl font-semibold">{userInitials}</span>
-          </div>
+          {!currentUser?.avatar ? (
+            <div className="h-12 w-12 mr-4 rounded-full bg-blue-500 text-white flex items-center justify-center">
+              <span className="text-xl font-semibold">{userInitials}</span>
+            </div>
+          ) : (
+            <img
+              src={currentUser?.avatar}
+              alt="avatar"
+              className="object-cover rounded-full h-12 w-12 mr-4"
+            />
+          )}
           <span className="mr-6 space-y-0 hidden flex-col xl:flex">
             <p className="font-bold">
               {currentUser?.firstname} {currentUser?.lastname}
