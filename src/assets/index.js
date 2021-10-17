@@ -43,4 +43,5 @@ export {
   NotifyFollowedIcon,
   NotifyRetweetIcon,
   NotifyReplyIcon,
+  CameraIcon,
 } from "./svgs";
