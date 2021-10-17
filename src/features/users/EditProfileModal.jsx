@@ -79,7 +79,7 @@ export const EditProfileModal = ({ setShowEditProfileModal }) => {
                   onError={() => setIsLinkBroken(true)}
                   src={selectedUser?.avatar ? selectedUser.avatar : avatar}
                   alt="avatar"
-                  className="object-cover rounded-full w-20 h-20 opacity-60"
+                  className="object-cover rounded-full w-20 h-20 opacity-80"
                 />
                 <span className="absolute top-1/3 left-1/3">
                   <CameraIcon />
