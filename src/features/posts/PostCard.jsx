@@ -50,7 +50,7 @@ export const PostCard = ({ post }) => {
       <div className="flex">
         {!post.userId.avatar || isLinkBroken ? (
           <div
-            className="bg-blue-500 mr-4 text-white h-12 w-14 rounded-full flex items-center justify-center"
+            className="bg-blue-500 mr-3 sm:mr-4 text-white h-12 w-14 rounded-full flex items-center justify-center"
             onClick={(e) => {
               e.stopPropagation();
               navigate(`/profile/${post.userId.username}`);
@@ -63,7 +63,7 @@ export const PostCard = ({ post }) => {
             onError={() => setIsLinkBroken(true)}
             src={post.userId.avatar}
             alt="avatar"
-            className="object-cover rounded-full h-12 w-14 mr-4"
+            className="object-cover rounded-full h-12 w-14 mr-3 sm:mr-4"
           />
         )}
         <div className="flex flex-col w-full">
