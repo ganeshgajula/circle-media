@@ -17,7 +17,7 @@ export const TimeAndDateInfo = ({ timestamp }) => {
   }
 
   return (
-    <span className="text-gray-500 pb-4 border-b border-gray-100">
+    <span className="text-sm sm:text-base text-gray-500 pb-4 border-b border-gray-100">
       {timeInfo} · Circle Web App
     </span>
   );
