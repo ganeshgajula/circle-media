@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { BookmarkedPosts } from "./features/posts/BookmarkedPosts";
 import { Followers } from "./features/users/Followers";
 import { Following } from "./features/users/Following";
-import { loadUsers } from "./features/users/usersSlice";
+import { initializeUserAvatar, loadUsers } from "./features/users/usersSlice";
 import { loadAllPosts } from "./features/posts/postSlice";
 import { Likes } from "./features/posts/Likes";
 import { Retweets } from "./features/posts/Retweets";
@@ -37,7 +37,7 @@ const setupAuthHeaderForServiceCalls = (token) => {
 
 function App() {
   const dispatch = useDispatch();
-  const { token, username } = useSelector((state) => state.auth);
+  const { token, username, currentUser } = useSelector((state) => state.auth);
   const { users } = useSelector((state) => state.users);
 
   useEffect(() => {
@@ -52,6 +52,36 @@ function App() {
       dispatch(loadAllPosts());
     }
   }, [token, dispatch]);
+
+  useEffect(() => {
+    dispatch(loadAllPosts());
+  }, [users, dispatch]);
+
+  // useEffect(() => {
+  //   if (currentUser && !currentUser.avatar) {
+  //     const avatar = `https://res.cloudinary.com/circler/image/twitter_name/c_fill,g_face,w_120,h_120,r_max/ganeshgajula_.jpg`;
+
+  //     let formData = new FormData();
+  //     formData.append("avatar", avatar);
+
+  //     dispatch(initializeUserAvatar({ username, formData }));
+  //   }
+  // }, [currentUser, dispatch, username]);
+
+  useEffect(() => {
+    if (users.length > 0) {
+      users.forEach(({ avatar, username }) => {
+        if (!avatar) {
+          const twitterAvatar = `https://res.cloudinary.com/circler/image/twitter_name/c_fill,g_face,w_120,h_120,r_max/${username}.jpg`;
+
+          let formData = new FormData();
+          formData.append("avatar", twitterAvatar);
+
+          dispatch(initializeUserAvatar({ username, formData }));
+        }
+      });
+    }
+  }, [dispatch, users]);
 
   token && setupAuthHeaderForServiceCalls(token);
   return (

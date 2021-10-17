@@ -49,6 +49,24 @@ export const editUserProfile = createAsyncThunk(
   }
 );
 
+export const initializeUserAvatar = createAsyncThunk(
+  "users/initializeUserAvatar",
+  async ({ username, formData }, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        `https://api-circlemedia.herokuapp.com/users/${username}`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const pushNotification = createAsyncThunk(
   "users/pushNotification",
   async ({ username, originatorUserId, type, postId }, thunkAPI) => {
@@ -153,6 +171,16 @@ export const usersSlice = createSlice({
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1500,
       });
+    },
+    [initializeUserAvatar.fulfilled]: (state, action) => {
+      const userIndex = state.users.findIndex(
+        (user) => user._id === action.payload.updatedUser._id
+      );
+
+      if (userIndex !== -1) {
+        state.users.splice(userIndex, 1);
+        state.users.push(action.payload.updatedUser);
+      }
     },
     [pushNotification.fulfilled]: (state, action) => {
       const toBeNotifiedUserIndex = state.users.findIndex(
