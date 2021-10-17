@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { UploadImageIcon, UploadEmojiIcon } from "../../assets";
 import { createNewPost } from "./postSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { emojis } from "../../data/emojis";
 
 export const NewPost = () => {
   const maxCharacterLimit = 280;
@@ -14,6 +15,7 @@ export const NewPost = () => {
   const lastNameInitial = currentUser?.lastname[0];
   const userInitials = `${firstNameInitial}${lastNameInitial}`;
   const [isLinkBroken, setIsLinkBroken] = useState(false);
+  const [showEmojis, setShowEmojis] = useState(false);
 
   const newPostHandler = () => {
     let formData = new FormData();
@@ -27,10 +29,10 @@ export const NewPost = () => {
   };
 
   return (
-    <div>
+    <div className="relative">
       <div className="flex px-3 py-3 border-b border-gray-100">
         {!currentUser?.avatar || isLinkBroken ? (
-          <div className="h-12 w-14 mr-4 rounded-full bg-blue-500 text-white flex items-center justify-center">
+          <div className="h-12 w-14 mr-3 sm:mr-4 rounded-full bg-blue-500 text-white flex items-center justify-center">
             <span className="text-xl font-semibold">{userInitials}</span>
           </div>
         ) : (
@@ -38,7 +40,7 @@ export const NewPost = () => {
             onError={() => setIsLinkBroken(true)}
             src={currentUser?.avatar}
             alt="avatar"
-            className="object-cover rounded-full h-12 w-14 mr-4"
+            className="object-cover rounded-full h-12 w-14 mr-3 sm:mr-4"
           />
         )}
         <div className="flex flex-col w-full">
@@ -68,7 +70,7 @@ export const NewPost = () => {
                   className="hidden"
                 />
               </label>
-              <span>
+              <span onClick={() => setShowEmojis((prev) => !prev)}>
                 <UploadEmojiIcon />
               </span>
             </div>
@@ -96,6 +98,19 @@ export const NewPost = () => {
           </div>
         </div>
       </div>
+      {showEmojis && (
+        <div className="absolute left-8 sm:left-1/4 max-w-4xl bg-white shadow-2xl grid grid-cols-8 gap-2 p-2 rounded-md">
+          {emojis.map((emoji, index) => (
+            <button
+              key={index}
+              className="text-2xl"
+              onClick={() => setPostContent((content) => `${content}${emoji}`)}
+            >
+              {emoji}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
