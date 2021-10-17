@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { LeftArrow } from "../../assets";
+import { CameraIcon, LeftArrow } from "../../assets";
 import { editUserProfile } from "./usersSlice";
 
 export const EditProfile = () => {
@@ -32,6 +32,7 @@ export const EditProfile = () => {
     formData.append("location", location);
 
     dispatch(editUserProfile({ username, formData }));
+    navigate(-1);
   };
 
   return (
@@ -61,11 +62,16 @@ export const EditProfile = () => {
               <span className="font-semibold text-2xl">{userInitials}</span>
             </div>
           ) : (
-            <img
-              src={avatar}
-              alt="avatar"
-              className="object-cover h-20 w-20 rounded-full"
-            />
+            <div className="relative max-w-max">
+              <img
+                src={avatar}
+                alt="avatar"
+                className="object-cover h-20 w-20 rounded-full opacity-80"
+              />
+              <span className="absolute top-1/3 left-1/3">
+                <CameraIcon />
+              </span>
+            </div>
           )}
           <input
             id="profile-image"

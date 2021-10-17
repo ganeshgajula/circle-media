@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { CloseMidThinIcon } from "../../assets";
+import { CameraIcon, CloseMidThinIcon } from "../../assets";
 import { editUserProfile } from "./usersSlice";
 
 export const EditProfileModal = ({ setShowEditProfileModal }) => {
@@ -74,12 +74,17 @@ export const EditProfileModal = ({ setShowEditProfileModal }) => {
                 <span className="text-3xl font-semibold">{userInitials}</span>
               </div>
             ) : (
-              <img
-                onError={() => setIsLinkBroken(true)}
-                src={selectedUser?.avatar ? selectedUser.avatar : avatar}
-                alt="avatar"
-                className="object-cover rounded-full w-20 h-20"
-              />
+              <div className="relative max-w-max">
+                <img
+                  onError={() => setIsLinkBroken(true)}
+                  src={selectedUser?.avatar ? selectedUser.avatar : avatar}
+                  alt="avatar"
+                  className="object-cover rounded-full w-20 h-20 opacity-60"
+                />
+                <span className="absolute top-1/3 left-1/3">
+                  <CameraIcon />
+                </span>
+              </div>
             )}
             <input
               id="profile-image"
