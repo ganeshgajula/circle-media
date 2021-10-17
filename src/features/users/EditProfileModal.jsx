@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { CameraIcon, CloseMidThinIcon } from "../../assets";
+import { CameraIcon, CloseMidThinIcon, CloseThickIconMid } from "../../assets";
 import { editUserProfile } from "./usersSlice";
 
 export const EditProfileModal = ({ setShowEditProfileModal }) => {
@@ -44,6 +44,8 @@ export const EditProfileModal = ({ setShowEditProfileModal }) => {
     dispatch(editUserProfile({ username, formData }));
   };
 
+  console.log("AVA", avatar);
+
   return (
     <div className="flex items-center justify-center fixed h-full w-full left-0 top-0 z-20 modal-bg">
       <div className="bg-white max-w-2xl m-auto box-border rounded-2xl h-3/5 overflow-auto">
@@ -68,32 +70,43 @@ export const EditProfileModal = ({ setShowEditProfileModal }) => {
         </div>
 
         <div className="mt-4 px-4 py-3">
-          <label htmlFor="profile-image">
-            {isLinkBroken ? (
-              <div className="bg-blue-500 text-white h-20 w-20 rounded-full flex items-center justify-center">
-                <span className="text-3xl font-semibold">{userInitials}</span>
-              </div>
-            ) : (
-              <div className="relative max-w-max">
-                <img
-                  onError={() => setIsLinkBroken(true)}
-                  src={selectedUser?.avatar ? selectedUser.avatar : avatar}
-                  alt="avatar"
-                  className="object-cover rounded-full w-20 h-20 opacity-80"
-                />
-                <span className="absolute top-1/3 left-1/3">
-                  <CameraIcon />
-                </span>
+          <div className="flex items-center justify-between max-w-max">
+            <label htmlFor="profile-image">
+              {isLinkBroken ? (
+                <div className="bg-blue-500 text-white h-20 w-20 rounded-full flex items-center justify-center">
+                  <span className="text-3xl font-semibold">{userInitials}</span>
+                </div>
+              ) : (
+                <div className="relative max-w-max">
+                  <img
+                    onError={() => setIsLinkBroken(true)}
+                    src={selectedUser?.avatar ? selectedUser?.avatar : avatar}
+                    alt="avatar"
+                    className="object-cover rounded-full w-20 h-20 opacity-80"
+                  />
+                  <span className="absolute top-1/3 left-1/3">
+                    <CameraIcon />
+                  </span>
+                </div>
+              )}
+              <input
+                id="profile-image"
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => setAvatar(e.target.files[0])}
+              />
+            </label>
+            {avatar?.name && (
+              <div
+                className="flex items-center bg-gray-300 max-w-max p-1 rounded-md cursor-pointer ml-4"
+                onClick={() => setAvatar(null)}
+              >
+                <CloseThickIconMid />
+                <span>{avatar?.name}</span>
               </div>
             )}
-            <input
-              id="profile-image"
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={(e) => setAvatar(e.target.files[0])}
-            />
-          </label>
+          </div>
 
           <div className="flex space-x-3 mt-4 items-center">
             <label htmlFor="firstname">Firstname</label>

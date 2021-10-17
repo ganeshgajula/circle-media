@@ -1,5 +1,9 @@
 import React, { useRef, useState } from "react";
-import { UploadImageIcon, UploadEmojiIcon } from "../../assets";
+import {
+  UploadImageIcon,
+  UploadEmojiIcon,
+  CloseThickIconMid,
+} from "../../assets";
 import { createNewPost } from "./postSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { emojis } from "../../data/emojis";
@@ -28,6 +32,7 @@ export const NewPost = () => {
     setPostMedia(null);
   };
 
+  console.log("PM", postMedia);
   return (
     <div className="relative">
       <div className="flex px-3 py-3 border-b border-gray-100">
@@ -58,6 +63,15 @@ export const NewPost = () => {
             onChange={(e) => setPostContent(e.target.value)}
             maxLength="280"
           ></textarea>
+          {postMedia && (
+            <div
+              className="flex items-center bg-gray-300 max-w-max p-1 rounded-md mb-2 cursor-pointer"
+              onClick={() => setPostMedia(null)}
+            >
+              <CloseThickIconMid />
+              <span className="ml-1">{postMedia.name}</span>
+            </div>
+          )}
           <div className="flex justify-between items-center pt-3 border-t border-gray-100">
             <div className="flex space-x-4">
               <label htmlFor="media-upload" className="flex">
