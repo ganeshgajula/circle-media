@@ -69,7 +69,7 @@ export const PostReplies = ({
               to={`/profile/${username}`}
               className={`${
                 showReplyActions && selectedReplyMsgId === _id && "mt-4"
-              } h-10 w-12 bg-blue-500 text-white rounded-full flex items-center justify-center mr-4`}
+              } h-10 w-12 bg-blue-500 text-white rounded-full flex items-center justify-center mr-3 sm:mr-4`}
             >
               <span className="text-lg font-semibold">{userInitials}</span>
             </Link>
@@ -78,7 +78,7 @@ export const PostReplies = ({
               to={`/profile/${username}`}
               className={`${
                 showReplyActions && selectedReplyMsgId === _id && "mt-4"
-              }`}
+              } mr-3 sm:mr-4`}
             >
               <img
                 onError={() => setIsLinkBroken(true)}

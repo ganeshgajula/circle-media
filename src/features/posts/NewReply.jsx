@@ -24,12 +24,12 @@ export const NewReply = ({ postId, postAuthorId, authorUsername }) => {
       {!avatar || isLinkBroken ? (
         <Link
           to={`/profile/${username}`}
-          className="h-12 w-14 rounded-full bg-blue-500 text-white flex items-center justify-center mr-4"
+          className="h-12 w-14 rounded-full bg-blue-500 text-white flex items-center justify-center mr-3 sm:mr-4"
         >
           <span className="text-xl font-semibold">{userInitials}</span>
         </Link>
       ) : (
-        <Link to={`/profile/${username}`} className="mr-4">
+        <Link to={`/profile/${username}`} className="mr-3 sm:mr-4">
           <img
             onError={() => setIsLinkBroken(true)}
             src={avatar}
