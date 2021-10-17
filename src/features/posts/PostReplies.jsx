@@ -22,6 +22,7 @@ export const PostReplies = ({
   const maxCharacterLimit = 280;
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
+  const [isLinkBroken, setIsLinkBroken] = useState(false);
 
   const activeReplies = replies.filter((reply) => reply.isActive);
 
@@ -55,7 +56,7 @@ export const PostReplies = ({
       _id,
       content,
       date,
-      replierId: { firstname, lastname, username, _id: userId },
+      replierId: { avatar, firstname, lastname, username, _id: userId },
     }) => {
       const firstNameInitial = firstname[0];
       const lastNameInitial = lastname[0];
@@ -63,14 +64,30 @@ export const PostReplies = ({
 
       return (
         <div key={_id} className="flex px-3 py-3 border-b border-gray-100">
-          <Link
-            to={`/profile/${username}`}
-            className={`${
-              showReplyActions && selectedReplyMsgId === _id && "mt-4"
-            } h-10 w-12 bg-blue-500 text-white rounded-full flex items-center justify-center mr-4`}
-          >
-            <span className="text-lg font-semibold">{userInitials}</span>
-          </Link>
+          {!avatar || isLinkBroken ? (
+            <Link
+              to={`/profile/${username}`}
+              className={`${
+                showReplyActions && selectedReplyMsgId === _id && "mt-4"
+              } h-10 w-12 bg-blue-500 text-white rounded-full flex items-center justify-center mr-4`}
+            >
+              <span className="text-lg font-semibold">{userInitials}</span>
+            </Link>
+          ) : (
+            <Link
+              to={`/profile/${username}`}
+              className={`${
+                showReplyActions && selectedReplyMsgId === _id && "mt-4"
+              }`}
+            >
+              <img
+                onError={() => setIsLinkBroken(true)}
+                src={avatar}
+                alt="avatar"
+                className="object-cover rounded-full h-10 w-12"
+              />
+            </Link>
+          )}
           <div className="flex flex-col w-full">
             <div className="flex items-center justify-between">
               <Link

@@ -10,6 +10,7 @@ export const SuggestionBox = () => {
   const { currentUser } = useSelector((state) => state.auth);
   const [showMoreSuggestions, setShowMoreSuggestions] = useState(false);
   const dispatch = useDispatch();
+  const [isLinkBroken, setIsLinkBroken] = useState(false);
 
   const showOnlyThreeProfiles = 3;
   const showOnlyFiveProfiles = 5;
@@ -38,7 +39,7 @@ export const SuggestionBox = () => {
                 } flex items-center justify-between px-3 py-2 border-b border-gray-200 hover:bg-gray-100 cursor-pointer`}
               >
                 <div className="flex items-center space-x-3 mr-12">
-                  {!avatar ? (
+                  {!avatar || isLinkBroken ? (
                     <Link
                       to={`/profile/${username}`}
                       className="h-12 w-12 bg-blue-500 text-white rounded-full flex items-center justify-center"
@@ -50,6 +51,7 @@ export const SuggestionBox = () => {
                   ) : (
                     <Link to={`/profile/${username}`}>
                       <img
+                        onError={() => setIsLinkBroken(true)}
                         src={avatar}
                         alt="avatar"
                         className="object-cover rounded-full h-12 w-12"

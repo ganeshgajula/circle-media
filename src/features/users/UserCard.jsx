@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { isUserPresent } from "../../utils/utils";
@@ -10,6 +10,7 @@ export const UserCard = ({ firstname, lastname, username, _id, avatar }) => {
   } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLinkBroken, setIsLinkBroken] = useState(false);
 
   const firstNameInitial = firstname[0];
   const lastNameInitial = lastname[0];
@@ -21,12 +22,13 @@ export const UserCard = ({ firstname, lastname, username, _id, avatar }) => {
       className="flex items-center justify-between p-3 hover:bg-gray-50 cursor-pointer"
     >
       <span className="flex items-center">
-        {!avatar ? (
+        {!avatar || isLinkBroken ? (
           <span className="bg-blue-500 mr-4 text-white h-12 w-12 flex items-center justify-center rounded-full ">
             <span className="text-xl font-semibold">{userInitials}</span>
           </span>
         ) : (
           <img
+            onError={() => setIsLinkBroken(true)}
             src={avatar}
             alt="avatar"
             className="object-cover rounded-full h-12 w-12 mr-4"

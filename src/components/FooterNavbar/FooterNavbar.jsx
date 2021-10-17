@@ -12,6 +12,8 @@ export const FooterNavbar = () => {
   const lastNameInitial = currentUser?.lastname[0];
   const userInitials = `${firstNameInitial}${lastNameInitial}`;
 
+  const [isLinkBroken, setIsLinkBroken] = useState(false);
+
   return (
     <>
       {showSideDrawer && <SideDrawer setShowSideDrawer={setShowSideDrawer} />}
@@ -25,7 +27,7 @@ export const FooterNavbar = () => {
         <Link to="/notifications">
           <NotificationIcon />
         </Link>
-        {!currentUser?.avatar ? (
+        {!currentUser?.avatar || isLinkBroken ? (
           <div
             className="h-8 w-8 bg-blue-500 text-white flex items-center justify-center rounded-full"
             onClick={() => setShowSideDrawer(true)}
@@ -34,6 +36,7 @@ export const FooterNavbar = () => {
           </div>
         ) : (
           <img
+            onError={() => setIsLinkBroken(true)}
             src={currentUser?.avatar}
             alt="avatar"
             onClick={() => setShowSideDrawer(true)}

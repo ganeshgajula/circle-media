@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import {
@@ -12,6 +12,8 @@ export const Notifications = () => {
   const {
     currentUser: { notifications },
   } = useSelector((state) => state.auth);
+
+  const [isLinkBroken, setIsLinkBroken] = useState(false);
 
   const navigate = useNavigate();
 
@@ -67,12 +69,13 @@ export const Notifications = () => {
                       navigate(`/profile/${username}`);
                     }}
                   >
-                    {!avatar ? (
+                    {!avatar || isLinkBroken ? (
                       <span className="text-md font-semibold">
                         {getUserInitials(firstname, lastname)}
                       </span>
                     ) : (
                       <img
+                        onError={() => setIsLinkBroken(true)}
                         src={avatar}
                         alt="avatar"
                         className="object-cover rounded-full h-8 w-8"

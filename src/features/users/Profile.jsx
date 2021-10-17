@@ -46,14 +46,14 @@ export const Profile = () => {
   useEffect(() => {
     if (selectedUser && !avatar) {
       setAvatar(
-        `https://res.cloudinary.com/circler/image/twitter_name/c_fill,g_face,w_120,h_120,r_max/ganeshgajula_.jpg`
+        `https://res.cloudinary.com/circler/image/twitter_name/c_fill,g_face,w_120,h_120,r_max/${username}.jpg`
       );
     }
-  }, [avatar, selectedUser]);
+  }, [avatar, selectedUser, username]);
 
   console.log(users);
   console.log(username);
-  console.log("56", selectedUser);
+  console.log(selectedUser);
   console.log(selectedUser?.following);
   console.log(posts);
   console.log(selectedUserPosts);

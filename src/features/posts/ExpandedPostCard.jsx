@@ -44,6 +44,7 @@ export const ExpandedPostCard = ({ post }) => {
   const [selectedReplyMsgId, setSelectedReplyMsgId] = useState(null);
   const inputEl = useRef(null);
   const maxCharacterLimit = 280;
+  const [isLinkBroken, setIsLinkBroken] = useState(false);
 
   const firstNameInitial = post.userId.firstname[0];
   const lastNameInitial = post.userId.lastname[0];
@@ -88,7 +89,7 @@ export const ExpandedPostCard = ({ post }) => {
         </div>
         <div className="flex justify-between">
           <span className="flex items-center">
-            {!post.userId.avatar ? (
+            {!post.userId.avatar || isLinkBroken ? (
               <Link
                 to={`/profile/${post.userId.username}`}
                 className="bg-blue-500 mr-3 text-white h-12 w-12 rounded-full flex items-center justify-center"
@@ -98,6 +99,7 @@ export const ExpandedPostCard = ({ post }) => {
             ) : (
               <Link to={`/profile/${post.userId.username}`} className="mr-3">
                 <img
+                  onError={() => setIsLinkBroken(true)}
                   src={post.userId.avatar}
                   alt="avatar"
                   className="object-cover rounded-full h-12 w-12"

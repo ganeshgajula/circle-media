@@ -13,6 +13,7 @@ export const NewPost = () => {
   const firstNameInitial = currentUser?.firstname[0];
   const lastNameInitial = currentUser?.lastname[0];
   const userInitials = `${firstNameInitial}${lastNameInitial}`;
+  const [isLinkBroken, setIsLinkBroken] = useState(false);
 
   const newPostHandler = () => {
     let formData = new FormData();
@@ -28,12 +29,13 @@ export const NewPost = () => {
   return (
     <div>
       <div className="flex px-3 py-3 border-b border-gray-100">
-        {!currentUser?.avatar ? (
+        {!currentUser?.avatar || isLinkBroken ? (
           <div className="h-12 w-14 mr-4 rounded-full bg-blue-500 text-white flex items-center justify-center">
             <span className="text-xl font-semibold">{userInitials}</span>
           </div>
         ) : (
           <img
+            onError={() => setIsLinkBroken(true)}
             src={currentUser?.avatar}
             alt="avatar"
             className="object-cover rounded-full h-12 w-14 mr-4"

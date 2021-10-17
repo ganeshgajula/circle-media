@@ -20,6 +20,8 @@ export const SideNavbar = () => {
   const lastNameInitial = currentUser?.lastname[0];
   const userInitials = `${firstNameInitial}${lastNameInitial}`;
 
+  const [isLinkBroken, setIsLinkBroken] = useState(false);
+
   return (
     <nav className="flex flex-col h-screen xl:w-17 px-3 py-3">
       <Link to="/">
@@ -79,12 +81,13 @@ export const SideNavbar = () => {
           className="flex items-center px-3 py-3 cursor-pointer xl:hover:bg-blue-50 rounded-full"
           onClick={() => setShowLogoutPopover(true)}
         >
-          {!currentUser?.avatar ? (
+          {!currentUser?.avatar || isLinkBroken ? (
             <div className="h-12 w-12 mr-4 rounded-full bg-blue-500 text-white flex items-center justify-center">
               <span className="text-xl font-semibold">{userInitials}</span>
             </div>
           ) : (
             <img
+              onError={() => setIsLinkBroken(true)}
               src={currentUser?.avatar}
               alt="avatar"
               className="object-cover rounded-full h-12 w-12 mr-4"

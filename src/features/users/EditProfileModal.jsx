@@ -24,10 +24,10 @@ export const EditProfileModal = ({ setShowEditProfileModal }) => {
   useEffect(() => {
     if (selectedUser && !avatar) {
       setAvatar(
-        `https://res.cloudinary.com/circler/image/twitter_name/c_fill,g_face,w_120,h_120,r_max/ganeshgajula_.jpg`
+        `https://res.cloudinary.com/circler/image/twitter_name/c_fill,g_face,w_120,h_120,r_max/${username}.jpg`
       );
     }
-  }, [avatar, selectedUser]);
+  }, [avatar, selectedUser, username]);
 
   const updateProfileHandler = () => {
     let formData = new FormData();

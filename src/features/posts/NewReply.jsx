@@ -13,6 +13,7 @@ export const NewReply = ({ postId, postAuthorId, authorUsername }) => {
   const inputEl = useRef(null);
   const dispatch = useDispatch();
   const maxCharacterLimit = 280;
+  const [isLinkBroken, setIsLinkBroken] = useState(false);
 
   const firstNameInitial = firstname[0];
   const lastNameInitial = lastname[0];
@@ -20,7 +21,7 @@ export const NewReply = ({ postId, postAuthorId, authorUsername }) => {
 
   return (
     <div className="flex pt-2">
-      {!avatar ? (
+      {!avatar || isLinkBroken ? (
         <Link
           to={`/profile/${username}`}
           className="h-12 w-14 rounded-full bg-blue-500 text-white flex items-center justify-center mr-4"
@@ -30,6 +31,7 @@ export const NewReply = ({ postId, postAuthorId, authorUsername }) => {
       ) : (
         <Link to={`/profile/${username}`} className="mr-4">
           <img
+            onError={() => setIsLinkBroken(true)}
             src={avatar}
             alt="avatar"
             className="object-cover rounded-full h-12 w-14"

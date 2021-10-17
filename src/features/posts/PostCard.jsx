@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { isUserIdPresent, isUserPresent } from "../../utils/utils";
@@ -27,6 +27,7 @@ export const PostCard = ({ post }) => {
   const firstNameInitial = post.userId.firstname[0];
   const lastNameInitial = post.userId.lastname[0];
   const userInitials = `${firstNameInitial}${lastNameInitial}`;
+  const [isLinkBroken, setIsLinkBroken] = useState(false);
 
   console.log(post);
   return (
@@ -47,7 +48,7 @@ export const PostCard = ({ post }) => {
         </span>
       </div>
       <div className="flex">
-        {!post.userId.avatar ? (
+        {!post.userId.avatar || isLinkBroken ? (
           <div
             className="bg-blue-500 mr-4 text-white h-12 w-14 rounded-full flex items-center justify-center"
             onClick={(e) => {
@@ -59,6 +60,7 @@ export const PostCard = ({ post }) => {
           </div>
         ) : (
           <img
+            onError={() => setIsLinkBroken(true)}
             src={post.userId.avatar}
             alt="avatar"
             className="object-cover rounded-full h-12 w-14 mr-4"

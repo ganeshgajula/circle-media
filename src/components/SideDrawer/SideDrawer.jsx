@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -18,6 +18,8 @@ export const SideDrawer = ({ setShowSideDrawer }) => {
   const lastNameInitial = currentUser?.lastname[0];
   const userInitials = `${firstNameInitial}${lastNameInitial}`;
 
+  const [isLinkBroken, setIsLinkBroken] = useState(false);
+
   return (
     <div className="flex items-center justify-center fixed h-full w-full top-0 left-0 z-10 modal-bg">
       <div className="w-2/3 bg-white h-full fixed top-0 left-0">
@@ -32,12 +34,13 @@ export const SideDrawer = ({ setShowSideDrawer }) => {
             setShowSideDrawer(false);
           }}
         >
-          {!currentUser?.avatar ? (
+          {!currentUser?.avatar || isLinkBroken ? (
             <div className="h-10 w-10 bg-blue-500 text-white rounded-full flex items-center justify-center">
               <span className="text-lg font-bold">{userInitials}</span>
             </div>
           ) : (
             <img
+              onError={() => setIsLinkBroken(true)}
               src={currentUser?.avatar}
               alt="avatar"
               className="object-cover rounded-full h-10 w-10"

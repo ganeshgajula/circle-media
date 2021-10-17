@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +9,8 @@ export const SearchResults = ({
 }) => {
   const { users } = useSelector((state) => state.users);
   const navigate = useNavigate();
+
+  const [isLinkBroken, setIsLinkBroken] = useState(false);
 
   const matchedUsersList = users.filter(
     (user) =>
@@ -36,7 +38,7 @@ export const SearchResults = ({
                   setSearchedKeyword("");
                 }}
               >
-                {!avatar ? (
+                {!avatar || isLinkBroken ? (
                   <div className="h-12 w-12 bg-blue-500 text-white rounded-full flex items-center justify-center">
                     <span className="text-xl font-semibold">
                       {userInitials}
@@ -44,6 +46,7 @@ export const SearchResults = ({
                   </div>
                 ) : (
                   <img
+                    onError={() => setIsLinkBroken(true)}
                     src={avatar}
                     alt="avatar"
                     className="object-cover rounded-full h-12 w-12"

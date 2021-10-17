@@ -16,6 +16,7 @@ export const EditProfile = () => {
   const [location, setLocation] = useState(selectedUser.location);
   const [link, setLink] = useState(selectedUser.link);
   const dispatch = useDispatch();
+  const [isLinkBroken, setIsLinkBroken] = useState(false);
 
   const firstNameInitial = firstname[0];
   const lastNameInitial = lastname[0];
@@ -57,13 +58,14 @@ export const EditProfile = () => {
 
       <div className="flex flex-col py-2 px-4 max-w-full mx-auto">
         <label htmlFor="profile-image" className="mt-2 mb-5">
-          {!avatar ? (
+          {!avatar || isLinkBroken ? (
             <div className="h-16 w-16 bg-blue-500 text-white rounded-full flex items-center justify-center">
               <span className="font-semibold text-2xl">{userInitials}</span>
             </div>
           ) : (
             <div className="relative max-w-max">
               <img
+                onError={() => setIsLinkBroken(true)}
                 src={avatar}
                 alt="avatar"
                 className="object-cover h-20 w-20 rounded-full opacity-80"
