@@ -37,7 +37,7 @@ const setupAuthHeaderForServiceCalls = (token) => {
 
 function App() {
   const dispatch = useDispatch();
-  const { token, username, currentUser } = useSelector((state) => state.auth);
+  const { token, username } = useSelector((state) => state.auth);
   const { users } = useSelector((state) => state.users);
 
   useEffect(() => {
@@ -56,17 +56,6 @@ function App() {
   useEffect(() => {
     dispatch(loadAllPosts());
   }, [users, dispatch]);
-
-  // useEffect(() => {
-  //   if (currentUser && !currentUser.avatar) {
-  //     const avatar = `https://res.cloudinary.com/circler/image/twitter_name/c_fill,g_face,w_120,h_120,r_max/ganeshgajula_.jpg`;
-
-  //     let formData = new FormData();
-  //     formData.append("avatar", avatar);
-
-  //     dispatch(initializeUserAvatar({ username, formData }));
-  //   }
-  // }, [currentUser, dispatch, username]);
 
   useEffect(() => {
     if (users.length > 0) {
