@@ -148,6 +148,13 @@ export const ExpandedPostCard = ({ post }) => {
               }}
               maxLength="280"
             ></textarea>
+            {post.media && (
+              <img
+                src={post.media}
+                alt="postImage"
+                className="block mt-1 mb-4 rounded-lg object-cover max-w-full h-auto"
+              />
+            )}
             <div className="flex items-center justify-end space-x-6">
               <div
                 className={`${
