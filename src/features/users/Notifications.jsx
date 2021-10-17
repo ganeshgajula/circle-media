@@ -44,7 +44,7 @@ export const Notifications = () => {
         notifications?.map(
           ({
             _id,
-            originatorUserId: { firstname, lastname, username },
+            originatorUserId: { firstname, lastname, username, avatar },
             type,
             postId,
           }) => (
@@ -67,9 +67,17 @@ export const Notifications = () => {
                       navigate(`/profile/${username}`);
                     }}
                   >
-                    <span className="text-md font-semibold">
-                      {getUserInitials(firstname, lastname)}
-                    </span>
+                    {!avatar ? (
+                      <span className="text-md font-semibold">
+                        {getUserInitials(firstname, lastname)}
+                      </span>
+                    ) : (
+                      <img
+                        src={avatar}
+                        alt="avatar"
+                        className="object-cover rounded-full h-8 w-8"
+                      />
+                    )}
                   </div>
                   <p className="mt-2">
                     <span
