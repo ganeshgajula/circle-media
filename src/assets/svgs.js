@@ -250,6 +250,15 @@ export const CloseThickIcon = () => (
   </svg>
 );
 
+export const CloseThickIconMid = () => (
+  <svg width="1rem" height="1rem" viewBox="0 0 24 24">
+    <path
+      d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91z"
+      fill="currentColor"
+    ></path>
+  </svg>
+);
+
 export const CloseThickIconMinified = () => (
   <svg width="0.8rem" height="0.8rem" viewBox="0 0 24 24">
     <path
