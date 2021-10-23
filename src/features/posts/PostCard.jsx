@@ -85,7 +85,7 @@ export const PostCard = ({ post }) => {
             </span>
           </div>
 
-          <article className="mb-1 text-base whitespace-pre">
+          <article className="mb-1 text-base whitespace-pre-line">
             {post.content}
           </article>
 
