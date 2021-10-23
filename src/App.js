@@ -49,13 +49,15 @@ function App() {
   useEffect(() => {
     if (token) {
       dispatch(loadUsers());
-      dispatch(loadAllPosts());
+      // dispatch(loadAllPosts());
     }
   }, [token, dispatch]);
 
   useEffect(() => {
-    dispatch(loadAllPosts());
-  }, [users, dispatch]);
+    if (token && users.length > 0) {
+      dispatch(loadAllPosts());
+    }
+  }, [token, users, dispatch]);
 
   useEffect(() => {
     if (users.length > 0) {
