@@ -18,6 +18,10 @@
   width: 22rem;
 }
 
+.h-screen-60 {
+  height: 60vh;
+}
+
 .bg-primary {
   background-color: #1da1f2;
 }
