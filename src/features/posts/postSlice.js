@@ -188,6 +188,9 @@ const initialState = {
   error: null,
   posts: [],
   requestedPost: null,
+  newPostStatus: "idle",
+  replyStatus: "idle",
+  updateReplyStatus: "idle",
 };
 
 export const postsSlice = createSlice({
@@ -199,6 +202,9 @@ export const postsSlice = createSlice({
       state.posts = [];
       state.error = null;
       state.requestedPost = null;
+      state.newPostStatus = "idle";
+      state.replyStatus = "idle";
+      state.updateReplyStatus = "idle";
     },
   },
   extraReducers: {
@@ -217,14 +223,14 @@ export const postsSlice = createSlice({
       });
     },
     [createNewPost.pending]: (state) => {
-      state.status = "loading";
+      state.newPostStatus = "loading";
       toast.info("post creation in progress.", {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1500,
       });
     },
     [createNewPost.fulfilled]: (state, action) => {
-      state.status = "fulfilled";
+      state.newPostStatus = "fulfilled";
       state.posts.push(action.payload.post);
       toast.success("post successful", {
         position: toast.POSITION.BOTTOM_CENTER,
@@ -232,7 +238,7 @@ export const postsSlice = createSlice({
       });
     },
     [createNewPost.rejected]: (state, action) => {
-      state.status = "rejected";
+      state.newPostStatus = "rejected";
       toast.error(action.payload.message, {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1500,
@@ -304,10 +310,10 @@ export const postsSlice = createSlice({
       });
     },
     [createNewReply.pending]: (state) => {
-      state.status = "loading";
+      state.replyStatus = "loading";
     },
     [createNewReply.fulfilled]: (state, action) => {
-      state.status = "fulfilled";
+      state.replyStatus = "fulfilled";
       const repliedToPostIndex = state.posts.findIndex(
         (post) => post._id === action.payload.repliedToPost._id
       );
@@ -359,14 +365,14 @@ export const postsSlice = createSlice({
       });
     },
     [updateReplyContent.pending]: (state) => {
-      state.status = "loading";
+      state.updateReplyStatus = "loading";
       toast.info("reply update in progress..", {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1000,
       });
     },
     [updateReplyContent.fulfilled]: (state, action) => {
-      state.status = "fulfilled";
+      state.updateReplyStatus = "fulfilled";
 
       const updatedPostIndex = state.posts.findIndex(
         (post) => post._id === action.payload.postAfterReplyUpdate._id
@@ -415,10 +421,10 @@ export const postsSlice = createSlice({
       });
     },
     [deleteReply.pending]: (state) => {
-      state.status = "loading";
+      state.updateReplyStatus = "loading";
     },
     [deleteReply.fulfilled]: (state, action) => {
-      state.status = "fulfilled";
+      state.updateReplyStatus = "fulfilled";
 
       const postIndex = state.posts.findIndex(
         (post) => post._id === action.payload.post._id
@@ -442,7 +448,7 @@ export const postsSlice = createSlice({
       });
     },
     [hideReply.fulfilled]: (state, action) => {
-      state.status = "fulfilled";
+      state.updateReplyStatus = "fulfilled";
 
       const updatedPostIndex = state.posts.findIndex(
         (post) => post._id === action.payload.postAfterReplyUpdate._id
@@ -459,7 +465,7 @@ export const postsSlice = createSlice({
       });
     },
     [hideReply.rejected]: (state, action) => {
-      state.status = "rejected";
+      state.updateReplyStatus = "rejected";
       toast.error(action.payload.message, {
         position: toast.POSITION.BOTTOM_CENTER,
         autoClose: 1500,

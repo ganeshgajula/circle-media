@@ -16,6 +16,7 @@ export const NewPost = () => {
   const [postMedia, setPostMedia] = useState(null);
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.auth);
+  const { newPostStatus } = useSelector((state) => state.feed);
   const firstNameInitial = currentUser?.firstname[0];
   const lastNameInitial = currentUser?.lastname[0];
   const userInitials = `${firstNameInitial}${lastNameInitial}`;
@@ -116,7 +117,7 @@ export const NewPost = () => {
                 onClick={newPostHandler}
                 disabled={!postContent}
               >
-                Post
+                {newPostStatus === "loading" ? "Posting" : "Post"}
               </button>
             </div>
           </div>

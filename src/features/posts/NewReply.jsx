@@ -8,7 +8,7 @@ export const NewReply = ({ postId, postAuthorId, authorUsername }) => {
   const {
     currentUser: { _id, avatar, firstname, lastname, username },
   } = useSelector((state) => state.auth);
-  const { status } = useSelector((state) => state.feed);
+  const { replyStatus } = useSelector((state) => state.feed);
   const [replyContent, setReplyContent] = useState("");
   const inputEl = useRef(null);
   const dispatch = useDispatch();
@@ -89,7 +89,7 @@ export const NewReply = ({ postId, postAuthorId, authorUsername }) => {
             }}
             disabled={!replyContent && true}
           >
-            {status === "loading" ? "Replying.." : "Reply"}
+            {replyStatus === "loading" ? "Replying.." : "Reply"}
           </button>
         </div>
       </div>
