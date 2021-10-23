@@ -61,6 +61,7 @@ export const NewPost = () => {
         )}
         <div className="flex flex-col w-full">
           <textarea
+            onClick={() => setShowEmojis(false)}
             type="text"
             value={postContent}
             ref={inputEl}
@@ -85,7 +86,11 @@ export const NewPost = () => {
           )}
           <div className="flex justify-between items-center pt-3 border-t border-gray-100">
             <div className="flex space-x-4">
-              <label htmlFor="media-upload" className="flex">
+              <label
+                htmlFor="media-upload"
+                className="flex"
+                onClick={() => setShowEmojis(false)}
+              >
                 <UploadImageIcon />
                 <input
                   id="media-upload"
