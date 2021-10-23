@@ -7,6 +7,7 @@ import {
 import { createNewPost } from "./postSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { emojis } from "../../data/emojis";
+import { Spinner } from "../../components/Spinner/Spinner";
 
 export const NewPost = () => {
   const maxCharacterLimit = 280;
@@ -32,13 +33,22 @@ export const NewPost = () => {
     setPostMedia(null);
   };
 
-  console.log("PM", postMedia);
   return (
     <div className="relative">
       <div className="flex px-3 py-3 border-b border-gray-100">
         {!currentUser?.avatar || isLinkBroken ? (
-          <div className="h-12 w-14 mr-3 sm:mr-4 rounded-full bg-blue-500 text-white flex items-center justify-center">
-            <span className="text-xl font-semibold">{userInitials}</span>
+          <div
+            className={`${
+              !currentUser ? "bg-gray-50" : "bg-blue-500"
+            } h-12 w-14 mr-3 sm:mr-4 rounded-full  text-white flex items-center justify-center`}
+          >
+            {!currentUser ? (
+              <div className="flex items-center justify-center">
+                <Spinner size={24} />
+              </div>
+            ) : (
+              <span className="text-xl font-semibold">{userInitials}</span>
+            )}
           </div>
         ) : (
           <img

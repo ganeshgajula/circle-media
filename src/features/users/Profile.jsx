@@ -7,8 +7,8 @@ import { PostCard } from "../posts/PostCard";
 import { EditProfileModal } from "./EditProfileModal";
 import { MonthAndYearInfo } from "./MonthAndYearInfo";
 import { followUnfollowUser, getSelectedUser } from "./usersSlice";
-
 import { Link } from "react-router-dom";
+import { Spinner } from "../../components/Spinner/Spinner";
 
 export const Profile = () => {
   const { username } = useParams();
@@ -58,8 +58,12 @@ export const Profile = () => {
   console.log(posts);
   console.log(selectedUserPosts);
 
-  return (
-    <div>
+  return !selectedUser ? (
+    <div className="flex items-center justify-center w-full h-screen-60">
+      <Spinner size={48} />
+    </div>
+  ) : (
+    <>
       <div className="flex items-center px-2 py-1 border-b border-gray-100 sticky top-0 w-full bg-white cursor-pointer">
         <span
           onClick={() => navigate(-1)}
@@ -188,6 +192,6 @@ export const Profile = () => {
       {showEditProfileModal && (
         <EditProfileModal setShowEditProfileModal={setShowEditProfileModal} />
       )}
-    </div>
+    </>
   );
 };

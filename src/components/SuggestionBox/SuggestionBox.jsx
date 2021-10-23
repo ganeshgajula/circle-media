@@ -4,9 +4,10 @@ import { VerifiedBadgeIcon } from "../../assets";
 import { followUnfollowUser } from "../../features/users/usersSlice";
 import { isUserPresent } from "../../utils/utils";
 import { Link } from "react-router-dom";
+import { Spinner } from "../Spinner/Spinner";
 
 export const SuggestionBox = () => {
-  const { users } = useSelector((state) => state.users);
+  const { users, status } = useSelector((state) => state.users);
   const { currentUser } = useSelector((state) => state.auth);
   const [showMoreSuggestions, setShowMoreSuggestions] = useState(false);
   const dispatch = useDispatch();
@@ -18,7 +19,11 @@ export const SuggestionBox = () => {
     ? showOnlyThreeProfiles
     : showOnlyFiveProfiles;
 
-  return (
+  return users.length === 0 && status === "loading" ? (
+    <div className="flex items-center justify-center h-screen-60 w-full">
+      <Spinner size={26} />
+    </div>
+  ) : (
     <div className="mt-12 flex flex-col bg-blue-500 lg:w-30 xl:w-22 bg-extra-light-gray rounded-2xl fixed top-24">
       <div className="font-extrabold text-gray-900 px-3 py-2 text-xl border-b border-gray-200 ">
         Who to follow

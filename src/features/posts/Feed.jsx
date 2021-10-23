@@ -5,6 +5,7 @@ import { PostCard } from "./PostCard";
 import { loadAllPosts } from "./postSlice";
 import { EmptyPosts } from "./EmptyPosts";
 import { isUserPresent } from "../../utils/utils";
+import { Spinner } from "../../components/Spinner/Spinner";
 
 export const Feed = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,11 @@ export const Feed = () => {
       <NewPost />
       <div className="h-3 bg-extra-light-gray"></div>
       <div>
+        {sortedPosts.length === 0 && status === "loading" && (
+          <div className="flex items-center justify-center w-full h-screen-60">
+            <Spinner size={56} />
+          </div>
+        )}
         {sortedPosts.length === 0 && status === "fulfilled" ? (
           <EmptyPosts />
         ) : (

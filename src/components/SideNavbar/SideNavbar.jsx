@@ -12,6 +12,7 @@ import {
 } from "../../assets";
 import { LogoutPopover } from "..";
 import { useSelector } from "react-redux";
+import { Spinner } from "../Spinner/Spinner";
 
 export const SideNavbar = () => {
   const [showLogoutPopover, setShowLogoutPopover] = useState(false);
@@ -76,34 +77,40 @@ export const SideNavbar = () => {
       {showLogoutPopover && (
         <LogoutPopover setShowLogoutPopover={setShowLogoutPopover} />
       )}
-      <div className="fixed bottom-12">
-        <div
-          className="flex items-center px-3 py-3 cursor-pointer xl:hover:bg-blue-50 rounded-full"
-          onClick={() => setShowLogoutPopover(true)}
-        >
-          {!currentUser?.avatar || isLinkBroken ? (
-            <div className="h-12 w-12 mr-4 rounded-full bg-blue-500 text-white flex items-center justify-center">
-              <span className="text-xl font-semibold">{userInitials}</span>
+      {!currentUser ? (
+        <div className="flex items-center justify-center w-full h-screen">
+          <Spinner size={20} />
+        </div>
+      ) : (
+        <div className="fixed bottom-12">
+          <div
+            className="flex items-center px-3 py-3 cursor-pointer xl:hover:bg-blue-50 rounded-full"
+            onClick={() => setShowLogoutPopover(true)}
+          >
+            {!currentUser?.avatar || isLinkBroken ? (
+              <div className="h-12 w-12 mr-4 rounded-full bg-blue-500 text-white flex items-center justify-center">
+                <span className="text-xl font-semibold">{userInitials}</span>
+              </div>
+            ) : (
+              <img
+                onError={() => setIsLinkBroken(true)}
+                src={currentUser?.avatar}
+                alt="avatar"
+                className="object-cover rounded-full h-12 w-12 mr-4"
+              />
+            )}
+            <span className="mr-6 space-y-0 hidden flex-col xl:flex">
+              <p className="font-bold">
+                {currentUser?.firstname} {currentUser?.lastname}
+              </p>
+              <p>@{currentUser?.username}</p>
+            </span>
+            <div className="hidden xl:block">
+              <MoreIcon />
             </div>
-          ) : (
-            <img
-              onError={() => setIsLinkBroken(true)}
-              src={currentUser?.avatar}
-              alt="avatar"
-              className="object-cover rounded-full h-12 w-12 mr-4"
-            />
-          )}
-          <span className="mr-6 space-y-0 hidden flex-col xl:flex">
-            <p className="font-bold">
-              {currentUser?.firstname} {currentUser?.lastname}
-            </p>
-            <p>@{currentUser?.username}</p>
-          </span>
-          <div className="hidden xl:block">
-            <MoreIcon />
           </div>
         </div>
-      </div>
+      )}
     </nav>
   );
 };
