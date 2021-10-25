@@ -24,6 +24,7 @@ Functionalities -
 - Display followers, following user's list.
 - Display LikedBy and RetweetedBy users list.
 - Update user profile and avatar.
+- Receive Notifications when someone follows or interacts with posts.
 - User Authentication using JWT token.
 - Fetches user avatar based on valid Twitter username.
 - Fully Responsive app which adapts to all screen sizes
